@@ -16,23 +16,20 @@ SEED = 42
 NB_HONEST_CLIENTS = 3
 NB_BYZANTINE_CLIENTS = 1
 BATCH_SIZE = 64
-NB_ROUNDS = 3
+NB_ROUNDS = 1000
 DEVICE = "cpu"
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parent / "ter_iaaa_byzfl_abbes_arezki-main"
-DATA_CANDIDATES = [PROJECT_ROOT / "data", SCRIPT_DIR.parent / "data", SCRIPT_DIR / "data"]
+DATA_CANDIDATES = SCRIPT_DIR.parent / "test_bibliotheque/data"
 OUTPUT_CSV = SCRIPT_DIR / "benchmark_results.csv"
 
 
 # Repere le dossier qui contient les fichiers MNIST deja presentes dans le projet.
 def resolve_data_root() -> Path:
-    for candidate in DATA_CANDIDATES:
-        if candidate.exists():
-            return candidate
+    if DATA_CANDIDATES:
+        return DATA_CANDIDATES
     raise FileNotFoundError(
-        "MNIST data folder not found. Expected one of: "
-        + ", ".join(str(path) for path in DATA_CANDIDATES)
+        "fichier DATA introuvable"
     )
 
 
@@ -131,7 +128,7 @@ def build_clients(client_loaders) -> list[Client]:
                     "milestones": [1000],
                     "learning_rate_decay": 0.25,
                     "LabelFlipping": False,
-                    "momentum": 0.9,
+                    "momentum": 0.1,
                     "store_per_client_metrics": False,
                     "training_dataloader": loader,
                     "nb_labels": 10,

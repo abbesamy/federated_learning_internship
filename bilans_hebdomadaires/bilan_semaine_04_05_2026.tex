@@ -1,0 +1,104 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Paquets ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% --- Configuration Code ---
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{gray},
+    breaklines=true,
+    frame=single,
+}
+
+\title{\textbf{Rapport de recherche : Bibliothèque ByzFL} \\ \large Étude de la robustesse dans l'apprentissage fédéré}
+\author{ABBES Samy \& AREZKI Célia}
+\date{Semaine de 04 Mai 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Ce rapport présente le travail effectué lors de notre première phase de recherche sur l'apprentissage fédéré avec \textbf{ByzFL}. Nous y détaillons notre processus d'apprentissage de l'outil \textbf{ByzFL}, la conception de notre première expérience sur le jeu de données MNIST, ainsi que l'évolution de nos résultats suite aux corrections techniques apportées.
+
+\section{Prise en main de la bibliothèque}
+La première semaine de notre TER a été consacrée à l'exploration et à la prise en main de la bibliothèque \textbf{ByzFL}. Cette phase nous a permis de comprendre l'implémentation modulaire de l'outil à travers ses quatre composantes fondamentales :
+
+\begin{itemize}
+    \item \textbf{DataDistributor} : Responsable de la partition des données entre les clients (distributions IID ou non-IID).
+    \item \textbf{Client} : Simule les entités honnêtes réalisant l'entraînement local et le calcul des gradients.
+    \item \textbf{ByzantineClient} : Simule les attaquants capables de corrompre les gradients avant leur envoi.
+    \item \textbf{Server} : Point central qui orchestre l'agrégation des gradients reçus et met à jour le modèle global.
+\end{itemize}
+
+Nous avons également étudié les différentes méthodes d'agrégation robuste (\textit{TrMean, Krum, Median...etc}) et les types d'attaques (\textit{SignFlipping, IPM, ALIE...etc}) proposés par la bibliothèque pour comprendre leurs fondements mathématiques.
+
+\section{Contenu de l'expérience MNIST}
+Notre première expérience pratique vise à évaluer la résistance d'un modèle de réseau de neurones (\textit{cnn\_mnist}) face à diverses perturbations. Le but est de confronter des mécanismes de défense à des stratégies d'attaque spécifiques.
+
+L'expérience consiste à comparer plusieurs combinaisons :
+\begin{itemize}
+    \item \textbf{Baseline} : Une agrégation simple (\textit{Average}) sans aucune attaque pour établir le score de référence.
+    \item \textbf{Attaque brute vs Défense simple} : \textit{SignFlipping} contre une moyenne (\textit{Average}) et contre une médiane (\textit{Median}).
+    \item \textbf{Attaque optimisée vs Défense statistique} : \textit{Inner Product Manipulation (IPM)} contre la moyenne tronquée (\textit{TrMean}).
+    \item \textbf{Attaque furtive vs Défense géométrique} : \textit{A Little Is Enough (ALIE)} contre l'algorithme \textit{Krum}.
+\end{itemize}
+
+L'objectif global est d'observer si les agrégateurs robustes parviennent à maintenir une précision élevée là où une moyenne classique échouerait.
+
+\section{Historique et Évolution de l'expérience}
+
+\subsection{Phase 1 : Résultats initiaux et difficultés}
+Lors de nos premiers tests, nous avons obtenu des résultats très médiocres. Le modèle ne parvenait pas à apprendre, avec une précision finale stagnante aux alentours de 10-13\%, ce qui correspondait quasiment à un choix aléatoire sur les 10 classes de MNIST.
+
+\textbf{Paramétrages de l'époque :}
+\begin{itemize}
+    \item \textbf{Nombre de rounds} : 3 (trop faible pour une convergence).
+    \item \textbf{Momentum} : 0.9 (potentiellement trop instable pour ce début d'entraînement).
+\end{itemize}
+
+\subsection{Phase 2 : Correction et succès}
+Après une vérification rigoureuse du code avec notre professeur, nous avons identifié que le nombre de cycles d'apprentissage était insuffisant et que certains hyperparamètres nuisaient à la stabilité. En corrigeant ces éléments, nous avons obtenu des résultats conformes aux attentes.
+
+\textbf{Nouveaux paramétrages :}
+\begin{itemize}
+    \item \textbf{Nombre de rounds} : 1000 (permettant une convergence complète).
+    \item \textbf{Momentum} : 0.1 (pour une mise à jour plus stable des gradients).
+\end{itemize}
+
+\section{Résultats finaux (Distribution IID)}
+Voici les performances obtenues après correction du protocole :
+
+\section{Résultats finaux et Comparaison}
+Le tableau ci-dessous présente la comparaison entre notre première tentative (infructueuse) et l'expérience corrigée. On observe que l'ajustement du nombre de rounds et du momentum a permis au modèle de passer d'un état de non-apprentissage à une convergence quasi-parfaite.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lllcc@{}}
+\toprule
+\textbf{Scénario} & \textbf{Agrégateur} & \textbf{Attaque} & \textbf{Acc. (3 rounds)} & \textbf{Acc. (1000 rounds)} \\ \midrule
+clean\_average     & Average            & None             & 0.1217                  & \textbf{0.9876}            \\
+signflip\_average  & Average            & SignFlipping     & 0.1202                  & 0.9849                     \\
+signflip\_median   & Median             & SignFlipping     & 0.1161                  & 0.9832                     \\
+ipm\_trmean        & TrMean             & IPM              & 0.1305                  & 0.9777                     \\
+alie\_krum         & Krum               & ALIE             & 0.1041                  & 0.9831                     \\ \bottomrule
+\end{tabular}
+\caption{Comparaison des performances : Expérience initiale vs Expérience corrigée}
+\end{table}
+
+\section{Analyse et Conclusion}
+Le passage de 3 à 1000 rounds a transformé une expérience médiocre en un succès technique. Nous avons validé que dans une distribution IID avec un seul attaquant, les défenses proposées par \textbf{ByzFL} sont extrêmement efficaces, limitant la perte de précision à moins de 1\% par rapport au cas sain. La prochaine étape consistera à complexifier la distribution des données (Non-IID) pour tester les limites de ces agrégateurs.
+
+\end{document}
