@@ -194,9 +194,9 @@ def plot_results(csv_path: Path, output_dir: Path):
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument("--rounds", type=int, default=200)
+    p.add_argument("--rounds", type=int, default=1000)
     p.add_argument("--eval-interval", type=int, default=1)
-    p.add_argument("--nb-honest", type=int, default=10)
+    p.add_argument("--nb-honest", type=int, default=4)
     p.add_argument("--batch-size", type=int, default=64)
     p.add_argument("--byz-list", type=int, nargs="+", default=[0, 1, 2])
     p.add_argument("--aggregators", nargs="+", default=["Average", "Median", "TrMean"]) 
