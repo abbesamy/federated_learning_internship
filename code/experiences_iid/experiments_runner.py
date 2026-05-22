@@ -178,7 +178,6 @@ def run_grid(
 
 def plot_results(csv_path: Path, output_dir: Path):
     df = pd.read_csv(csv_path)
-    # group by scenario and plot accuracy vs round, one plot per (aggregator, attack) with lines for nb_byz
     for (aggregator, attack), group in df.groupby(["aggregator", "attack"]):
         plt.figure()
         for nb_byz, sub in group.groupby("nb_byz"):
@@ -194,7 +193,7 @@ def plot_results(csv_path: Path, output_dir: Path):
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument("--rounds", type=int, default=1000)
+    p.add_argument("--rounds", type=int, default=100)
     p.add_argument("--eval-interval", type=int, default=1)
     p.add_argument("--nb-honest", type=int, default=4)
     p.add_argument("--batch-size", type=int, default=64)
