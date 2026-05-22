@@ -20,7 +20,7 @@ SEED = 42
 DEVICE = "cpu"
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-DATA_ROOT = SCRIPT_DIR.parent / "test_bibliotheque" / "data"
+DATA_ROOT = SCRIPT_DIR.parent / "data" / "mnist"  # Adjusted to point to the expected MNIST data location
 OUTPUT_DIR = SCRIPT_DIR / "experiments_output"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
