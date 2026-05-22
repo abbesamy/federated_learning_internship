@@ -8,14 +8,19 @@ Le projet est organisé en 3 répertoires :
 
     code : Contient toutes nos expériences (scénarios d'attaques byzantines, agrégateurs testés et scripts de génération des courbes de convergence).
 
+    data : contient tous les jeu de données utilisés lors de nos expériences.
+
 Nous avons opté pour l'outil "UV" pour la configuration Python et la reproductibilité de nos expériences. Une fois le dépôt téléchargé, voici la procédure à suivre :
 
 Installer uv (s'il n'est pas déjà présent sur votre machine) :
+
     curl -LsSf https://astral.sh/uv/install.sh | sh
     
 Activer l'environnement virtuel avec les deux commandes  suivantes (depuis la racine du projet):
+
     uv venv
     source .venv/bin/activate
 
 Installer les dépendances exactes du projet (le fichier "uv.lock" se trouve dans le dossier racine du projet):
+
     uv pip install -r uv.lock
