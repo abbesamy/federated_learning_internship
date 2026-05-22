@@ -20,7 +20,7 @@ DATA_ROOT = SCRIPT_DIR.parents[1] / "data"
 OUTPUT_CSV = SCRIPT_DIR / "benchmark_results.csv"
 
 def build_dataloaders():
-    transform = transforms.Compose([
+    """transform = transforms.Compose([
         transforms.ToTensor(), 
         transforms.Normalize((0.1307,), (0.3081,))
     ])
@@ -28,7 +28,12 @@ def build_dataloaders():
     # Remplacement de FashionMNIST par MNIST
     train_dataset = datasets.MNIST(root=str(DATA_ROOT), train=True, download=True, transform=transform)
     test_dataset = datasets.MNIST(root=str(DATA_ROOT), train=False, download=True, transform=transform)
-    
+    """
+
+    transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+    train_dataset = datasets.FashionMNIST(root=str(DATA_ROOT), train=True, download=True, transform=transform)
+    test_dataset = datasets.FashionMNIST(root=str(DATA_ROOT), train=False, download=True, transform=transform)
+
     train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 

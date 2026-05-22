@@ -78,6 +78,5 @@ if __name__ == "__main__":
     test_tolerance(nb_honest=4, nb_byz=2)
     # 4 Honnêtes, 2 Byz 
     test_tolerance(nb_honest=5, nb_byz=1)
-    
     # 3 Honnêtes, 3 Byz 
     test_tolerance(nb_honest=3, nb_byz=3)
