@@ -1,0 +1,80 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Paquets ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% --- Configuration Code ---
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{gray},
+    breaklines=true,
+    frame=single,
+}
+
+\title{\textbf{Rapport de recherche (incomplet) : Bibliothèque ByzFL} \\ \large Reproductibilité, Données Non-IID et Limites Théoriques}
+\author{ABBES Samy \& AREZKI Célia}
+\date{Semaine du 11 Mai 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Suite à la réunion du 11/05/2026, cette semaine a été consacrée à la professionnalisation de notre environnement de travail et à l'exploration de scénarios plus complexes avec les jeux de données MNIST et FashionMNIST. Nous avons étudié l'impact d'une distribution hétérogène (Non-IID) sur les performances des agrégateurs et avons testé empiriquement les limites mathématiques de tolérance aux clients byzantins.
+
+\section{Réorganisation du dépôt et Reproductibilité}
+Afin de garantir un environnement de recherche robuste et collaboratif, nous avons restructuré notre dépôt Git :
+\begin{itemize}
+    \item \textbf{Séparation des dossiers} : Les codes sources (\texttt{code/}), les données brutes (\texttt{data/}), et les rapports (\texttt{rapports/}) sont désormais isolés. Cela évite les téléchargements redondants de jeux de données et clarifie l'arborescence.
+    \item \textbf{Environnement Virtuel} : Nous avons configuré l'environnement avec le gestionnaire \texttt{uv}.
+    \item \textbf{Fichiers de configuration} : La mise en place d'un \texttt{README.md}, d'un fichier \texttt{requirements.txt} et d'un \texttt{uv.lock} permet désormais à quiconque de reproduire nos expériences à l'identique, depuis n'importe quelle machine, en figeant les versions exactes des dépendances.
+\end{itemize}
+
+\section{Impact de la distribution des données (FashionMNIST)}
+Nous avons remplacé MNIST par FashionMNIST, un jeu de données plus complexe, et avons comparé l'apprentissage sur 100 cycles (rounds) entre une distribution homogène (IID) et une distribution hétérogène (Non-IID via une loi de Dirichlet).
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llcc@{}}
+\toprule
+\textbf{Scénario} & \textbf{Agrégateur (Attaque)} & \textbf{Précision (IID)} & \textbf{Précision (Non-IID)} \\ \midrule
+clean\_average     & Average (Aucune)              & 0.7065 & 0.7210 \\
+signflip\_average  & Average (SignFlipping)        & 0.6445 & 0.6655 \\
+signflip\_median   & Median (SignFlipping)         & \textbf{0.6950} & \textbf{0.4585} \\
+ipm\_trmean        & TrMean (IPM)                  & \textbf{0.7158} & \textbf{0.5071} \\
+alie\_krum         & Krum (ALIE)                   & \textbf{0.7067} & \textbf{0.6157} \\ \bottomrule
+\end{tabular}
+\caption{Comparaison des précisions finales sur FashionMNIST (100 rounds)}
+\end{table}
+
+\subsection{Analyse des résultats}
+L'expérience met en évidence une vulnérabilité majeure des agrégateurs robustes face aux données Non-IID. En IID, \textit{Median}, \textit{TrMean} et \textit{Krum} résistent parfaitement aux attaques et maintiennent une précision d'environ 70\%. En revanche, avec des données Non-IID, les performances s'effondrent (chute à 45\% pour la médiane et 50\% pour TrMean). Cela s'explique par le fait que les agrégateurs peinent à distinguer une variation de gradient due à une attaque d'une variation due à une différence légitime de données locales.
+
+
+\section{Preuve empirique du théorème de robustesse ($2f \ge n$)}
+Nous avons aussi conçu une expérience visant à briser mathématiquement l'agrégateur géométrique Krum en utilisant l'attaque \textit{SignFlipping} et en modifiant progressivement le ratio de clients byzantins ($f$) par rapport au nombre total de clients ($n$).
+
+\textbf{Résultats obtenus :}
+\begin{itemize}
+    \item \textbf{5 Honnêtes vs 1 Byzantin ($f=1, n=6$)} : Précision finale de 77.64\%. Krum filtre facilement le gradient malveillant.
+    \item \textbf{4 Honnêtes vs 2 Byzantins ($f=2, n=6$)} : Précision finale de 74.78\%. La majorité honnête est maintenue, le modèle converge.
+    \item \textbf{3 Honnêtes vs 3 Byzantins ($f=3, n=6$)} : \textbf{Erreur d'exécution}.
+\end{itemize}
+
+\subsection{Explication de l'erreur ByzFL}
+Lors du dernier test, le programme s'est interrompu avec l'erreur : \texttt{ValueError: Cannot tolerate 2f >= n. Got f=3, n=6}. 
+Les algorithmes d'agrégation robuste reposent sur l'hypothèse fondamentale qu'il existe une majorité absolue de clients honnêtes. Dès lors que $2f \ge n$ (ici 50\% de byzantins), les attaquants ont la capacité de dicter la direction du modèle global. Le framework détecte cette faille structurelle et préfère lever une exception de sécurité plutôt que d'empoisonner le modèle.
+
+
+\end{document}
