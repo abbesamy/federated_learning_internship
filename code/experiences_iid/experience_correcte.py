@@ -18,7 +18,7 @@ NB_ROUNDS = 1000
 DEVICE = "cpu"
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-DATA_ROOT = SCRIPT_DIR.parent / "test_bibliotheque" / "data"
+DATA_ROOT = SCRIPT_DIR.parent / "data" / "mnist" 
 OUTPUT_CSV = SCRIPT_DIR / "benchmark_results_experience_correcte.csv"
 
 

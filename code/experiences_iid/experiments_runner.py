@@ -20,7 +20,7 @@ SEED = 42
 DEVICE = "cpu"
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-DATA_ROOT = SCRIPT_DIR.parent / "test_bibliotheque" / "data"
+DATA_ROOT = SCRIPT_DIR.parents[1] / "data"
 OUTPUT_DIR = SCRIPT_DIR / "experiments_output"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
