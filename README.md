@@ -18,7 +18,7 @@ Installer uv (s'il n'est pas déjà présent sur votre machine) :
     
 Activer l'environnement virtuel avec les deux commandes  suivantes (depuis la racine du projet):
 
-    uv venv
+    uv venv --python python3.12
     source .venv/bin/activate
 
 Installer les dépendances exactes du projet (le fichier "uv.lock" se trouve dans le dossier racine du projet):
