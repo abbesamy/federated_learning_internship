@@ -1,0 +1,9 @@
+{
+  "name": "signflipping_TrMean",
+  "dataset": "MNIST",
+  "distribution": "iid",
+  "nb_honest": 3,
+  "nb_byz": 1,
+  "aggregator": "TrMean",
+  "attack": "SignFlipping"
+}

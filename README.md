@@ -24,3 +24,21 @@ Activer l'environnement virtuel avec les deux commandes  suivantes (depuis la ra
 Installer les dépendances exactes du projet (le fichier "uv.lock" se trouve dans le dossier racine du projet):
 
     uv pip install -r uv.lock
+
+## Lancer les expériences à partir de fichiers JSON
+
+Les scénarios d'expériences sont décrits dans `code/experiment_configs/`. Un seul lanceur exécute les expériences sélectionnées.
+
+Lister les scénarios disponibles :
+
+    python code/run_experiments.py --list
+
+Lancer un scénario précis :
+
+    python code/run_experiments.py --scenario iid_clean_average
+
+Lancer tous les scénarios décrits dans l'index :
+
+    python code/run_experiments.py --all
+
+Les résultats sont enregistrés dans `code/experiment_outputs/` avec un CSV combiné et des graphiques par scénario.

@@ -1,4 +1,0 @@
-scenario,aggregator,attack,nb_honest_clients,nb_byzantine_clients,initial_accuracy,final_accuracy
-baseline_clean_average,Average,none,4,0,0.135,0.9873
-baseline_clean_median,Median,none,4,0,0.055,0.9862
-baseline_clean_trmean,TrMean,none,4,0,0.1208,0.9878

@@ -1,6 +1,0 @@
-scenario,aggregator,attack,initial_accuracy,final_accuracy
-clean_average,Average,clean,0.1093,0.7065
-signflip_average,Average,SignFlipping,0.1099,0.6445
-signflip_median,Median,SignFlipping,0.1032,0.695
-ipm_trmean,TrMean,InnerProductManipulation,0.099,0.7158
-alie_krum,Krum,ALittleIsEnough,0.0722,0.7067
