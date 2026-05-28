@@ -1,0 +1,6 @@
+rank_by_accuracy,scenario,dataset,distribution,aggregator,attack,nb_honest,nb_byz,round,accuracy,error
+1,iid_clean_average,MNIST,iid,Average,none,4,0,20,0.7311,0.2689
+2,signflipping_Krum,MNIST,iid,Krum,SignFlipping,3,1,20,0.6487,0.3512999999999999
+3,signflipping_Average,MNIST,iid,Average,SignFlipping,3,1,20,0.6052,0.3948
+4,signflipping_Median,MNIST,iid,Median,SignFlipping,3,1,20,0.5388,0.4612
+5,signflipping_TrMean,MNIST,iid,TrMean,SignFlipping,3,1,20,0.5388,0.4612
