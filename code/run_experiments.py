@@ -8,7 +8,6 @@ from experiment_engine import (
     build_config,
     load_common_config,
     load_json,
-    load_scenario,
     load_scenario_index,
     plot_records,
     resolve_repo_path,

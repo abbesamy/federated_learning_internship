@@ -231,17 +231,13 @@ def plot_records(records: list[dict[str, Any]], output_dir: Path) -> None:
     df = pd.DataFrame(records)
 
     for scenario_name, group in df.groupby("scenario"):
-        fig, axes = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+        fig, ax = plt.subplots(figsize=(10, 5))
 
-        axes[0].plot(group["round"], group["accuracy"], color="tab:blue", linewidth=2)
-        axes[0].set_ylabel("Accuracy")
-        axes[0].set_title(scenario_name)
-        axes[0].grid(True, alpha=0.3)
-
-        axes[1].plot(group["round"], group["error"], color="tab:red", linewidth=2)
-        axes[1].set_xlabel("Round")
-        axes[1].set_ylabel("Error")
-        axes[1].grid(True, alpha=0.3)
+        ax.plot(group["round"], group["accuracy"], color="tab:blue", linewidth=2)
+        ax.set_xlabel("Round")
+        ax.set_ylabel("Accuracy")
+        ax.set_title(scenario_name)
+        ax.grid(True, alpha=0.3)
 
         fig.tight_layout()
         fig.savefig(plots_dir / f"{scenario_name}.png", dpi=150)

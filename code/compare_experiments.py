@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import argparse
 from pathlib import Path
 
+import argparse
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -28,12 +28,6 @@ def parse_args() -> argparse.Namespace:
         default=str(DEFAULT_OUTPUT_DIR),
         help="Directory where comparison plots will be written.",
     )
-    parser.add_argument(
-        "--metric",
-        choices=["accuracy", "error"],
-        default="accuracy",
-        help="Primary metric to compare.",
-    )
     return parser.parse_args()
 
 
@@ -41,7 +35,7 @@ def build_label(row: pd.Series) -> str:
     return f"{row['scenario']} | {row['aggregator']} | {row['attack']}"
 
 
-def plot_metric(df: pd.DataFrame, metric: str, output_path: Path) -> None:
+def plot_metric(df: pd.DataFrame, output_path: Path) -> None:
     fig, ax = plt.subplots(figsize=(14, 8))
 
     for scenario_name, group in df.groupby("scenario", sort=False):
@@ -53,7 +47,7 @@ def plot_metric(df: pd.DataFrame, metric: str, output_path: Path) -> None:
         linewidth = 2.8 if int(first_row["nb_byz"]) == 0 else 2.2
         ax.plot(
             ordered["round"],
-            ordered[metric],
+            ordered["accuracy"],
             label=label,
             linewidth=linewidth,
             linestyle=line_style,
@@ -61,8 +55,8 @@ def plot_metric(df: pd.DataFrame, metric: str, output_path: Path) -> None:
         )
 
     ax.set_xlabel("Round")
-    ax.set_ylabel(metric.capitalize())
-    ax.set_title(f"Comparison of all scenarios - {metric.capitalize()}")
+    ax.set_ylabel("Accuracy")
+    ax.set_title("Comparison of all scenarios - Accuracy")
     ax.grid(True, alpha=0.3)
     ax.legend(fontsize=9, loc="best")
     fig.tight_layout()
@@ -102,25 +96,21 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     df = pd.read_csv(input_csv)
-    required_columns = {"scenario", "round", "accuracy", "error", "aggregator", "attack", "nb_byz"}
+    required_columns = {"scenario", "round", "accuracy", "aggregator", "attack", "nb_byz"}
     missing_columns = required_columns - set(df.columns)
     if missing_columns:
         raise SystemExit(f"CSV is missing columns: {', '.join(sorted(missing_columns))}")
 
     accuracy_plot = output_dir / "all_scenarios_accuracy.png"
-    error_plot = output_dir / "all_scenarios_error.png"
     summary_csv = output_dir / "final_round_summary.csv"
 
-    plot_metric(df, args.metric, accuracy_plot if args.metric == "accuracy" else error_plot)
-    plot_metric(df, "error", error_plot)
-    plot_metric(df, "accuracy", accuracy_plot)
+    plot_metric(df, accuracy_plot)
 
     summary = summarize_final_round(df)
     summary.to_csv(summary_csv, index=False)
 
     print(f"Comparison plots saved to: {output_dir}")
     print(f"Accuracy plot: {accuracy_plot}")
-    print(f"Error plot: {error_plot}")
     print(f"Summary CSV: {summary_csv}")
     print("Top scenarios by final accuracy:")
     print(summary.head(10).to_string(index=False))
@@ -128,3 +118,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

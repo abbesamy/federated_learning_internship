@@ -25,6 +25,17 @@ Installer les dépendances exactes du projet (le fichier "uv.lock" se trouve dan
 
     uv pip install -r uv.lock
 
+## Organisation des scripts
+
+Les scripts exécutables sont placés une seule fois dans `code/`.
+
+Structure principale :
+
+- `code/experiment_engine.py` : moteur d'exécution des expériences.
+- `code/run_experiments.py` : lancement des scénarios JSON.
+- `code/compare_experiments.py` : comparaison globale des courbes d'accuracy.
+- `code/regenerate_plots.py` : régénération des figures depuis le CSV.
+
 ## Lancer les expériences à partir de fichiers JSON
 
 Les scénarios d'expériences sont décrits dans `code/experiment_configs/`. Un seul lanceur exécute les expériences sélectionnées.
@@ -42,3 +53,11 @@ Lancer tous les scénarios décrits dans l'index :
     python code/run_experiments.py --all
 
 Les résultats sont enregistrés dans `code/experiment_outputs/` avec un CSV combiné et des graphiques par scénario.
+
+Pour régénérer les courbes à partir du CSV déjà généré :
+
+    python code/regenerate_plots.py
+
+Pour produire la comparaison globale entre toutes les expériences :
+
+    python code/compare_experiments.py

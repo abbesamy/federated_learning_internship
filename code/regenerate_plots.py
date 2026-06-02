@@ -1,0 +1,104 @@
+from __future__ import annotations
+
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+INPUT_CSV = PROJECT_ROOT / "code" / "experiment_outputs" / "combined_results.csv"
+PLOTS_DIR = PROJECT_ROOT / "code" / "experiment_outputs" / "plots"
+COMPARISON_DIR = PROJECT_ROOT / "code" / "experiment_outputs" / "comparison"
+
+
+def plot_per_scenario(df: pd.DataFrame) -> None:
+    PLOTS_DIR.mkdir(parents=True, exist_ok=True)
+
+    for scenario_name, group in df.groupby("scenario"):
+        ordered = group.sort_values("round")
+        fig, ax = plt.subplots(figsize=(10, 5))
+        ax.plot(ordered["round"], ordered["accuracy"], color="tab:blue", linewidth=2)
+        ax.set_xlabel("Round")
+        ax.set_ylabel("Accuracy")
+        ax.set_title(scenario_name)
+        ax.grid(True, alpha=0.3)
+        fig.tight_layout()
+        fig.savefig(PLOTS_DIR / f"{scenario_name}.png", dpi=150)
+        plt.close(fig)
+
+
+def plot_comparison(df: pd.DataFrame) -> None:
+    COMPARISON_DIR.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(14, 8))
+
+    for scenario_name, group in df.groupby("scenario", sort=False):
+        ordered = group.sort_values("round")
+        first_row = ordered.iloc[0]
+        label = f"{first_row['scenario']} | {first_row['aggregator']} | {first_row['attack']}"
+        line_style = "--" if int(first_row["nb_byz"]) == 0 else "-"
+        linewidth = 2.8 if int(first_row["nb_byz"]) == 0 else 2.2
+        ax.plot(
+            ordered["round"],
+            ordered["accuracy"],
+            label=label,
+            linewidth=linewidth,
+            linestyle=line_style,
+            alpha=0.95,
+        )
+
+    ax.set_xlabel("Round")
+    ax.set_ylabel("Accuracy")
+    ax.set_title("Comparison of all scenarios - Accuracy")
+    ax.grid(True, alpha=0.3)
+    ax.legend(fontsize=9, loc="best")
+    fig.tight_layout()
+    fig.savefig(COMPARISON_DIR / "all_scenarios_accuracy.png", dpi=180)
+    plt.close(fig)
+
+
+def summarize_final_round(df: pd.DataFrame) -> pd.DataFrame:
+    final_rounds = df.sort_values("round").groupby("scenario", as_index=False).tail(1)
+    summary = final_rounds[
+        [
+            "scenario",
+            "dataset",
+            "distribution",
+            "aggregator",
+            "attack",
+            "nb_honest",
+            "nb_byz",
+            "round",
+            "accuracy",
+            "error",
+        ]
+    ].copy()
+    summary = summary.sort_values("accuracy", ascending=False).reset_index(drop=True)
+    summary.insert(0, "rank_by_accuracy", range(1, len(summary) + 1))
+    return summary
+
+
+def main() -> None:
+    if not INPUT_CSV.exists():
+        raise SystemExit(f"Input CSV not found: {INPUT_CSV}")
+
+    df = pd.read_csv(INPUT_CSV)
+    required_columns = {"scenario", "round", "accuracy", "error", "aggregator", "attack", "nb_byz"}
+    missing_columns = required_columns - set(df.columns)
+    if missing_columns:
+        raise SystemExit(f"CSV is missing columns: {', '.join(sorted(missing_columns))}")
+
+    plot_per_scenario(df)
+    plot_comparison(df)
+
+    summary = summarize_final_round(df)
+    summary.to_csv(COMPARISON_DIR / "final_round_summary.csv", index=False)
+
+    print(f"Plots regenerated from: {INPUT_CSV}")
+    print(f"Per-scenario plots: {PLOTS_DIR}")
+    print(f"Comparison plot: {COMPARISON_DIR / 'all_scenarios_accuracy.png'}")
+    print(f"Summary CSV: {COMPARISON_DIR / 'final_round_summary.csv'}")
+
+
+if __name__ == "__main__":
+    main()
