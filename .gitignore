@@ -1,4 +1,4 @@
 .venv/
 code/__pycache__/
 code/**/__pycache__/
-code/experiment_outputs/
+code/experiment_outputs/!code/experiment_outputs/
