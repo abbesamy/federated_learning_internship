@@ -46,7 +46,3 @@ client_loaders, test_loader, distributor = build_mnist_one_class_loaders(
 - regroupe les indices par classe
 - attribue une classe unique à chaque client
 - crée un `DataLoader` par client
-
-## Remarque
-
-Le comportement par défaut suppose `10` clients et `10` classes. Si tu veux moins ou plus de clients, il faudra décider comment réutiliser les classes.
