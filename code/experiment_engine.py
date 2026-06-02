@@ -196,6 +196,11 @@ def run_scenario(config: dict[str, Any]) -> list[dict[str, Any]]:
 
         honest_gradients = [client.get_flat_gradients_with_momentum() for client in clients]
         corrupted = [] if byzantine_client is None else byzantine_client.apply_attack(honest_gradients)
+        
+        device = server.device if hasattr(server, 'device') else "cuda"
+
+        corrupted = [g.to(device) for g in corrupted]
+
         server.update_model_with_gradients(honest_gradients + corrupted)
 
         if round_number % eval_interval == 0:
