@@ -8,7 +8,7 @@ Le projet est organisé en 3 répertoires :
 
     code : Contient toutes nos expériences (scénarios d'attaques byzantines, agrégateurs testés et scripts de génération des courbes de convergence).
 
-    data : contient tous les jeu de données utilisés lors de nos expériences.
+    data : contient tous les jeux de données utilisés lors de nos expériences.
 
 Nous avons opté pour l'outil "UV" pour la configuration Python et la reproductibilité de nos expériences. Une fois le dépôt téléchargé, voici la procédure à suivre :
 
@@ -54,6 +54,7 @@ Lancer tous les scénarios décrits dans l'index :
 
 Les résultats sont enregistrés dans `code/experiment_outputs/` avec un CSV combiné et des graphiques par scénario.
 
+
 Pour régénérer les courbes à partir du CSV déjà généré :
 
     python code/regenerate_plots.py
@@ -61,3 +62,10 @@ Pour régénérer les courbes à partir du CSV déjà généré :
 Pour produire la comparaison globale entre toutes les expériences :
 
     python code/compare_experiments.py
+
+
+
+Execution GPU :
+
+Pour exécuter des expériences avec accélération GPU, il faut se rendre sur Google Colab et exécuter les commandes figurant dans le fichier texte `commandes_ggl_colab.txt`.
+

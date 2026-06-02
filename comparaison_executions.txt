@@ -1,0 +1,5 @@
+experiences_iid/experience_1 :
+
+CPU : 153 secondes
+
+GPU = 64 secondes

@@ -8,12 +8,16 @@ commandes, ainsi que de configurer le type d'exécution de Google Colab sur l'ac
 # Accès au dépot avec token :
 !git clone https://a25024364:glpat-iROrp29aFyXK85076VE_B286MQp1OjNoegk.01.0z1m6hwrg@etulab.univ-amu.fr/a25024364/ter_iaaa_byzfl_abbes_arezki.git
 
+# Accès au dossier racine de la session google colab
 %cd /content
 
+# Accès au dossier racine du projet
 %cd ter_iaaa_byzfl_abbes_arezki
 
+# Installations
 !uv pip install --system -r requirements.txt
 
+# Accès au script
 %cd code/experiences_iid/
 
 !python experience_1.py
