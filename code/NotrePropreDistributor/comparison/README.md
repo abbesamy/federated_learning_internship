@@ -24,7 +24,7 @@ python code/NotrePropreDistributor/comparison/compare_distributors.py
 
 ## Options utiles
 
-Tu peux changer quelques paramètres :
+On peux changer quelques paramètres :
 
 ```bash
 python code/NotrePropreDistributor/comparison/compare_distributors.py \
@@ -35,10 +35,3 @@ python code/NotrePropreDistributor/comparison/compare_distributors.py \
   --output-dir code/NotrePropreDistributor/comparison/outputs
 ```
 
-Si tu veux tester le référentiel non-iid de `byzfl` :
-
-```bash
-python code/NotrePropreDistributor/comparison/compare_distributors.py \
-  --reference-distribution dirichlet_niid \
-  --distribution-parameter 0.5
-```
