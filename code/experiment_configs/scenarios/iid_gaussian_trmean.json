@@ -1,0 +1,11 @@
+{
+  "name": "iid_gaussian_trmean",
+  "dataset": "MNIST",
+  "distribution": "iid",
+  "nb_honest": 4,
+  "nb_byz": 1,
+  "aggregator": "TrMean",
+  "attack": "Gaussian",
+  "attack_mu": 0.0,
+  "attack_sigma": 1.0
+}

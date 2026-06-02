@@ -1,0 +1,10 @@
+{
+  "name": "iid_alittle_centeredclipping",
+  "dataset": "MNIST",
+  "distribution": "iid",
+  "nb_honest": 4,
+  "nb_byz": 1,
+  "aggregator": "CenteredClipping",
+  "attack": "ALittleIsEnough",
+  "attack_tau": 1.5
+}
