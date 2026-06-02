@@ -218,7 +218,7 @@ def run_scenario(config: dict[str, Any]) -> list[dict[str, Any]]:
     return records
 
 
-def save_records(records: list[dict[str, Any]], output_dir: Path, filename: str = "combined_results.csv") -> Path:
+def save_records(records: list[dict[str, Any]], output_dir: Path, filename: str = "combined_results_colab.csv") -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
     csv_path = output_dir / filename
     pd.DataFrame(records).to_csv(csv_path, index=False)

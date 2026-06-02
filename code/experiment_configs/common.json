@@ -1,6 +1,6 @@
 {
   "seed": 42,
-  "device": "cpu",
+  "device": "cuda",
   "data_root": "data",
   "model_name": "cnn_mnist",
   "optimizer_name": "SGD",
@@ -14,8 +14,8 @@
   "client_momentum": 0.1,
   "milestones": [1000],
   "nb_labels": 10,
-  "rounds": 1000,
+  "rounds": 500,
   "batch_size": 64,
-  "eval_interval": 1,
+  "eval_interval": 50,
   "output_dir": "code/experiment_outputs"
 }

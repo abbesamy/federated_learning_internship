@@ -1,47 +1,6 @@
 {
   "scenarios": [
     {
-      "name": "iid_clean_average",
-      "file": "code/experiment_configs/scenarios/iid_clean_average.json",
-      "description": "MNIST IID clean baseline with Average"
-    },
-    {
-      "name": "iid_signflipping_median",
-      "file": "code/experiment_configs/scenarios/iid_signflipping_median.json",
-      "description": "MNIST IID with SignFlipping and Median"
-    },
-    {
-      "name": "iid_innerproduct_trmean",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_trmean.json",
-      "description": "MNIST IID with InnerProductManipulation and TrMean"
-    },
-    {
-      "name": "iid_gaussian_average",
-      "file": "code/experiment_configs/scenarios/iid_gaussian_average.json",
-      "description": "MNIST IID with Gaussian attack and Average"
-    },
-    {
-      "name": "iid_alittle_krum",
-      "file": "code/experiment_configs/scenarios/iid_alittle_krum.json",
-      "description": "MNIST IID with ALittleIsEnough attack and Krum"
-    },
-    {
-      "name": "noniid_dirichlet_fashionmnist_krum",
-      "file": "code/experiment_configs/scenarios/noniid_dirichlet_fashionmnist_krum.json",
-      "description": "FashionMNIST Dirichlet non-IID with Krum and SignFlipping"
-    },
-    {
-      "name": "noniid_dirichlet_innerproduct_median",
-      "file": "code/experiment_configs/scenarios/noniid_dirichlet_innerproduct_median.json",
-      "description": "MNIST Dirichlet non-IID with InnerProductManipulation and Median"
-    },
-    {
-      "name": "noniid_dirichlet_gaussian_trmean",
-      "file": "code/experiment_configs/scenarios/noniid_dirichlet_gaussian_trmean.json",
-      "description": "FashionMNIST Dirichlet non-IID with Gaussian attack and TrMean"
-    }
-    ,
-    {
       "name": "signflipping_Average",
       "file": "code/experiment_configs/scenarios/signflipping_Average.json",
       "description": "MNIST IID SignFlipping with Average"
@@ -60,59 +19,6 @@
       "name": "signflipping_Krum",
       "file": "code/experiment_configs/scenarios/signflipping_Krum.json",
       "description": "MNIST IID SignFlipping with Krum"
-    }
-    ,
-    {
-      "name": "iid_alittle_trmean",
-      "file": "code/experiment_configs/scenarios/iid_alittle_trmean.json",
-      "description": "MNIST IID with ALittleIsEnough attack and TrMean"
-    },
-    {
-      "name": "iid_alittle_monna",
-      "file": "code/experiment_configs/scenarios/iid_alittle_monna.json",
-      "description": "MNIST IID with ALittleIsEnough attack and MoNNA"
-    },
-    {
-      "name": "iid_alittle_centeredclipping",
-      "file": "code/experiment_configs/scenarios/iid_alittle_centeredclipping.json",
-      "description": "MNIST IID with ALittleIsEnough attack and CenteredClipping"
-    }
-    ,
-    {
-      "name": "iid_innerproduct_average",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_average.json",
-      "description": "MNIST IID with InnerProductManipulation and Average"
-    },
-    {
-      "name": "iid_innerproduct_multikrum",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_multikrum.json",
-      "description": "MNIST IID with InnerProductManipulation and MultiKrum"
-    },
-    {
-      "name": "iid_innerproduct_monna",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_monna.json",
-      "description": "MNIST IID with InnerProductManipulation and MoNNA"
-    },
-    {
-      "name": "iid_innerproduct_centeredclipping",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_centeredclipping.json",
-      "description": "MNIST IID with InnerProductManipulation and CenteredClipping"
-    }
-    ,
-    {
-      "name": "iid_gaussian_trmean",
-      "file": "code/experiment_configs/scenarios/iid_gaussian_trmean.json",
-      "description": "MNIST IID with Gaussian attack and TrMean"
-    },
-    {
-      "name": "iid_gaussian_average",
-      "file": "code/experiment_configs/scenarios/iid_gaussian_average.json",
-      "description": "MNIST IID with Gaussian attack and Average"
-    },
-    {
-      "name": "iid_gaussian_krum",
-      "file": "code/experiment_configs/scenarios/iid_gaussian_krum.json",
-      "description": "MNIST IID with Gaussian attack and Krum"
     }
   ]
 }
