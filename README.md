@@ -35,6 +35,7 @@ Structure principale :
 - `code/lancer_experiences.py` : lancement des scénarios JSON.
 - `code/comparer_experiences.py` : comparaison globale des courbes d'accuracy.
 - `code/regenerer_graphiques.py` : régénération des figures depuis le CSV.
+- `code/comparer_attaques_agregateurs.py` : comparaison des agrégateurs pour chaque attaque.
 - `code/experiences_avec_moyenne/moyenne_experiences.py` : lancement répété d'une expérience pour calculer la moyenne.
 - `code/distributeur_une_classe_par_client/` : distributeur maison une classe par client.
 
@@ -64,6 +65,10 @@ Pour régénérer les courbes à partir du CSV déjà généré :
 Pour produire la comparaison globale entre toutes les expériences :
 
     python code/comparer_experiences.py
+
+Pour comparer les agrégateurs attaque par attaque à partir de tous les CSV de résultats disponibles :
+
+    python code/comparer_attaques_agregateurs.py
 
 
 
