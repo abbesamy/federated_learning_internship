@@ -103,10 +103,15 @@ def build_dataloaders(config: dict[str, Any]):
     return distributor.split_data(), test_loader
 
 
-def build_server(config: dict[str, Any], test_loader: DataLoader, aggregator_name: str, nb_byz: int) -> Server:
+def build_aggregator_parameters(config: dict[str, Any], aggregator_name: str) -> dict[str, Any]:
     aggregator_parameters = copy.deepcopy(config.get("aggregator_parameters", {}))
     if aggregator_name in {"TrMean", "Krum", "MultiKrum"}:
-        aggregator_parameters.setdefault("f", nb_byz)
+        aggregator_parameters.setdefault("f", int(config["nb_byz"]))
+    return aggregator_parameters
+
+
+def build_server(config: dict[str, Any], test_loader: DataLoader, aggregator_name: str, nb_byz: int) -> Server:
+    aggregator_parameters = build_aggregator_parameters(config, aggregator_name)
 
     return Server(
         {
@@ -156,6 +161,15 @@ def attack_parameters(attack_name: str, config: dict[str, Any]) -> dict[str, Any
         return {"tau": float(config.get("attack_tau", 2.0))}
     if attack_name == "ALittleIsEnough":
         return {"tau": float(config.get("attack_tau", 1.5))}
+    if attack_name in {"Optimal_InnerProductManipulation", "Optimal_ALittleIsEnough"}:
+        return {
+            "aggregator_info": {
+                "name": config["aggregator"],
+                "parameters": build_aggregator_parameters(config, config["aggregator"]),
+            }
+        }
+    if attack_name in {"Mimic", "Inf"}:
+        return {}
     if attack_name == "Gaussian":
         return {
             "mu": float(config.get("attack_mu", 0.0)),

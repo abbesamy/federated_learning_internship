@@ -2,28 +2,148 @@
   "scenarios": [
     {
       "name": "iid_innerproduct_average",
-      "file": "code/configurations_experiences/scenarios/iid_innerproduct_average.json",
+      "file": "code/configurations_experiences/scenarios/innerproductmanipulation/iid_innerproduct_average.json",
       "description": "MNIST IID InnerProductManipulation with Average"
     },
     {
       "name": "iid_innerproduct_centeredclipping",
-      "file": "code/configurations_experiences/scenarios/iid_innerproduct_centeredclipping.json",
+      "file": "code/configurations_experiences/scenarios/innerproductmanipulation/iid_innerproduct_centeredclipping.json",
       "description": "MNIST IID InnerProductManipulation with CenteredClipping"
     },
     {
       "name": "iid_innerproduct_monna",
-      "file": "code/configurations_experiences/scenarios/iid_innerproduct_monna.json",
+      "file": "code/configurations_experiences/scenarios/innerproductmanipulation/iid_innerproduct_monna.json",
       "description": "MNIST IID InnerProductManipulation with MoNNA"
     },
     {
       "name": "iid_innerproduct_multikrum",
-      "file": "code/configurations_experiences/scenarios/iid_innerproduct_multikrum.json",
+      "file": "code/configurations_experiences/scenarios/innerproductmanipulation/iid_innerproduct_multikrum.json",
       "description": "MNIST IID InnerProductManipulation with MultiKrum"
     },
     {
       "name": "iid_innerproduct_trmean",
-      "file": "code/configurations_experiences/scenarios/iid_innerproduct_trmean.json",
+      "file": "code/configurations_experiences/scenarios/innerproductmanipulation/iid_innerproduct_trmean.json",
       "description": "MNIST IID InnerProductManipulation with TrMean"
+    },
+    {
+      "name": "iid_opt_ipm_median",
+      "file": "code/configurations_experiences/scenarios/optimal_innerproductmanipulation/iid_opt_ipm_median.json",
+      "description": "MNIST IID Opt-IPM with Median"
+    },
+    {
+      "name": "iid_opt_ipm_trmean",
+      "file": "code/configurations_experiences/scenarios/optimal_innerproductmanipulation/iid_opt_ipm_trmean.json",
+      "description": "MNIST IID Opt-IPM with TrMean"
+    },
+    {
+      "name": "iid_opt_ipm_geometricmedian",
+      "file": "code/configurations_experiences/scenarios/optimal_innerproductmanipulation/iid_opt_ipm_geometricmedian.json",
+      "description": "MNIST IID Opt-IPM with GeometricMedian"
+    },
+    {
+      "name": "iid_opt_ipm_krum",
+      "file": "code/configurations_experiences/scenarios/optimal_innerproductmanipulation/iid_opt_ipm_krum.json",
+      "description": "MNIST IID Opt-IPM with Krum"
+    },
+    {
+      "name": "iid_opt_ipm_multikrum",
+      "file": "code/configurations_experiences/scenarios/optimal_innerproductmanipulation/iid_opt_ipm_multikrum.json",
+      "description": "MNIST IID Opt-IPM with MultiKrum"
+    },
+    {
+      "name": "iid_opt_ipm_centeredclipping",
+      "file": "code/configurations_experiences/scenarios/optimal_innerproductmanipulation/iid_opt_ipm_centeredclipping.json",
+      "description": "MNIST IID Opt-IPM with CenteredClipping"
+    },
+    {
+      "name": "iid_opt_alie_median",
+      "file": "code/configurations_experiences/scenarios/optimal_alittleisenough/iid_opt_alie_median.json",
+      "description": "MNIST IID Opt-ALIE with Median"
+    },
+    {
+      "name": "iid_opt_alie_trmean",
+      "file": "code/configurations_experiences/scenarios/optimal_alittleisenough/iid_opt_alie_trmean.json",
+      "description": "MNIST IID Opt-ALIE with TrMean"
+    },
+    {
+      "name": "iid_opt_alie_geometricmedian",
+      "file": "code/configurations_experiences/scenarios/optimal_alittleisenough/iid_opt_alie_geometricmedian.json",
+      "description": "MNIST IID Opt-ALIE with GeometricMedian"
+    },
+    {
+      "name": "iid_opt_alie_krum",
+      "file": "code/configurations_experiences/scenarios/optimal_alittleisenough/iid_opt_alie_krum.json",
+      "description": "MNIST IID Opt-ALIE with Krum"
+    },
+    {
+      "name": "iid_opt_alie_multikrum",
+      "file": "code/configurations_experiences/scenarios/optimal_alittleisenough/iid_opt_alie_multikrum.json",
+      "description": "MNIST IID Opt-ALIE with MultiKrum"
+    },
+    {
+      "name": "iid_opt_alie_centeredclipping",
+      "file": "code/configurations_experiences/scenarios/optimal_alittleisenough/iid_opt_alie_centeredclipping.json",
+      "description": "MNIST IID Opt-ALIE with CenteredClipping"
+    },
+    {
+      "name": "iid_mimic_median",
+      "file": "code/configurations_experiences/scenarios/mimic/iid_mimic_median.json",
+      "description": "MNIST IID Mimic with Median"
+    },
+    {
+      "name": "iid_mimic_trmean",
+      "file": "code/configurations_experiences/scenarios/mimic/iid_mimic_trmean.json",
+      "description": "MNIST IID Mimic with TrMean"
+    },
+    {
+      "name": "iid_mimic_geometricmedian",
+      "file": "code/configurations_experiences/scenarios/mimic/iid_mimic_geometricmedian.json",
+      "description": "MNIST IID Mimic with GeometricMedian"
+    },
+    {
+      "name": "iid_mimic_krum",
+      "file": "code/configurations_experiences/scenarios/mimic/iid_mimic_krum.json",
+      "description": "MNIST IID Mimic with Krum"
+    },
+    {
+      "name": "iid_mimic_multikrum",
+      "file": "code/configurations_experiences/scenarios/mimic/iid_mimic_multikrum.json",
+      "description": "MNIST IID Mimic with MultiKrum"
+    },
+    {
+      "name": "iid_mimic_centeredclipping",
+      "file": "code/configurations_experiences/scenarios/mimic/iid_mimic_centeredclipping.json",
+      "description": "MNIST IID Mimic with CenteredClipping"
+    },
+    {
+      "name": "iid_infinity_median",
+      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_median.json",
+      "description": "MNIST IID Infinity with Median"
+    },
+    {
+      "name": "iid_infinity_trmean",
+      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_trmean.json",
+      "description": "MNIST IID Infinity with TrMean"
+    },
+    {
+      "name": "iid_infinity_geometricmedian",
+      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_geometricmedian.json",
+      "description": "MNIST IID Infinity with GeometricMedian"
+    },
+    {
+      "name": "iid_infinity_krum",
+      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_krum.json",
+      "description": "MNIST IID Infinity with Krum"
+    },
+    {
+      "name": "iid_infinity_multikrum",
+      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_multikrum.json",
+      "description": "MNIST IID Infinity with MultiKrum"
+    },
+    {
+      "name": "iid_infinity_centeredclipping",
+      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_centeredclipping.json",
+      "description": "MNIST IID Infinity with CenteredClipping"
     }
   ]
 }
