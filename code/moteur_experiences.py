@@ -17,7 +17,7 @@ from byzfl.utils.misc import set_random_seed
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CODE_DIR = PROJECT_ROOT / "code"
-CONFIG_DIR = CODE_DIR / "experiment_configs"
+CONFIG_DIR = CODE_DIR / "configurations_experiences"
 DEFAULT_COMMON_CONFIG = CONFIG_DIR / "common.json"
 DEFAULT_SCENARIO_INDEX = CONFIG_DIR / "scenario_index.json"
 
@@ -223,7 +223,7 @@ def run_scenario(config: dict[str, Any]) -> list[dict[str, Any]]:
     return records
 
 
-def save_records(records: list[dict[str, Any]], output_dir: Path, filename: str = "combined_results_colab_IPM.csv") -> Path:
+def save_records(records: list[dict[str, Any]], output_dir: Path, filename: str = "resultats_combines.csv") -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
     csv_path = output_dir / filename
     pd.DataFrame(records).to_csv(csv_path, index=False)
@@ -231,7 +231,7 @@ def save_records(records: list[dict[str, Any]], output_dir: Path, filename: str 
 
 
 def plot_records(records: list[dict[str, Any]], output_dir: Path) -> None:
-    plots_dir = output_dir / "plots"
+    plots_dir = output_dir / "graphiques"
     plots_dir.mkdir(parents=True, exist_ok=True)
     df = pd.DataFrame(records)
 

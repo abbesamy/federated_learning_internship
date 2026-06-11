@@ -8,7 +8,7 @@ THIS_DIR = Path(__file__).resolve().parent
 if str(THIS_DIR) not in sys.path:
     sys.path.insert(0, str(THIS_DIR))
 
-from notre_propre_distributor import build_mnist_one_class_loaders
+from distributeur_une_classe_par_client import build_mnist_one_class_loaders
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent

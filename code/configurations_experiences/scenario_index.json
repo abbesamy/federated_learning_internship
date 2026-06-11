@@ -2,27 +2,27 @@
   "scenarios": [
     {
       "name": "iid_innerproduct_average",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_average.json",
+      "file": "code/configurations_experiences/scenarios/iid_innerproduct_average.json",
       "description": "MNIST IID InnerProductManipulation with Average"
     },
     {
       "name": "iid_innerproduct_centeredclipping",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_centeredclipping.json",
+      "file": "code/configurations_experiences/scenarios/iid_innerproduct_centeredclipping.json",
       "description": "MNIST IID InnerProductManipulation with CenteredClipping"
     },
     {
       "name": "iid_innerproduct_monna",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_monna.json",
+      "file": "code/configurations_experiences/scenarios/iid_innerproduct_monna.json",
       "description": "MNIST IID InnerProductManipulation with MoNNA"
     },
     {
       "name": "iid_innerproduct_multikrum",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_multikrum.json",
+      "file": "code/configurations_experiences/scenarios/iid_innerproduct_multikrum.json",
       "description": "MNIST IID InnerProductManipulation with MultiKrum"
     },
     {
       "name": "iid_innerproduct_trmean",
-      "file": "code/experiment_configs/scenarios/iid_innerproduct_trmean.json",
+      "file": "code/configurations_experiences/scenarios/iid_innerproduct_trmean.json",
       "description": "MNIST IID InnerProductManipulation with TrMean"
     }
   ]

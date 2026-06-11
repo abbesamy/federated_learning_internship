@@ -17,5 +17,5 @@
   "rounds": 500,
   "batch_size": 64,
   "eval_interval": 50,
-  "output_dir": "code/experiment_outputs"
+  "output_dir": "code/resultats_experiences"
 }

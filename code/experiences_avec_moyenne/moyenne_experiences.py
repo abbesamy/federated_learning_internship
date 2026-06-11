@@ -15,7 +15,7 @@ PROJECT_ROOT = CODE_DIR.parent
 if str(CODE_DIR) not in sys.path:
     sys.path.insert(0, str(CODE_DIR))
 
-from experiment_engine import (  # noqa: E402
+from moteur_experiences import (  # noqa: E402
     DEFAULT_COMMON_CONFIG,
     build_config,
     load_common_config,
@@ -25,7 +25,7 @@ from experiment_engine import (  # noqa: E402
 )
 
 
-DEFAULT_OUTPUT_DIR = THIS_DIR / "outputs"
+DEFAULT_OUTPUT_DIR = THIS_DIR / "resultats"
 DEFAULT_SAMPLES = 10
 
 
@@ -166,9 +166,9 @@ def main() -> None:
         seed_step=args.seed_step,
     )
 
-    raw_csv = output_dir / "all_runs.csv"
-    mean_csv = output_dir / "mean_curve.csv"
-    plot_path = output_dir / "mean_curve.png"
+    raw_csv = output_dir / "resultats_bruts.csv"
+    mean_csv = output_dir / "courbe_moyenne.csv"
+    plot_path = output_dir / "courbe_moyenne.png"
 
     runs_df.to_csv(raw_csv, index=False)
 
@@ -176,9 +176,9 @@ def main() -> None:
     mean_df.to_csv(mean_csv, index=False)
     plot_average_curve(mean_df, plot_path)
 
-    print(f"Runs saved to: {raw_csv}")
-    print(f"Mean curve saved to: {mean_csv}")
-    print(f"Plot saved to: {plot_path}")
+    print(f"Résultats bruts enregistrés dans : {raw_csv}")
+    print(f"Courbe moyenne enregistrée dans : {mean_csv}")
+    print(f"Graphique enregistré dans : {plot_path}")
 
 
 if __name__ == "__main__":

@@ -19,14 +19,14 @@ for path in (PACKAGE_DIR, CODE_DIR):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from notre_propre_distributor import (  # noqa: E402
+from distributeur_une_classe_par_client import (  # noqa: E402
     DATASET_SPECS,
     SingleClassDataDistributor,
 )
 from byzfl import DataDistributor  # noqa: E402
 
 
-DEFAULT_OUTPUT_DIR = THIS_DIR / "outputs"
+DEFAULT_OUTPUT_DIR = THIS_DIR / "resultats"
 NUM_CLASSES = 10
 
 
@@ -270,20 +270,20 @@ def main() -> None:
     )
     custom_df = loaders_to_dataframe(
         custom_loaders,
-        distribution_name="NotrePropreDistributor",
+        distribution_name="distributeur_une_classe_par_client",
     )
     result_df = pd.concat([reference_df, custom_df], ignore_index=True)
 
-    csv_path = output_dir / "comparison_counts.csv"
-    png_path = output_dir / "comparison_heatmap.png"
+    csv_path = output_dir / "comptes_comparaison.csv"
+    png_path = output_dir / "carte_chaleur_comparaison.png"
     result_df.to_csv(csv_path, index=False)
     plot_comparison(result_df, png_path)
 
-    print("Comparison generated successfully.")
-    print(f"CSV saved to: {csv_path}")
-    print(f"PNG saved to: {png_path}")
+    print("Comparaison générée avec succès.")
+    print(f"CSV enregistré dans : {csv_path}")
+    print(f"PNG enregistré dans : {png_path}")
     summarize_distribution(result_df, f"byzfl_{args.reference_distribution}")
-    summarize_distribution(result_df, "NotrePropreDistributor")
+    summarize_distribution(result_df, "distributeur_une_classe_par_client")
     print("\nCustom distributor assignment preview:")
     custom_distributor.print_summary()
 

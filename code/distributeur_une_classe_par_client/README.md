@@ -16,21 +16,21 @@ Chaque client apprend donc sur une seule classe.
 
 ## Fichiers
 
-- `notre_propre_distributor.py` : classe principale `SingleClassDataDistributor`
-- `demo.py` : petit script qui affiche la classe attribuée à chaque client
+- `distributeur_une_classe_par_client.py` : classe principale `SingleClassDataDistributor`
+- `demo_distributeur.py` : petit script qui affiche la classe attribuée à chaque client
 
 ## Utilisation
 
 Depuis la racine du projet :
 
 ```bash
-python code/NotrePropreDistributor/demo.py
+python code/distributeur_une_classe_par_client/demo_distributeur.py
 ```
 
-Si tu veux réutiliser le distributeur dans un autre script :
+Si on veut réutiliser le distributeur dans un autre script :
 
 ```python
-from code.NotrePropreDistributor.notre_propre_distributor import build_mnist_one_class_loaders
+from distributeur_une_classe_par_client import build_mnist_one_class_loaders
 
 client_loaders, test_loader, distributor = build_mnist_one_class_loaders(
     data_root="data/MNIST",

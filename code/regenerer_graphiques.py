@@ -7,9 +7,9 @@ import pandas as pd
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-INPUT_CSV = PROJECT_ROOT / "code" / "experiment_outputs" / "combined_results.csv"
-PLOTS_DIR = PROJECT_ROOT / "code" / "experiment_outputs" / "plots"
-COMPARISON_DIR = PROJECT_ROOT / "code" / "experiment_outputs" / "comparison"
+INPUT_CSV = PROJECT_ROOT / "code" / "resultats_experiences" / "resultats_combines.csv"
+PLOTS_DIR = PROJECT_ROOT / "code" / "resultats_experiences" / "graphiques"
+COMPARISON_DIR = PROJECT_ROOT / "code" / "resultats_experiences" / "comparaison"
 
 
 def plot_per_scenario(df: pd.DataFrame) -> None:
@@ -49,11 +49,11 @@ def plot_comparison(df: pd.DataFrame) -> None:
 
     ax.set_xlabel("Round")
     ax.set_ylabel("Accuracy")
-    ax.set_title("Comparison of all scenarios - Accuracy")
+    ax.set_title("Comparaison de tous les scénarios - Accuracy")
     ax.grid(True, alpha=0.3)
     ax.legend(fontsize=9, loc="best")
     fig.tight_layout()
-    fig.savefig(COMPARISON_DIR / "all_scenarios_accuracy.png", dpi=180)
+    fig.savefig(COMPARISON_DIR / "courbe_comparaison_globale.png", dpi=180)
     plt.close(fig)
 
 
@@ -92,12 +92,12 @@ def main() -> None:
     plot_comparison(df)
 
     summary = summarize_final_round(df)
-    summary.to_csv(COMPARISON_DIR / "final_round_summary.csv", index=False)
+    summary.to_csv(COMPARISON_DIR / "resume_final.csv", index=False)
 
-    print(f"Plots regenerated from: {INPUT_CSV}")
-    print(f"Per-scenario plots: {PLOTS_DIR}")
-    print(f"Comparison plot: {COMPARISON_DIR / 'all_scenarios_accuracy.png'}")
-    print(f"Summary CSV: {COMPARISON_DIR / 'final_round_summary.csv'}")
+    print(f"Graphiques régénérés à partir de : {INPUT_CSV}")
+    print(f"Graphiques par scénario : {PLOTS_DIR}")
+    print(f"Courbe de comparaison : {COMPARISON_DIR / 'courbe_comparaison_globale.png'}")
+    print(f"CSV de résumé : {COMPARISON_DIR / 'resume_final.csv'}")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 
-from experiment_engine import (
+from moteur_experiences import (
     DEFAULT_COMMON_CONFIG,
     DEFAULT_SCENARIO_INDEX,
     build_config,
@@ -70,11 +70,11 @@ def main() -> None:
         records = run_scenario(config)
         all_records.extend(records)
 
-    output_dir = resolve_repo_path(common_config.get("output_dir", "code/experiment_outputs"))
+    output_dir = resolve_repo_path(common_config.get("output_dir", "code/resultats_experiences"))
     csv_path = save_records(all_records, output_dir)
     plot_records(all_records, output_dir)
     print(f"Results saved to: {csv_path}")
-    print(f"Plots saved to: {output_dir / 'plots'}")
+    print(f"Graphiques enregistrés dans : {output_dir / 'graphiques'}")
 
 
 if __name__ == "__main__":

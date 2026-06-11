@@ -27,41 +27,43 @@ Installer les dépendances exactes du projet (le fichier "uv.lock" se trouve dan
 
 ## Organisation des scripts
 
-Les scripts exécutables sont placés une seule fois dans `code/`.
+Les scripts exécutables sont placés une seule fois dans `code/` avec des noms français explicites.
 
 Structure principale :
 
-- `code/experiment_engine.py` : moteur d'exécution des expériences.
-- `code/run_experiments.py` : lancement des scénarios JSON.
-- `code/compare_experiments.py` : comparaison globale des courbes d'accuracy.
-- `code/regenerate_plots.py` : régénération des figures depuis le CSV.
+- `code/moteur_experiences.py` : moteur d'exécution des expériences.
+- `code/lancer_experiences.py` : lancement des scénarios JSON.
+- `code/comparer_experiences.py` : comparaison globale des courbes d'accuracy.
+- `code/regenerer_graphiques.py` : régénération des figures depuis le CSV.
+- `code/experiences_avec_moyenne/moyenne_experiences.py` : lancement répété d'une expérience pour calculer la moyenne.
+- `code/distributeur_une_classe_par_client/` : distributeur maison une classe par client.
 
 ## Lancer les expériences à partir de fichiers JSON
 
-Les scénarios d'expériences sont décrits dans `code/experiment_configs/`. Un seul lanceur exécute les expériences sélectionnées.
+Les scénarios d'expériences sont décrits dans `code/configurations_experiences/`. Un seul lanceur exécute les expériences sélectionnées.
 
 Lister les scénarios disponibles :
 
-    python code/run_experiments.py --list
+    python code/lancer_experiences.py --list
 
 Lancer un scénario précis :
 
-    python code/run_experiments.py --scenario iid_clean_average
+    python code/lancer_experiences.py --scenario iid_clean_average
 
 Lancer tous les scénarios décrits dans l'index :
 
-    python code/run_experiments.py --all
+    python code/lancer_experiences.py --all
 
-Les résultats sont enregistrés dans `code/experiment_outputs/` avec un CSV combiné et des graphiques par scénario.
+Les résultats sont enregistrés dans `code/resultats_experiences/` avec `resultats_combines.csv`, un dossier `graphiques/` et un dossier `comparaison/`.
 
 
 Pour régénérer les courbes à partir du CSV déjà généré :
 
-    python code/regenerate_plots.py
+    python code/regenerer_graphiques.py
 
 Pour produire la comparaison globale entre toutes les expériences :
 
-    python code/compare_experiments.py
+    python code/comparer_experiences.py
 
 
 

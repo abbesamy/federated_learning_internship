@@ -6,32 +6,32 @@ Ce dossier contient un script indépendant pour comparer le distributeur maison 
 
 Le script affiche la différence de répartition des labels entre :
 
-- `NotrePropreDistributor` : une seule classe par client
+- `distributeur_une_classe_par_client` : une seule classe par client
 - `byzfl.DataDistributor` : répartition de référence, par défaut `iid`
 
 Il exporte aussi :
 
-- un fichier CSV avec les comptes par client et par classe
-- une image PNG avec deux cartes de chaleur côte à côte
+- `comptes_comparaison.csv` : comptes par client et par classe
+- `carte_chaleur_comparaison.png` : deux cartes de chaleur côte à côte
 
 ## Lancer la comparaison
 
 Depuis la racine du projet :
 
 ```bash
-python code/NotrePropreDistributor/comparison/compare_distributors.py
+python code/distributeur_une_classe_par_client/comparaison/comparer_distributions.py
 ```
 
 ## Options utiles
 
-On peux changer quelques paramètres :
+On peut changer quelques paramètres :
 
 ```bash
-python code/NotrePropreDistributor/comparison/compare_distributors.py \
+python code/distributeur_une_classe_par_client/comparaison/comparer_distributions.py \
   --dataset MNIST \
   --num-clients 10 \
   --batch-size 64 \
   --reference-distribution iid \
-  --output-dir code/NotrePropreDistributor/comparison/outputs
+  --output-dir code/distributeur_une_classe_par_client/comparaison/resultats
 ```
 

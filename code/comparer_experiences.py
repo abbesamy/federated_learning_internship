@@ -8,8 +8,8 @@ import pandas as pd
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_INPUT_CSV = PROJECT_ROOT / "code" / "experiment_outputs" / "combined_results.csv"
-DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "code" / "experiment_outputs" / "comparison"
+DEFAULT_INPUT_CSV = PROJECT_ROOT / "code" / "resultats_experiences" / "resultats_combines.csv"
+DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "code" / "resultats_experiences" / "comparaison"
 
 
 def parse_args() -> argparse.Namespace:
@@ -56,7 +56,7 @@ def plot_metric(df: pd.DataFrame, output_path: Path) -> None:
 
     ax.set_xlabel("Round")
     ax.set_ylabel("Accuracy")
-    ax.set_title("Comparison of all scenarios - Accuracy")
+    ax.set_title("Comparaison de tous les scénarios - Accuracy")
     ax.grid(True, alpha=0.3)
     ax.legend(fontsize=9, loc="best")
     fig.tight_layout()
@@ -101,18 +101,18 @@ def main() -> None:
     if missing_columns:
         raise SystemExit(f"CSV is missing columns: {', '.join(sorted(missing_columns))}")
 
-    accuracy_plot = output_dir / "all_scenarios_accuracy.png"
-    summary_csv = output_dir / "final_round_summary.csv"
+    accuracy_plot = output_dir / "courbe_comparaison_globale.png"
+    summary_csv = output_dir / "resume_final.csv"
 
     plot_metric(df, accuracy_plot)
 
     summary = summarize_final_round(df)
     summary.to_csv(summary_csv, index=False)
 
-    print(f"Comparison plots saved to: {output_dir}")
-    print(f"Accuracy plot: {accuracy_plot}")
-    print(f"Summary CSV: {summary_csv}")
-    print("Top scenarios by final accuracy:")
+    print(f"Graphiques de comparaison enregistrés dans : {output_dir}")
+    print(f"Courbe d'accuracy : {accuracy_plot}")
+    print(f"CSV de résumé : {summary_csv}")
+    print("Meilleurs scénarios selon l'accuracy finale :")
     print(summary.head(10).to_string(index=False))
 
 

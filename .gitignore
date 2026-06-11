@@ -1,4 +1,6 @@
 .venv/
 code/__pycache__/
 code/**/__pycache__/
-code/experiment_outputs/!code/experiment_outputs/
+code/resultats_experiences/!code/resultats_experiences/
+code/experiences_avec_moyenne/resultats/
+code/distributeur_une_classe_par_client/comparaison/resultats/
