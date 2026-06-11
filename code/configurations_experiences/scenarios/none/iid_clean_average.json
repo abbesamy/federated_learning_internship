@@ -2,7 +2,7 @@
   "name": "iid_clean_average",
   "dataset": "MNIST",
   "distribution": "iid",
-  "nb_honest": 4,
+  "nb_honest": 7,
   "nb_byz": 0,
   "aggregator": "Average",
   "attack": "none"

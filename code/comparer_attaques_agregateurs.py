@@ -33,8 +33,9 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def sanitize_name(value: str) -> str:
-    normalized = re.sub(r"[^A-Za-z0-9]+", "_", value.strip().lower())
+def sanitize_name(value: any) -> str:
+    value_str = str(value) if value is not None else ""
+    normalized = re.sub(r"[^A-Za-z0-9]+", "_", value_str.strip().lower())
     return normalized.strip("_") or "attaque"
 
 

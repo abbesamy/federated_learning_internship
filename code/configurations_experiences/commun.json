@@ -16,6 +16,6 @@
   "nb_labels": 10,
   "rounds": 500,
   "batch_size": 64,
-  "eval_interval": 50,
+  "eval_interval": 10,
   "output_dir": "code/resultats_experiences"
 }
