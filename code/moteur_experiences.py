@@ -18,7 +18,7 @@ from byzfl.utils.misc import set_random_seed
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CODE_DIR = PROJECT_ROOT / "code"
 CONFIG_DIR = CODE_DIR / "configurations_experiences"
-DEFAULT_COMMON_CONFIG = CONFIG_DIR / "common.json"
+DEFAULT_COMMON_CONFIG = CONFIG_DIR / "commun.json"
 DEFAULT_SCENARIO_INDEX = CONFIG_DIR / "scenario_index.json"
 
 DATASET_SPECS = {
@@ -234,6 +234,8 @@ def plot_records(records: list[dict[str, Any]], output_dir: Path) -> None:
     plots_dir = output_dir / "graphiques"
     plots_dir.mkdir(parents=True, exist_ok=True)
     df = pd.DataFrame(records)
+    round_max = int(df["round"].max()) if not df.empty else 1
+    x_max = max(round_max, 2)
 
     for scenario_name, group in df.groupby("scenario"):
         fig, ax = plt.subplots(figsize=(10, 5))
@@ -242,6 +244,8 @@ def plot_records(records: list[dict[str, Any]], output_dir: Path) -> None:
         ax.set_xlabel("Round")
         ax.set_ylabel("Accuracy")
         ax.set_title(scenario_name)
+        ax.set_xlim(1, x_max)
+        ax.set_ylim(0.0, 1.0)
         ax.grid(True, alpha=0.3)
 
         fig.tight_layout()

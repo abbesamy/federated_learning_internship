@@ -37,6 +37,8 @@ def build_label(row: pd.Series) -> str:
 
 def plot_metric(df: pd.DataFrame, output_path: Path) -> None:
     fig, ax = plt.subplots(figsize=(14, 8))
+    round_max = int(df["round"].max()) if not df.empty else 1
+    x_max = max(round_max, 2)
 
     for scenario_name, group in df.groupby("scenario", sort=False):
         ordered = group.sort_values("round")
@@ -57,6 +59,8 @@ def plot_metric(df: pd.DataFrame, output_path: Path) -> None:
     ax.set_xlabel("Round")
     ax.set_ylabel("Accuracy")
     ax.set_title("Comparaison de tous les scénarios - Accuracy")
+    ax.set_xlim(1, x_max)
+    ax.set_ylim(0.0, 1.0)
     ax.grid(True, alpha=0.3)
     ax.legend(fontsize=9, loc="best")
     fig.tight_layout()

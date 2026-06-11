@@ -204,6 +204,7 @@ def plot_comparison(df: pd.DataFrame, output_path: Path) -> None:
         axes = [axes]
 
     max_value = int(df["sample_count"].max()) if not df.empty else 1
+    max_clients = int(df["client_id"].max()) if not df.empty else 0
 
     last_image = None
     for axis, distribution_name in zip(axes, distributions):
@@ -214,6 +215,8 @@ def plot_comparison(df: pd.DataFrame, output_path: Path) -> None:
         last_image = axis.imshow(matrix.values, aspect="auto", cmap="Blues", vmin=0, vmax=max_value)
         axis.set_title(distribution_name)
         axis.set_xlabel("Classe")
+        axis.set_xlim(-0.5, NUM_CLASSES - 0.5)
+        axis.set_ylim(max_clients + 0.5, -0.5)
         axis.set_xticks(range(NUM_CLASSES))
         axis.set_xticklabels(range(NUM_CLASSES))
         axis.set_yticks(range(matrix.shape[0]))

@@ -120,6 +120,8 @@ def aggregate_mean(df: pd.DataFrame) -> pd.DataFrame:
 
 def plot_average_curve(mean_df: pd.DataFrame, output_path: Path) -> None:
     fig, ax = plt.subplots(figsize=(10, 5))
+    round_max = int(mean_df["round"].max()) if not mean_df.empty else 1
+    x_max = max(round_max, 2)
 
     for scenario_name, group in mean_df.groupby("base_scenario", sort=False):
         ordered = group.sort_values("round")
@@ -134,6 +136,8 @@ def plot_average_curve(mean_df: pd.DataFrame, output_path: Path) -> None:
     ax.set_xlabel("Round")
     ax.set_ylabel("Accuracy moyenne")
     ax.set_title("Courbe moyenne sur plusieurs seeds")
+    ax.set_xlim(1, x_max)
+    ax.set_ylim(0.0, 1.0)
     ax.grid(True, alpha=0.3)
     ax.legend(loc="best")
     fig.tight_layout()
