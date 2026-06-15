@@ -12,57 +12,69 @@
 \usepackage{amssymb}
 \usepackage{xcolor}
 
-\title{\textbf{Compte rendu de réunion n°3 : TER BYZFL} \\ \large Restructuration du code, Environnement GPU et Plan d'expérimentations}
+\title{\textbf{Compte rendu de réunion n°3 : TER BYZFL} \\ \large Flexibilité de l'environnement, Industrialisation par JSON et Robustesse aux Seeds}
 \author{ABBES Samy \& AREZKI Célia} 
-\date{Semaine du 18 Mai 2026}
+\date{22 Mai 2026}
 
 \begin{document}
 
 \maketitle
 
-\section{Objectifs de la réunion}
-Suite à nos premières séries de tests, cette réunion a permis de faire le point sur la qualité de notre base de code, les problèmes d'environnement rencontrés (matériels et logiciels) et de définir précisément le cadre de nos prochaines expérimentations.
-
-\section{Restructuration du code et Reproductibilité}
-
-\subsection{Paramétrage via fichiers JSON}
-Il a été constaté une forte duplication de code dans nos scripts actuels, nous devions souvent réécrire ou copier-coller des fichiers entiers pour ne modifier que quelques lignes d'une expérience à l'autre. Pour pallier ce problème, il nous a été conseillé d'adopter une architecture basée sur des fichiers de configuration \texttt{.json}. 
-Désormais, le script principal d'exécution ne contiendra que la logique globale et les variables de base (nombre de rounds, taille de batch, nombre de clients totaux et nombre de byzantins). Le reste des paramètres spécifiques sera injecté via le JSON :
+\section*{Informations générales}
 \begin{itemize}
-    \item Choix de l'agrégateur.
-    \item Type d'attaque byzantine à simuler.
-    \item Distribution des données (IID ou Non-IID).
-    \item Configurations spécifiques du serveur et des clients.
-\end{itemize}
-Ainsi, le lancement d'une nouvelle expérience se résumera à appeler le script principal en lui passant en argument le fichier de configuration souhaité.
-
-\subsection{Suivi des métriques et Validation par l'aléatoire}
-Afin de produire des analyses rigoureuses, nous devons systématiser la sauvegarde de l'évolution de l'\textit{accuracy} et de la \textit{loss} à intervalle de round régulier. Cela nous permettra de tracer des courbes d'apprentissage complètes plutôt que de se fier uniquement au résultat final.
-De plus, suite aux directives de notre encadrant, nous devons impérativement conserver le facteur aléatoire lors de nos simulations (ne pas fixer les \textit{seeds} de NumPy et PyTorch). L'objectif est de vérifier que les conclusions et les règles théoriques que nous tirons de nos expériences restent valides et constantes dans tous les scénarios, indépendamment des aléas d'initialisation du modèle ou du bruit de sélection des données.
-\section{Environnement Technique et Résolution des problèmes}
-
-\subsection{Justification de la version de PyTorch via UV}
-Une remarque a été faite concernant l'utilisation d'une version jugée « trop ancienne » de PyTorch (version 2.3). Après analyse approfondie du gestionnaire d'environnement \texttt{uv} (outil que nous découvrons), il s'avère que ce choix est imposé par la bibliothèque \texttt{ByzFL} elle-même.
-\texttt{ByzFL} a été développée et testée spécifiquement avec PyTorch 2.2. Malgré nos tentatives de forcer des versions plus récentes dans le \texttt{requirements.txt}, \texttt{uv} résout automatiquement l'arbre des dépendances en téléchargeant la version 2.3, qu'il juge être la plus récente tout en restant strictement rétrocompatible avec les exigences internes de \texttt{ByzFL}. Nous conserverons donc cette version pour garantir la stabilité de nos scripts.
-
-\subsection{Accélération CUDA et transition vers Google Colab}
-La bibliothèque \texttt{ByzFL} propose deux modes d'exécution : CPU ou CUDA. Pensant que tous les ordinateurs portables étaient équipés d'une carte graphique NVIDIA exploitable, nous avions laissé \texttt{uv} gérer les dépendances par défaut. Suite à la demande d'exécuter des tests avec accélération matérielle, nous avons constaté que nos machines personnelles ne possédaient pas de véritable GPU dédié, mais uniquement des composants graphiques intégrés non compatibles avec CUDA.
-Pour remédier à ce blocage matériel, nous avons établi un protocole de migration de nos exécutions vers \textbf{Google Colab}. Toutes les étapes nécessaires pour configurer l'environnement distant et allouer une carte graphique performante (GPU NVIDIA T4) ont été documentées et regroupées dans le fichier \texttt{commandes\_ggl\_colab.txt}.
-
-\section{Plan d'expérimentation et Nouveaux jeux de données}
-
-\subsection{Méthodologie de comparaison des agrégateurs}
-Pour évaluer efficacement la robustesse des défenses, le protocole expérimental consistera à \textbf{fixer une seule attaque par série de tests}. Face à cette attaque spécifique, nous ferons concourir différents agrégateurs. Cette méthode permettra d'isoler le comportement de chaque défense face à une menace donnée.
-
-\subsection{Introduction du jeu de données Fashion-MNIST}
-Afin de faire des expérience sur un problème plus complexe que la reconnaissance de chiffres manuscrits (MNIST), nous avons intégré le jeu de données \textbf{Fashion-MNIST}.
-\begin{itemize}
-    \item \textbf{Description :} C'est un dataset de classification d'images d'articles de vêtements : T-shirt/Haut, Pantalon, Pull, Robe, Manteau, Sandale, Chemise, Basket, Sac, Bottine.
-    \item \textbf{Caractéristiques :} Il est structuré exactement comme MNIST (60 000 images d'entraînement et 10 000 images de test, réparties en 10 classes). Les images sont en niveaux de gris et de dimension $28 \times 28$ pixels.
-    \item \textbf{Intérêt :} Bien que la structure informatique soit identique (ne nécessitant que peu de changements dans le code), les motifs visuels sont beaucoup plus complexes à identifier que de simples chiffres. Il représente un défi plus réaliste pour évaluer la dégradation des performances lors d'une attaque byzantine.
+    \item \textbf{Date de la réunion :} 22 mai 2026 à 15 h
+    \item \textbf{Membres du groupe présents :} ABBES Samy, AREZKI Célia
+    \item \textbf{Encadrants présents :} Dupé François-Xavier (en visioconférence), LABOUREL Arnaud
+    \item \textbf{Sujet du TER :} Benchmarking et analyse comparative d'algorithmes d'agrégation robustes en apprentissage fédéré face aux adversaires byzantins avec ByzFL
 \end{itemize}
 
+\section{Objectifs et Orientations de la réunion}
+Cette troisième réunion de travail a permis de dresser le bilan de nos scripts initiaux et de poser de nouvelles exigences méthodologiques formulées par nos encadrants. L'accent a été mis sur la flexibilité technique de notre environnement (mise à niveau des dépendances, portabilité matérielle), l'industrialisation rigoureuse de notre protocole d'expérimentation (généralisation par fichiers de configuration) et la validation statistique des résultats.
 
+\section{Mise à niveau de l'Environnement et Compatibilité}
 
+\subsection{Dépendances} % CORRIGÉ : Ajout de l'accent sur Dépendances
+La bibliothèque \texttt{ByzFL} impose par défaut des versions spécifiques et datées (PyTorch 2.2). Les encadrants nous demandent d'étudier la faisabilité d'une migration vers des versions stables beaucoup plus récentes :
+\begin{itemize}
+    \item \textbf{PyTorch :} Tenter la mise à niveau vers la version stable actuelle (PyTorch 2.12).
+    \item \textbf{Dépendances connexes :} Mettre à jour conjointement Python, NumPy, ainsi que Torchvision afin d'éviter les ruptures de compatibilité.
+\end{itemize}
+
+\subsection{Alternative à CUDA pour l'accélération matérielle}
+L'exécution classique sur GPU via CUDA impose l'utilisation exclusive d'une carte graphique NVIDIA. Or, nos machines de travail actuelles ne disposent pas de ce type de matériel, ce qui empêche d'effectuer les calculs localement avec cette technologie. Les encadrants nous demandent donc de trouver des solutions alternatives pour l'accélération matérielle. Nous devons orienter nos recherches vers l'utilisation de versions plus récentes de PyTorch, qui intègrent de nouveaux frameworks de calcul compatibles avec d'autres architectures matérielles, afin de permettre l'exécution sur nos GPU respectifs.
+
+\section{Architecture du Code et Protocoles Expérimentaux}
+
+\subsection{Paramétrage par fichiers JSON}
+Pour mettre fin à la duplication de code et garantir une organisation rigoureuse, l'architecture du projet évolue vers un fonctionnement piloté par la donnée. Toutes les expériences seront désormais centralisées et configurées au travers de fichiers de configuration \texttt{.json}. Un script d'indexation global permettra de charger dynamiquement ces scénarios sans avoir à modifier manuellement le code source à chaque expérience.
+
+\subsection{Suivi de la Convergence et Sauvegarde de l'Accuracy}
+Afin de pouvoir comparer finement l'efficacité des attaques face aux différents mécanismes de défense, nous devons implémenter une journalisation systématique. L'évolution temporelle de l'accuracy au fil de chaque round d'apprentissage devra être capturée et sauvegardée dans des fichiers \texttt{.csv}. Ces métriques permettront de générer des courbes comparatives directes par couple attaque/agrégateur.
+
+\subsection{Validation Statistique par Graines Aléatoires (Seeds)}
+Afin de valider la robustesse de nos conclusions et s'assurer que les performances observées ne relèvent pas du hasard informatique, le protocole intègre des exécutions répétées. Chaque scénario devra être exécuté plusieurs fois en faisant varier systématiquement la graine aléatoire (\texttt{seed}), permettant ainsi de moyenner les courbes d'accuracy et d'analyser les écarts-types de convergence.
+
+\section{Approfondissement Théorique et Scénarios Critiques}
+
+\subsection{Exploration fine des hyperparamètres et distributions}
+Nous devons approfondir l'étude des paramètres internes spécifiques à chaque objet de la bibliothèque tels que :
+\begin{itemize}
+    \item \textbf{Paramètres d'agrégateurs :} Analyser l'impact de variables clés telles que le facteur de tolérance ou d'échelle $\tau$ au sein des filtres.
+    \item \textbf{Distribution des données :} Au-delà du cas idéal IID, nous devons explorer la distribution non-IID des données chez les clients en exploitant l'allocation de \textbf{Dirichlet} et son coefficient de concentration $\alpha$. % CORRIGÉ : Ajout du point final manquant
+\end{itemize}
+
+\subsection{Test à la frontière du tiers byzantin ($f = n/3$)}
+Conformément aux limites théoriques de l'apprentissage fédéré robuste, les encadrants nous demandent de pousser les agrégateurs dans leurs retranchements. Des scénarios spécifiques incorporant exactement ou plus d'un tiers de clients malveillants ($f \ge n/3$) seront programmés afin d'observer expérimentalement l'effondrement ou la résilience des barrières géométriques.
+
+\subsection{Diversification des jeux de données}
+Afin de valider nos benchmarks et s'assurer que nos observations ne sont pas biaisées par la simplicité relative de MNIST, le protocole devra intégrer des tests sur d'autres banques d'images ou jeux de données plus complexes (par exemple Fashion-MNIST ou CIFAR-10).
+
+\section{Conclusion et Prochaines étapes}
+Le plan d'action d'ici la prochaine réunion s'articule autour de trois points :
+\begin{enumerate}
+    \item Tester la mise à niveau de l'environnement virtuel avec les versions récentes de Python/PyTorch et valider un \textit{backend} GPU alternatif à CUDA.
+    \item Finaliser la refonte du code pour migrer vers le système de fichiers de configuration JSON et l'exécution automatisée sur plusieurs \textit{seeds}.
+    \item Lancer la première campagne de benchmark croisée (Même attaque face à différents agrégateurs) en intégrant les scénarios à forte proportion byzantine et les distributions non-IID via Dirichlet.
+\end{enumerate}
 
 \end{document}

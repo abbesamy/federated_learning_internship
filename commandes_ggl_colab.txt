@@ -6,7 +6,7 @@ commandes, ainsi que de configurer le type d'exécution de Google Colab sur l'ac
  sinon, toutes les commandes devront être relancées.)
 
 # Accès au dépot avec token :
-!git clone https://a25024364:glpat-iROrp29aFyXK85076VE_B286MQp1OjNoegk.01.0z1m6hwrg@etulab.univ-amu.fr/a25024364/ter_iaaa_byzfl_abbes_arezki.git
+!git clone https://a25024364:glpat-TJfVRRHM67AP2ZpOTHaa6G86MQp1OjN6eAk.01.0z14xp35v@etulab.univ-amu.fr/a25024364/ter_iaaa_byzfl_abbes_arezki.git
 
 # Accès au dossier racine de la session google colab
 %cd /content
@@ -17,8 +17,30 @@ commandes, ainsi que de configurer le type d'exécution de Google Colab sur l'ac
 # Installations
 !uv pip install --system -r requirements.txt
 
-# Accès au script
-%cd code/experiences_iid/
+# Lancement de l'execution du fichier
+!python code/lancer_experiences.py
 
-!python experience_1.py
+
+
+
+# Commandes pour faire un push depuis colab une fois l'expérience finalisée pour avoir les mise à jour des résultats et des graphiques
+
+# Se placer à la racine
+%cd /content/ter_iaaa_byzfl_abbes_arezki
+
+# Configuration Git
+!git config user.email "nom.prenom@etu.univ-amu.fr"
+!git config user.name "Prénom Nom"
+
+# En cas de modification pendant l'expérience
+!git pull origin main --no-rebase --no-edit
+
+# Ajouter les fichiers modifiés
+!git add .
+
+# Créer le commit
+!git commit -m "message du commit"
+
+# Envoyer sur Etulab
+!git push origin main
 

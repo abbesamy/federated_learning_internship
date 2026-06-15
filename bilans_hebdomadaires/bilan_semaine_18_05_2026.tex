@@ -1,0 +1,93 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Paquets ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tabularx} % Pour empêcher le tableau de dépasser à droite
+
+% --- Configuration Code ---
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{gray},
+    breaklines=true,
+    frame=single,
+}
+
+\title{\textbf{Rapport de recherche : Bibliothèque ByzFL} \\ \large Industrialisation par JSON, Automatisation Colab et Benchmarks de Performance GPU}
+\author{ABBES Samy \& AREZKI Célia}
+\date{Semaine du 18 Mai 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Suite aux directives issues de la réunion du 22/05/2026, cette semaine a été marquée par une refonte structurelle complète de notre architecture de code. Nous avons abandonné la duplication de scripts au profit d'un système entièrement piloté par des configurations JSON, mis en place un protocole d'exécution industrialisé sur Google Colab avec sauvegarde sur Etulab, et mené nos premiers tests comparatifs de performance entre l'accélération matérielle GPU et l'exécution CPU.
+
+\section{Refonte de l'Architecture et Protocole d'Exécution}
+
+\subsection{Réorganisation du dépôt de fond en comble}
+Afin de fluidifier le développement et de standardiser nos pipelines d'expérimentations, le code source a été intégralement restructuré. Nous avons isolé les rôles de chaque script et centralisé les hyperparamètres :
+\begin{itemize}
+    \item \textbf{Gestion des configurations} : Création du répertoire \texttt{configurations\_experiences/}. Les paramètres globaux partagés sont définis dans \texttt{commun.json}, tandis que les fichiers de configurations spécifiques aux scénarios sont regroupés dans le sous-répertoire \texttt{scenarios/}. 
+    \item \textbf{Indexation dynamique} : Mise en place du fichier \texttt{scenario\_index.json}. Compte tenu de la multiplication des scénarios à tester, ce fichier sert de commutateur central pour spécifier précisément quels scénarios exécuter lors de l'exécution d'une expérience.
+    \item \textbf{Scripting applicatif} : Développement du script principal \texttt{lancer\_experiences.py}, qui charge les fichiers JSON, orchestre l'apprentissage fédéré et exporte automatiquement l'évolution de l'accuracy de chaque round dans des fichiers au format \texttt{.csv}.
+    \item \textbf{Analyse graphique} : Intégration du script \texttt{comparer\_experiences.py}, chargé de lire les fichiers CSV générés et de tracer des courbes de convergence comparatives.
+\end{itemize}
+
+\subsection{Industrialisation et traçabilité sur Google Colab}
+Nous avons formalisé un protocole d'exécution résumé dans le fichier \texttt{commandes\_ggl\_colab.txt}. Ce fichier consigne l'ensemble des commandes nécessaires pour :
+\begin{enumerate}
+    \item Configurer l'identité Git locale et cloner le dépôt Etulab via un jeton d'accès sécurisé.
+    \item Installer les dépendances du projet via \texttt{uv} et lancer l'exécution du script principal de simulation.
+     \item Récupérer les éventuelles modifications distantes de l'équipe via un \texttt{git pull} juste avant le push, au cas où des fichiers auraient été mis à jour sur le dépôt pendant le temps d'exécution de l'expérience.
+    \item Exécuter un \texttt{git push} manuel et sécurisé en fin de script pour synchroniser et sauvegarder les nouveaux résultats CSV ainsi que les graphiques directement sur \texttt{Etulab}.
+\end{enumerate}
+
+\section{Benchmark de Performance : CPU vs GPU (T4)}
+Afin de valider l'apport de l'accélération matérielle demandée par les encadrants, nous avons configuré une expérience de référence sur un jeu de données standard (MNIST), étalée sur une durée de \textbf{1000 rounds}.
+
+\subsection{Périmètre du benchmark}
+L'expérience croise 4 attaques fondamentales (\textit{SignFlipping, IPM, ALIE, Gaussian}) et 4 agrégateurs (\textit{TrMean, Average, Median, Krum}), combinés à travers 5 scénarios de référence lancés chacun sur 1000 rounds :
+\begin{itemize}
+    \item \texttt{clean\_average} (Baseline saine sans attaque)
+    \item \texttt{signflip\_average} (Attaque SignFlipping sans défense)
+    \item \texttt{signflip\_median} (Attaque SignFlipping mitigée par la Médiane)
+    \item \texttt{ipm\_trmean} (Attaque Inner Product Manipulation mitigée par la Moyenne Tronquée)
+    \item \texttt{alie\_krum} (Attaque A Little Is Enough mitigée par Krum)
+\end{itemize}
+
+\subsection{Analyse comparative des temps d'exécution}
+L'infrastructure matérielle fournie par Google Colab a été sollicitée sous deux modes distincts pour faire tourner cette suite de simulations :
+\begin{itemize}
+    \item \textbf{Mode CPU} : Exécution sur un processeur virtuel \textit{Intel Xeon} (2 cœurs, fréquence d'environ 2.20\,GHz).
+    \item \textbf{Mode GPU} : Accélération via une carte graphique \textit{NVIDIA Tesla T4} (16\,Go de VRAM dédiée).
+\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{@{}lXX@{}}
+\toprule
+\textbf{Infrastructure de calcul Colab} & \textbf{Temps d'exécution total (1000 rounds)} & \textbf{Facteur d'accélération} \\ \midrule
+CPU Virtuel (Intel Xeon, 2vCPUs)        & 153 secondes                                   & 1.0$\times$ (Référence)         \\ \addlinespace
+GPU Matériel (NVIDIA Tesla T4)          & \textbf{64 secondes}                           & \textbf{2.39$\times$}           \\ \bottomrule
+\end{tabularx}
+\caption{Mesure d'efficacité temporelle du pipeline d'apprentissage robuste}
+\end{table}
+
+Les résultats démontrent une réduction drastique du temps de calcul de plus de \textbf{58\%} lors du passage sur GPU. Ce gain d'efficacité confirme la nécessité d'exploiter le calcul parallèle sur carte graphique pour exécuter les futures campagnes de tests à grande échelle, impliquant des distributions non-IID via Dirichlet ainsi que des variations systématiques de graines aléatoires (\textit{seeds}).
+
+\section{Conclusion et Perspectives}
+L'infrastructure de notre projet est désormais industrialisée, robuste et prête pour des exécutions massives. Les hyperparamètres critiques sont isolés dans des fichiers JSON et les résultats sont traçables. La prochaine étape consistera à lancer l'ensemble des scénarios indexés et à exploiter le script \texttt{comparer\_experiences.py} pour analyser la résilience des agrégateurs lorsque la proportion de clients byzantins varie.
+
+\end{document}
