@@ -1,0 +1,78 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Paquets ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\title{\textbf{Compte rendu de réunion n°6 : TER BYZFL} \\ \large Frontières de résilience ($3f+1$), Analyse d'Efficacité et Cadrage des Livrables Finaux}
+\author{ABBES Samy \& AREZKI Célia} 
+\date{11 Juin 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Informations générales}
+\begin{itemize}
+    \item \textbf{Date de la réunion :} 11 juin 2026 à 16 h
+    \item \textbf{Membres du groupe présents :} ABBES Samy, AREZKI Célia
+    \item \textbf{Encadrants présents :} Dupé François-Xavier, LABOUREL Arnaud
+    \item \textbf{Sujet du TER :} Benchmarking et analyse comparative d'algorithmes d'agrégation robustes en apprentissage fédéré face aux adversaires byzantins avec ByzFL
+\end{itemize}
+
+\section{Objectifs et Orientations de la réunion}
+Cette sixième réunion de travail a permis de fixer le cadre final de nos travaux, à savoir : 
+\begin{itemize}
+    \item La définition stricte des livrables de fin de TER (rapport et soutenance).
+    \item La planification d'une campagne finale d'expérimentations massives. Les encadrants nous ont demandé d'essayer d'identifier l'attaque la plus destructive et la défense la plus robuste.
+\end{itemize}
+
+\section{Directives de Rédaction du Rapport Final}
+Compte tenu de la contrainte de longueur imposée par les modalités de rédaction du rapport final (\textbf{4 pages maximum}), la structure devra faire preuve d'un fort esprit de synthèse :
+\begin{itemize}
+    \item \textbf{Éviter le formalisme lourd :} Les descriptions mathématiques exhaustives des agrégateurs devront être mises de côté au profit de brèves descriptions et d'une explication conceptuelle condensée du travail réalisé durant tout le TER.
+    \item \textbf{Rigueur des citations :} Toutes les sources et fondements théoriques des algorithmes devront être documentés en exploitant la bibliographie de référence présente dans la documentation officielle de \texttt{ByzFL}.
+\end{itemize}
+
+\section{Protocole Expérimental et Clôture des Benchmarks}
+
+\subsection{Exploration de la frontière de tolérance}
+Les encadrants ont insisté sur la nécessité d'illustrer la rupture des garanties de convergence distribuées. Dans le contexte byzantin, le système requiert un minimum de $n = 3f + 1$ nœuds pour isoler $f$ attaquants ($f < n/3$). Nous devons concevoir des simulations qui violent délibérément cette borne en augmentant la proportion d'adversaires jusqu'à atteindre la moitié des clients ($f = n/2$) afin d'analyser les résultats de convergence.
+
+\subsection{Analyses comparatives à grande échelle}
+Pour la semaine prochaine, nous devons mener des vagues d'expériences complètes, expliquées et détaillées de manière rigoureuse (toujours confrontées à la baseline \textit{Clean Average}). Ces tests serviront directement de support pour le rapport final et viseront à observer :
+\begin{itemize}
+    \item \textbf{L'impact de la masse critique byzantine :} Analyser le comportement des mêmes agrégateurs face à une même attaque en comparant directement un scénario à faible nombre de Byzantins à un scénario à forte concentration.
+    \item \textbf{L'expérience globale :} Combiner l'intégralité des attaques avec tous les agrégateurs au sein d'une simulation globale pour en extraire des conclusions et tenter d'identifier \textbf{l'attaque la plus violente} et \textbf{l'agrégateur le plus robuste}.
+    \item \textbf{Arbitrage par la complexité algorithmique :} Si deux agrégateurs affichent des précisions de convergence équivalentes, nous devrons étudier leur coût informatique (complexité théorique en temps et en espace) afin de déterminer le moins coûteux pour le serveur.
+\end{itemize}
+
+\subsection{Architecture du dépôt}
+Le répertoire \texttt{code/} doit être nettoyé. Les dossiers contenant les fichiers de configuration (JSON) ainsi que ceux stockant les résultats (CSV, graphiques) n'ont pas leur place au sein des scripts sources. Ils doivent être déplacés vers des répertoires dédiés et isolés, situés à la racine du projet au même niveau que \texttt{code/}.
+
+\section{Cadrage et Préparatifs de la Soutenance}
+La présentation orale étant restreinte à une durée stricte de \textbf{10 minutes}, les encadrants nous imposent les règles suivantes pour la conception du support visuel :
+\begin{itemize}
+    \item \textbf{Volume des diapositives :} Configurer un diaporama contenant \textbf{exactement 10 slides} (règle d'une minute par slide).
+    \item \textbf{Contenu attendu :} Mettre l'accent sur la vulgarisation du contexte (introduction de l'apprentissage fédéré et présentation de la bibliothèque \texttt{ByzFL}).
+    \item \textbf{Sélection stratégique :} Compte tenu du temps très limité, il nous est demandé de cibler la présentation sur certains aspects précis du projet plutôt que de chercher à aborder l'exhaustivité de nos travaux.
+    \item \textbf{Bilan et recul théorique :} La conclusion de la soutenance devra proposer un bilan global solide, apportant du recul sur nos résultats et s'appuyant sur des explications mathématiques claires pour justifier les phénomènes observés.
+\end{itemize}
+
+\section{Conclusion et Prochaines étapes}
+Le plan d'action immédiat se divise en trois tâches :
+\begin{enumerate}
+    \item Réorganiser l'arborescence Git en sortant les configurations et les résultats du dossier \texttt{code/}.
+    \item Lancer la campagne d'expériences globales (croisement complet attaques/défenses) incluant les scénarios critiques à $f = n/2$ et extraire les graphiques pour le rapport.
+    \item Entamer la rédaction de la version condensée (4 pages) du rapport final.
+\end{enumerate}
+
+\end{document}

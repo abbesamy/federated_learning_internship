@@ -14,12 +14,19 @@ from torchvision import datasets, transforms
 from byzfl import ByzantineClient, Client, DataDistributor, Server
 from byzfl.utils.misc import set_random_seed
 
+# ==============================================================================
+# STRUCTURE DES DOSSIERS (Mise à jour Racine)
+# ==============================================================================
+# __file__ est dans "PROJECT_ROOT/code/moteur_experiences.py"
+CODE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = CODE_DIR.parent
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-CODE_DIR = PROJECT_ROOT / "code"
-CONFIG_DIR = CODE_DIR / "configurations_experiences"
+# Dossier des configurations au même niveau que code/
+CONFIG_DIR = PROJECT_ROOT / "configurations_experiences"
+
 DEFAULT_COMMON_CONFIG = CONFIG_DIR / "commun.json"
 DEFAULT_SCENARIO_INDEX = CONFIG_DIR / "scenario_index.json"
+# ==============================================================================
 
 DATASET_SPECS = {
     "MNIST": {
@@ -212,7 +219,6 @@ def run_scenario(config: dict[str, Any]) -> list[dict[str, Any]]:
         corrupted = [] if byzantine_client is None else byzantine_client.apply_attack(honest_gradients)
         
         device = server.device if hasattr(server, 'device') else "cuda"
-
         corrupted = [g.to(device) for g in corrupted]
 
         server.update_model_with_gradients(honest_gradients + corrupted)
@@ -247,7 +253,20 @@ def save_records(records: list[dict[str, Any]], output_dir: Path, filename: str 
 def plot_records(records: list[dict[str, Any]], output_dir: Path) -> None:
     plots_dir = output_dir / "graphiques"
     plots_dir.mkdir(parents=True, exist_ok=True)
+    
+    if not records:
+        print("⚠️ Aucun enregistrement trouvé dans 'records'. Impossible de générer les graphiques.")
+        return
+
     df = pd.DataFrame(records)
+    
+    if "scenario" not in df.columns:
+        if "name" in df.columns:
+            df = df.rename(columns={"name": "scenario"})
+        else:
+            print("❌ Impossible de grouper par scénario. Génération des graphiques annulée.")
+            return
+
     round_max = int(df["round"].max()) if not df.empty else 1
     x_max = max(round_max, 2)
 

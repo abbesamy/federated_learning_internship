@@ -7,10 +7,20 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# ==============================================================================
+# STRUCTURE DES DOSSIERS (Mise à jour Racine)
+# ==============================================================================
+# __file__ est dans "PROJECT_ROOT/code/comparer_attaques.py" (ou équivalent)
+CODE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = CODE_DIR.parent
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-RESULTS_DIR = PROJECT_ROOT / "code" / "resultats_experiences"
-DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "code" / "resultats_experiences" / "comparaison_par_attaque"
+# Dossier des résultats globaux sorti de code/ et placé au même niveau
+RESULTS_DIR = PROJECT_ROOT / "resultats_experiences"
+
+# Dossier par défaut pour les graphiques comparatifs
+DEFAULT_OUTPUT_DIR = RESULTS_DIR / "comparaison_par_attaque"
+# ==============================================================================
+
 AGGREGATOR_ORDER = ["Average", "Median", "TrMean", "Krum", "MultiKrum", "MoNNA", "CenteredClipping"]
 
 
@@ -147,10 +157,11 @@ def main() -> None:
     best_csv = output_dir / "meilleur_agregateur_par_attaque.csv"
     best_by_attack.to_csv(best_csv, index=False)
 
+    print(f"\n--- Synthèse Terminée ---")
     print(f"CSV de synthèse : {summary_csv}")
     print(f"CSV du meilleur agrégateur par attaque : {best_csv}")
     print(f"CSV source(s) utilisées : {', '.join(str(path) for path in input_csvs)}")
-    print("Meilleurs agrégateurs par attaque :")
+    print("\nMeilleurs agrégateurs par attaque :")
     print(best_by_attack.to_string(index=False))
 
 

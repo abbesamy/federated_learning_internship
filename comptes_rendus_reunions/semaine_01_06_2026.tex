@@ -1,0 +1,79 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Paquets ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\title{\textbf{Compte rendu de réunion n°5 : TER BYZFL} \\ \large Standardisation des graphiques, Métriques croisées et Formalisation de l'Aide-Mémoire}
+\author{ABBES Samy \& AREZKI Célia} 
+\date{2 Juin 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Informations générales}
+\begin{itemize}
+    \item \textbf{Date de la réunion :} 2 juin 2026 à 17 h
+    \item \textbf{Membres du groupe présents :} ABBES Samy, AREZKI Célia
+    \item \textbf{Encadrants présents :} Dupé François-Xavier, LABOUREL Arnaud
+    \item \textbf{Sujet du TER :} Benchmarking et analyse comparative d'algorithmes d'agrégation robustes en apprentissage fédéré face aux adversaires byzantins avec ByzFL
+\end{itemize}
+
+\section{Objectifs et Orientations de la réunion}
+Cette cinquième réunion de travail a mis en lumière plusieurs lacunes techniques et théoriques qu'il est impératif de corriger pour solidifier la rigueur de notre TER. Les encadrants nous ont imposé une refonte de notre manière de générer nos graphiques pour permettre des comparaisons directes, un ronommage de nos fichiers, ainsi qu'un travail approfondi de formalisation mathématique des outils de la bibliothèque \texttt{ByzFL}.
+
+\section{Directives Techniques et Corrections du Code}
+
+\subsection{Standardisation des baselines et lissage des courbes}
+Lors de l'analyse d'une attaque face à plusieurs agrégateurs, notre protocole doit systématiquement intégrer un point de comparaison neutre :
+\begin{itemize}
+    \item \textbf{Intégration de la baseline saine :} Chaque graphique ou tableau comparatif doit inclure le cas de référence « sans attaque » (\textit{Clean Average}) afin de mesurer précisément la dégradation de l'apprentissage induite par les scénarios byzantins.
+    \item \textbf{Augmentation de la résolution temporelle :} L'extraction des données de précision, bien qu'enregistrée à chaque round, ne sélectionnait jusqu'ici qu'une valeur tous les 50 rounds pour l'affichage. Désormais, l'affichage exploitera un point tous les 10 rounds. Cette modification du pas d'échantillonnage offrira une résolution plus fine, permettant un tracé de courbe naturellement plus fluide et plus représentatif des dynamiques de convergence.
+\end{itemize}
+
+\subsection{Amélioration de l'affichage des graphiques}
+L'affichage actuel (un graphique isolé par scénario) rend les comparaisons visuelles complexes et fastidieuses. Les exigences suivantes doivent être appliquées au script \texttt{comparer\_experiences.py} :
+\begin{itemize}
+    \item \textbf{Graphes combinés multi-courbes :} Pour une attaque donnée, les courbes de convergence de tous les agrégateurs testés doivent être superposées sur un seul et unique graphique.
+    \item \textbf{Uniformisation des échelles (Axes fixes) :} Afin d'éviter les biais de lecture visuelle, tous les graphiques devront adopter une échelle identique pour l'axe des ordonnées (l'accuracy bloquée entre $0.0$ et $1.0$), facilitant la confrontation directe d'un graphique à l'autre.
+\end{itemize}
+
+\subsection{Nomenclature et nettoyage du dépôt}
+Le nommage actuel des fichiers du projet a été qualifié de critique car il ne permet pas de comprendre explicitement leur rôle ou leur contenu. Nous devons mener un renommage global afin de standardiser les scripts et les configurations selon une convention claire et explicite.
+
+\section{Analyses Croisées et Formalisation Théorique}
+
+\subsection{Objectifs des campagnes de simulations}
+Nos prochaines expériences devront explicitement répondre à deux points principaux :
+\begin{enumerate}
+    \item \textbf{Perspective Attaque :} Déterminer, pour une attaque donnée, quel agrégateur offre la meilleure résilience et le meilleur taux de convergence.
+    \item \textbf{Perspective Défense :} Déterminer, pour un agrégateur donné, quelle variante d'attaque byzantine parvient à l'affaiblir le plus ou à contourner ses mécanismes de défense. % CORRIGÉ : Remplacement de barrières géométriques par mécanismes de défense
+\end{enumerate}
+
+\subsection{Création d'un aide-mémoire mathématique et intuitif}
+Constatant des approximations dans notre compréhension fine de certains opérateurs complexes, notamment l'agrégateur \textit{Centered Clipping} et l'impact de ses hyperparamètres clés (le seuil de découpage $\tau$ et le nombre d'itérations internes $m$), les encadrants réclament la rédaction d'un document de synthèse.
+
+Cet aide-mémoire devra répertorier l'intégralité des modules étudiés (attaques, pré-agrégateurs, et agrégateurs) et s'articuler pour chacun d'eux autour de deux piliers :
+\begin{itemize}
+    \item \textbf{Une explication formelle :} L'expression mathématique exacte et rigoureuse de l'algorithme ainsi que le rôle précis de ses paramètres.
+    \item \textbf{Une explication intuitive :} Une vulgarisation géométrique ou statistique du concept permettant de justifier et comprendre en profondeur son fonctionnement et son comportement.
+\end{itemize}
+
+\section{Conclusion et Prochaines étapes}
+Le plan de travail à court terme s'organise ainsi :
+\begin{enumerate}
+    \item Améliorer le script de génération de graphiques pour implémenter les fenêtres multi-courbes à axes fixes ($0.0$ à $1.0$) et modifier le pas d'échantillonnage graphique à 10 rounds.
+    \item Procéder au renommage propre et logique de l'ensemble des fichiers du dépôt Git.
+    \item Rédiger le document d'aide-mémoire théorique sur les mécanismes internes de \texttt{ByzFL}.
+\end{enumerate}
+
+\end{document}

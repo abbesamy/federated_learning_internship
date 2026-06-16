@@ -5,11 +5,20 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# ==============================================================================
+# STRUCTURE DES DOSSIERS (Mise à jour Racine)
+# ==============================================================================
+# __file__ est dans "PROJECT_ROOT/code/nom_du_script.py"
+CODE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = CODE_DIR.parent
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-INPUT_CSV = PROJECT_ROOT / "code" / "resultats_experiences" / "resultats_combines.csv"
-PLOTS_DIR = PROJECT_ROOT / "code" / "resultats_experiences" / "graphiques"
-COMPARISON_DIR = PROJECT_ROOT / "code" / "resultats_experiences" / "comparaison"
+# Dossier global des résultats (au même niveau que code/)
+RESULTS_DIR = PROJECT_ROOT / "resultats_experiences"
+
+INPUT_CSV = RESULTS_DIR / "resultats_combines.csv"
+PLOTS_DIR = RESULTS_DIR / "graphiques"
+COMPARISON_DIR = RESULTS_DIR / "comparaison"
+# ==============================================================================
 
 
 def plot_per_scenario(df: pd.DataFrame) -> None:
@@ -102,10 +111,11 @@ def main() -> None:
     summary = summarize_final_round(df)
     summary.to_csv(COMPARISON_DIR / "resume_final.csv", index=False)
 
+    print(f"\n--- Régénération Globale Terminée ---")
     print(f"Graphiques régénérés à partir de : {INPUT_CSV}")
-    print(f"Graphiques par scénario : {PLOTS_DIR}")
-    print(f"Courbe de comparaison : {COMPARISON_DIR / 'courbe_comparaison_globale.png'}")
-    print(f"CSV de résumé : {COMPARISON_DIR / 'resume_final.csv'}")
+    print(f"Dossier des graphiques par scénario : {PLOTS_DIR}")
+    print(f"Courbe de comparaison globale : {COMPARISON_DIR / 'courbe_comparaison_globale.png'}")
+    print(f"CSV de résumé final : {COMPARISON_DIR / 'resume_final.csv'}")
 
 
 if __name__ == "__main__":

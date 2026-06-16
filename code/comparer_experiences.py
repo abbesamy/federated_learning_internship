@@ -1,15 +1,24 @@
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 
-import argparse
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# ==============================================================================
+# STRUCTURE DES DOSSIERS (Mise à jour Racine)
+# ==============================================================================
+# __file__ est dans "PROJECT_ROOT/code/nom_du_script.py"
+CODE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = CODE_DIR.parent
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_INPUT_CSV = PROJECT_ROOT / "code" / "resultats_experiences" / "resultats_combines.csv"
-DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "code" / "resultats_experiences" / "comparaison"
+# Dossier des résultats sorti de code/ et placé au même niveau
+RESULTS_DIR = PROJECT_ROOT / "resultats_experiences"
+
+DEFAULT_INPUT_CSV = RESULTS_DIR / "resultats_combines.csv"
+DEFAULT_OUTPUT_DIR = RESULTS_DIR / "comparaison"
+# ==============================================================================
 
 
 def parse_args() -> argparse.Namespace:
@@ -113,13 +122,13 @@ def main() -> None:
     summary = summarize_final_round(df)
     summary.to_csv(summary_csv, index=False)
 
+    print(f"\n--- Comparaison Globale Terminée ---")
     print(f"Graphiques de comparaison enregistrés dans : {output_dir}")
-    print(f"Courbe d'accuracy : {accuracy_plot}")
-    print(f"CSV de résumé : {summary_csv}")
-    print("Meilleurs scénarios selon l'accuracy finale :")
+    print(f"Courbe d'accuracy globale : {accuracy_plot}")
+    print(f"CSV de résumé final : {summary_csv}")
+    print("\nMeilleurs scénarios selon l'accuracy finale :")
     print(summary.head(10).to_string(index=False))
 
 
 if __name__ == "__main__":
     main()
-

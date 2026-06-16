@@ -1,0 +1,71 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Paquets ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\title{\textbf{Compte rendu de réunion n°4 : TER BYZFL} \\ \large Robustesse statistique, Hétérogénéité extrême et Préparatifs de soutenance}
+\author{ABBES Samy \& AREZKI Célia} 
+\date{28 Mai 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Informations générales}
+\begin{itemize}
+    \item \textbf{Date de la réunion :} 28 mai 2026 à 15 h 30
+    \item \textbf{Membres du groupe présents :} ABBES Samy, AREZKI Célia
+    \item \textbf{Encadrants présents :} Dupé François-Xavier (en visioconférence), LABOUREL Arnaud
+    \item \textbf{Sujet du TER :} Benchmarking et analyse comparative d'algorithmes d'agrégation robustes en apprentissage fédéré face aux adversaires byzantins avec ByzFL
+\end{itemize}
+
+\section{Objectifs et Orientations de la réunion}
+Cette quatrième réunion de travail s'est concentrée sur le durcissement de notre protocole scientifique afin d'aboutir à des résultats plus fiables. Face aux instabilités observées sur certains scénarios, les encadrants nous ont fourni des directives claires consistant à lisser les résultats et simuler des cas d'hétérogénéité extrême. Enfin, une partie importante de l'échange a été dédiée à la planification des livrables de fin de TER.
+
+\section{Directives Techniques et Protocoles Scientifiques}
+
+\subsection{Fiabilité statistique par multi-seeds (10 graines)}
+Pour pallier le caractère potentiellement aléatoire d'une simulation unique, il nous est désormais demandé d'exécuter chaque scénario sur un échantillon de \textbf{10 graines aléatoires (\textit{seeds}) différentes}. Le pipeline devra calculer la moyenne de l'accuracy sur ces 10 itérations. Cette méthode permettra d'obtenir des courbes de convergence plus fiables que celles exécutées sur un seul seed.
+
+\subsection{Lissage des courbes de convergence}
+Les graphiques générés actuellement présentent des fluctuations brusques et des pics de variance qui nuisent à la lisibilité et compliquent l'extraction de conclusions rigoureuses. Nous devons implémenter le lissage visuel des courbes de résultats afin de faire ressortir la tendance de fond de l'apprentissage fédéré face aux attaques.
+
+\subsection{Hétérogénéité extrême : Dirichlet et \textit{Data Distributor} personnalisé}
+Afin de pousser la résilience des agrégateurs dans des scénarios asymétriques ultra-réalistes, nous devons durcir la distribution Non-IID des données :
+\begin{itemize}
+    \item \textbf{Allocation de Dirichlet :} Tester des coefficients de concentration $\alpha$ très faibles pour accentuer le déséquilibre entre les clients.
+    \item \textbf{Distributeur de données personnalisé :} Nous devrons développer notre propre script de partitionnement (\textit{Data Distributor}). L'objectif est d'atteindre un cas limite où chaque client ne reçoit qu'un échantillon contenant \textbf{une seule et unique classe} du jeu de données (par exemple, le client 1 n'apprend que sur les images de "0", le client 2 sur les "1", etc.). Le client ne saura ainsi reconnaître que sa propre classe, mettant à l'épreuve la capacité des agrégateurs robustes à fusionner des connaissances locales totalement disjointes.
+\end{itemize}
+
+\subsection{Généralisation et mise à niveau système}
+\begin{itemize}
+    \item \textbf{Diversification des datasets :} Analyser et documenter les écarts de comportement des algorithmes lors du passage d'un jeu de données à un autre, en confrontant les dynamiques d'apprentissage sur des structures d'images différentes.
+    \item \textbf{Compatibilité logicielle :} Tenter de faire fonctionner \texttt{ByzFL} sur des environnements très récents, spécifiquement avec \textbf{Python 3.14} et \textbf{PyTorch 2.12}.
+\end{itemize}
+
+\section{Préparatifs de la Soutenance}
+En vue de la fin prochaine de l'année universitaire, la réunion a permis de poser les bases de la phase de rédaction et de restitution :
+
+\begin{itemize}
+    \item \textbf{Prise de contact administrative :} Nous devons rapidement contacter notre responsable, \textbf{Mr Abdellah FOURTASSI}, afin d'obtenir toutes les modalités de la soutenance finale (durée et format de la présentation, contenu attendu du rapport, dates exactes des sessions, etc.).
+    \item \textbf{Exploitation des rapports hebdomadaires :} La structure de notre rapport de TER s'appuiera directement sur le travail de documentation réalisé chaque semaine. L'ensemble de nos comptes rendus de réunion et bilans de recherche servira de fil conducteur pour la rédaction du rapport final.
+    \item \textbf{Valorisation des conclusions :} Nous devrons synthétiser et mettre en valeur les conclusions scientifiques majeures dégagées grâce aux résultats obtenus tout au long de nos campagnes de benchmarks.
+\end{itemize}
+
+\section{Conclusion et Prochaines étapes}
+Le calendrier à court terme intègre deux priorités :
+\begin{enumerate}
+    \item \textbf{Code :} Intégrer la boucle des 10 \textit{seeds}, adapter le script de rendu graphique pour y ajouter le lissage des courbes, concevoir le système de distribution mono-classe et continuer nos expériences.
+    \item \textbf{Rédaction :} Initialiser le document du rapport de TER et envoyer le mail de demande d'informations à notre responsable de formation.
+\end{enumerate}
+
+\end{document}

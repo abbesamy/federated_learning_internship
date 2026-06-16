@@ -17,30 +17,29 @@ commandes, ainsi que de configurer le type d'exécution de Google Colab sur l'ac
 # Installations
 !uv pip install --system -r requirements.txt
 
-# Lancement de l'execution du fichier
+# Lancer l'execution du fichier
 !python code/lancer_experiences.py
 
 
 
 
-# Commandes pour faire un push depuis colab une fois l'expérience finalisée pour avoir les mise à jour des résultats et des graphiques
 
-# Se placer à la racine
+# 1. Se placer 
 %cd /content/ter_iaaa_byzfl_abbes_arezki
 
-# Configuration Git
+# 2. Configuration Git
 !git config user.email "nom.prenom@etu.univ-amu.fr"
 !git config user.name "Prénom Nom"
 
-# En cas de modification pendant l'expérience
+# 3. En cas de modification pendant l'exérience lancée sur colab
 !git pull origin main --no-rebase --no-edit
 
-# Ajouter les fichiers modifiés
+# 4. Ajouter tes fichiers modifiés
 !git add .
 
-# Créer le commit
+# 5. Créer le commit
 !git commit -m "message du commit"
 
-# Envoyer sur Etulab
+# 6. Envoyer sur Etulab
 !git push origin main
 
