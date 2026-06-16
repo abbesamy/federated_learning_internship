@@ -2,32 +2,32 @@
   "scenarios": [
     {
       "name": "iid_infinity_median",
-      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_median.json",
+      "file": "configurations_experiences/scenarios/infinity/iid_infinity_median.json",
       "description": "MNIST IID Infinity with Median"
     },
     {
       "name": "iid_infinity_trmean",
-      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_trmean.json",
+      "file": "configurations_experiences/scenarios/infinity/iid_infinity_trmean.json",
       "description": "MNIST IID Infinity with TrMean"
     },
     {
       "name": "iid_infinity_geometricmedian",
-      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_geometricmedian.json",
+      "file": "configurations_experiences/scenarios/infinity/iid_infinity_geometricmedian.json",
       "description": "MNIST IID Infinity with GeometricMedian"
     },
     {
       "name": "iid_infinity_krum",
-      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_krum.json",
+      "file": "configurations_experiences/scenarios/infinity/iid_infinity_krum.json",
       "description": "MNIST IID Infinity with Krum"
     },
     {
       "name": "iid_infinity_multikrum",
-      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_multikrum.json",
+      "file": "configurations_experiences/scenarios/infinity/iid_infinity_multikrum.json",
       "description": "MNIST IID Infinity with MultiKrum"
     },
     {
       "name": "iid_infinity_centeredclipping",
-      "file": "code/configurations_experiences/scenarios/infinity/iid_infinity_centeredclipping.json",
+      "file": "configurations_experiences/scenarios/infinity/iid_infinity_centeredclipping.json",
       "description": "MNIST IID Infinity with CenteredClipping"
     }
   ]
