@@ -22,8 +22,12 @@ Activer l'environnement virtuel avec les deux commandes  suivantes (depuis la ra
     source .venv/bin/activate
 
 Installer les dépendances exactes du projet (le fichier "uv.lock" se trouve dans le dossier racine du projet):
+    
+    uv pip sync uv.lock
 
-    uv pip install -r uv.lock
+Le fichier uv.lock a été généré grace à cette commande :
+    
+    uv pip compile requirements.txt -o uv.lock
 
 ## Organisation des scripts
 
