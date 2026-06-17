@@ -1,0 +1,90 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Paquets ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tabularx} % Pour empêcher le tableau de dépasser à droite
+\usepackage{graphicx} % Ajout nécessaire pour l'insertion des images
+\usepackage{float}    % Ajout nécessaire pour forcer le placement exact des images avec [H]
+
+% --- Configuration Code ---
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{gray},
+    breaklines=true,
+    frame=single,
+}
+
+\title{\textbf{Rapport de recherche : Bibliothèque ByzFL} \\ \large Amélioration visuelle, normalisation et fondations théoriques}
+\author{ABBES Samy \& AREZKI Célia}
+\date{Semaine du 08 Juin 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Cette semaine a été consacrée à l'amélioration de la lisibilité de notre dépôt, à l'optimisation de nos outils d'analyse visuelle et à la consolidation théorique de nos expériences. Nous avons révisé la nomenclature de nos fichiers, relancé nos campagnes d'expériences pour générer des graphiques comparatifs de meilleure qualité.
+
+\section{Restructuration et Nomenclature}
+Afin de faciliter la navigation au sein de notre base de code et la compréhension immédiate de nos travaux, nous avons procédé à un renommage systématique des fichiers. 
+De nouveaux scénarios ont également été ajoutés pour enrichir notre spectre de tests. Désormais, l'arborescence et le nommage des scripts et des fichiers de configurations reflètent intuitivement le contenu et l'objectif de chaque expérience, ce qui fluidifie grandement le travail collaboratif et la relecture.
+
+\section{Amélioration du Pipeline Graphique et Ré-exécution}
+Lors des semaines précédentes, l'analyse des performances était rendue difficile par la multiplicité des graphiques individuels et l'hétérogénéité de leurs échelles. Nous avons donc mis à jour notre script de traçage pour appliquer les règles suivantes :
+\begin{itemize}
+    \item \textbf{Échelle standardisée :} Tous les graphiques d'accuracy partagent désormais la même échelle sur l'axe des ordonnées (généralement de 0.0 à 1.0), permettant d'apprécier la convergence absolue d'un simple coup d'œil.
+    \item \textbf{Fusion des courbes :} Pour une attaque donnée, les performances des différents agrégateurs sont désormais tracées sur un seul et unique graphique. Cette superposition facilite grandement l'analyse comparative de la robustesse relative de chaque algorithme de défense.
+\end{itemize}
+
+Pour appliquer ces nouvelles normes, nous avons réexécuté les expériences précédentes. Les résultats visuels obtenus, présentés ci-dessous, sont nettement plus qualitatifs.
+
+\subsection{Analyse des attaques classiques}
+
+Face aux attaques \textit{SignFlipping} et \textit{InnerProductManipulation}, les graphiques confirment de manière claire la résilience de la majorité des agrégateurs étudiés, qui convergent tous vers des scores supérieurs à 0.95.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{courbe_signflipping_agregateurs.png}
+    \caption{Comparaison des agrégateurs face à l'attaque SignFlipping sur 500 rounds.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{courbe_innerproductmanipulation_agregateurs.png}
+    \caption{Comparaison des agrégateurs face à l'attaque InnerProductManipulation sur 500 rounds.}
+\end{figure}
+
+\subsection{Le cas particulier de l'attaque Infinity}
+
+L'exécution de l'attaque \textit{Infinity} met en évidence une vulnérabilité critique de l'agrégateur \textbf{CenteredClipping}. Tandis que les autres agrégateurs (Median, TrMean, Krum, etc.) parviennent à ignorer ces valeurs aberrantes et à converger normalement, CenteredClipping stagne à une accuracy d'environ 0.10 (équivalent à des prédictions purement aléatoires sur 10 classes).
+
+\textbf{Interprétation analytique :} L'attaque Infinity introduit des valeurs extrêmes (infinies) dans les vecteurs de mise à jour. Dans la formule du \textit{Centered Clipping}, la distance $\|x_i - v_\ell\|_2$ devient infinie. Le terme de rognage $\min(1, \tau / \infty)$ devient donc $0$. Cependant, l'algorithme doit multiplier ce scalaire $0$ par le vecteur initial $(x_i - v_\ell)$ qui est infini. Informatiquement, l'opération $\infty \times 0$ génère instantanément des valeurs \texttt{NaN} (\textit{Not a Number}). Dès le premier round, la moyenne est corrompue et les poids du modèle global sont détruits de manière irréversible. Le modèle effectuant alors des prédictions purement aléatoires sur un jeu de données à 10 classes (MNIST), l'accuracy stagne logiquement autour de la probabilité théorique de $1/10$ (soit $0.10$).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{courbe_inf_agregateurs.png}
+    \caption{Vulnérabilité de CenteredClipping (courbe rouge plate) face à l'attaque Infinity, contrastant avec la robustesse des autres agrégateurs.}
+\end{figure}
+
+\section{Rapport Théorique et Mathématique}
+En parallèle du volet expérimental, nous avons produit un document de synthèse formel visant à expliciter le fonctionnement sous-jacent des mécanismes utilisés dans le projet ByzFL. 
+
+Ce document, disponible dans le répertoire \texttt{rapport\_principal}, détaille de manière rigoureuse :
+\begin{itemize}
+    \item \textbf{Les fondements mathématiques} des différents \textbf{agrégateurs} et \textbf{pré-agrégateurs}.
+    \item \textbf{Les intuitions vulgarisées} permettant de mieux comprendre le comportement de ces formules et ainsi mieux interpréter les résultats expérimentaux.
+\end{itemize}
+Ce socle théorique nous est désormais indispensable pour interpréter correctement nos observations empiriques, à l'image du diagnostic posé sur l'échec du \textit{CenteredClipping} face à l'attaque Infinity.
+
+\end{document}
