@@ -1,9 +1,0 @@
-{
-  "name": "iid_opt_alie_geometricmedian",
-  "dataset": "MNIST",
-  "distribution": "iid",
-  "nb_honest": 4,
-  "nb_byz": 1,
-  "aggregator": "GeometricMedian",
-  "attack": "Optimal_ALittleIsEnough"
-}

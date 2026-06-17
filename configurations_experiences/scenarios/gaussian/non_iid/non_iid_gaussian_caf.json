@@ -1,0 +1,10 @@
+{
+  "name": "non_iid_gaussian_caf",
+  "dataset": "MNIST",
+  "distribution": "non-iid",
+  "nb_honest": 5,
+  "nb_byz": 2,
+  "aggregator": "CAF",
+  "attack": "Gaussian",
+  "alpha": 0.5
+}

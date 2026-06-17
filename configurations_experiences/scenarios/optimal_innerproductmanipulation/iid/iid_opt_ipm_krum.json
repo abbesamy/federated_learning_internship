@@ -1,0 +1,9 @@
+{
+  "name": "iid_opt_ipm_krum",
+  "dataset": "MNIST",
+  "distribution": "iid",
+  "nb_honest": 4,
+  "nb_byz": 1,
+  "aggregator": "Krum",
+  "attack": "Optimal_InnerProductManipulation"
+}

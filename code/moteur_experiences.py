@@ -112,7 +112,7 @@ def build_dataloaders(config: dict[str, Any]):
 
 def build_aggregator_parameters(config: dict[str, Any], aggregator_name: str) -> dict[str, Any]:
     aggregator_parameters = copy.deepcopy(config.get("aggregator_parameters", {}))
-    if aggregator_name in {"TrMean", "Krum", "MultiKrum"}:
+    if aggregator_name in {"TrMean", "Krum", "MultiKrum", "MDA", "MoNNA", "Meamed", "CAF", "SMEA"}:
         aggregator_parameters.setdefault("f", int(config["nb_byz"]))
     return aggregator_parameters
 

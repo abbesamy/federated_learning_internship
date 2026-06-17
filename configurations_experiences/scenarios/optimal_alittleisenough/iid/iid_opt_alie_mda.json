@@ -1,0 +1,9 @@
+{
+  "name": "iid_opt_alie_mda",
+  "dataset": "MNIST",
+  "distribution": "iid",
+  "nb_honest": 4,
+  "nb_byz": 1,
+  "aggregator": "MDA",
+  "attack": "Optimal_ALittleIsEnough"
+}

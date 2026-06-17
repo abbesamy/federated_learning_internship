@@ -1,9 +1,0 @@
-{
-  "name": "iid_opt_ipm_median",
-  "dataset": "MNIST",
-  "distribution": "iid",
-  "nb_honest": 4,
-  "nb_byz": 1,
-  "aggregator": "Median",
-  "attack": "Optimal_InnerProductManipulation"
-}

@@ -1,0 +1,9 @@
+{
+  "name": "iid_gaussian_multikrum",
+  "dataset": "MNIST",
+  "distribution": "iid",
+  "nb_honest": 4,
+  "nb_byz": 1,
+  "aggregator": "MultiKrum",
+  "attack": "Gaussian"
+}

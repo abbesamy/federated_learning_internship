@@ -1,0 +1,9 @@
+{
+  "name": "iid_alittle_smea",
+  "dataset": "MNIST",
+  "distribution": "iid",
+  "nb_honest": 4,
+  "nb_byz": 1,
+  "aggregator": "SMEA",
+  "attack": "ALittleIsEnough"
+}

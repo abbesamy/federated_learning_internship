@@ -1,0 +1,9 @@
+{
+  "name": "iid_infinity_geometricmedian",
+  "dataset": "MNIST",
+  "distribution": "iid",
+  "nb_honest": 4,
+  "nb_byz": 1,
+  "aggregator": "GeometricMedian",
+  "attack": "Inf"
+}

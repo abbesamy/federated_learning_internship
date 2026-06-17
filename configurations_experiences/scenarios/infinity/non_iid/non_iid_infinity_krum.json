@@ -1,0 +1,10 @@
+{
+  "name": "non_iid_infinity_krum",
+  "dataset": "MNIST",
+  "distribution": "non-iid",
+  "nb_honest": 5,
+  "nb_byz": 2,
+  "aggregator": "Krum",
+  "attack": "Inf",
+  "alpha": 0.5
+}

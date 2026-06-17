@@ -1,9 +1,0 @@
-{
-  "name": "signflipping_Average",
-  "dataset": "MNIST",
-  "distribution": "iid",
-  "nb_honest": 3,
-  "nb_byz": 1,
-  "aggregator": "Average",
-  "attack": "SignFlipping"
-}

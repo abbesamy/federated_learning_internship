@@ -1,0 +1,10 @@
+{
+  "name": "non_iid_innerproduct_geometricmedian",
+  "dataset": "MNIST",
+  "distribution": "non-iid",
+  "nb_honest": 5,
+  "nb_byz": 2,
+  "aggregator": "GeometricMedian",
+  "attack": "InnerProductManipulation",
+  "alpha": 0.5
+}

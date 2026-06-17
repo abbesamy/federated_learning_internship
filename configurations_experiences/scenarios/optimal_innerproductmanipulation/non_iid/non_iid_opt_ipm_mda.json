@@ -1,0 +1,10 @@
+{
+  "name": "non_iid_opt_ipm_mda",
+  "dataset": "MNIST",
+  "distribution": "non-iid",
+  "nb_honest": 5,
+  "nb_byz": 2,
+  "aggregator": "MDA",
+  "attack": "Optimal_InnerProductManipulation",
+  "alpha": 0.5
+}

@@ -1,0 +1,9 @@
+{
+  "name": "iid_signflipping_mda",
+  "dataset": "MNIST",
+  "distribution": "iid",
+  "nb_honest": 4,
+  "nb_byz": 1,
+  "aggregator": "MDA",
+  "attack": "SignFlipping"
+}

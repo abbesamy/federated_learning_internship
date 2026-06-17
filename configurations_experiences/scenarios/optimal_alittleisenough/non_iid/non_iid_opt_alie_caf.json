@@ -1,0 +1,10 @@
+{
+  "name": "non_iid_opt_alie_caf",
+  "dataset": "MNIST",
+  "distribution": "non-iid",
+  "nb_honest": 5,
+  "nb_byz": 2,
+  "aggregator": "CAF",
+  "attack": "Optimal_ALittleIsEnough",
+  "alpha": 0.5
+}

@@ -1,0 +1,10 @@
+{
+  "name": "non_iid_signflipping_centeredclipping",
+  "dataset": "MNIST",
+  "distribution": "non-iid",
+  "nb_honest": 5,
+  "nb_byz": 2,
+  "aggregator": "CenteredClipping",
+  "attack": "SignFlipping",
+  "alpha": 0.5
+}
