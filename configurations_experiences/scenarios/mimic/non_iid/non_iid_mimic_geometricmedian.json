@@ -1,0 +1,10 @@
+{
+  "name": "non_iid_mimic_geometricmedian",
+  "dataset": "MNIST",
+  "distribution": "non-iid",
+  "alpha": 0.5,
+  "nb_honest": 5,
+  "nb_byz": 2,
+  "aggregator": "GeometricMedian",
+  "attack": "Mimic"
+}

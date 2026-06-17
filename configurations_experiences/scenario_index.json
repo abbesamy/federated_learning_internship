@@ -1,34 +1,64 @@
 {
   "scenarios": [
     {
-      "name": "iid_infinity_median",
-      "file": "configurations_experiences/scenarios/infinity/iid_infinity_median.json",
-      "description": "MNIST IID Infinity with Median"
+      "name": "non_iid_mimic_centeredclipping",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_centeredclipping.json",
+      "description": "MNIST Non-IID - Mimic - CenteredClipping"
     },
     {
-      "name": "iid_infinity_trmean",
-      "file": "configurations_experiences/scenarios/infinity/iid_infinity_trmean.json",
-      "description": "MNIST IID Infinity with TrMean"
+      "name": "non_iid_mimic_average",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_average.json",
+      "description": "MNIST Non-IID - Mimic - Average"
     },
     {
-      "name": "iid_infinity_geometricmedian",
-      "file": "configurations_experiences/scenarios/infinity/iid_infinity_geometricmedian.json",
-      "description": "MNIST IID Infinity with GeometricMedian"
+      "name": "non_iid_mimic_median",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_median.json",
+      "description": "MNIST Non-IID - Mimic - Median"
     },
     {
-      "name": "iid_infinity_krum",
-      "file": "configurations_experiences/scenarios/infinity/iid_infinity_krum.json",
-      "description": "MNIST IID Infinity with Krum"
+      "name": "non_iid_mimic_trmean",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_trmean.json",
+      "description": "MNIST Non-IID - Mimic - TrMean"
     },
     {
-      "name": "iid_infinity_multikrum",
-      "file": "configurations_experiences/scenarios/infinity/iid_infinity_multikrum.json",
-      "description": "MNIST IID Infinity with MultiKrum"
+      "name": "non_iid_mimic_geometricmedian",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_geometricmedian.json",
+      "description": "MNIST Non-IID - Mimic - GeometricMedian"
     },
     {
-      "name": "iid_infinity_centeredclipping",
-      "file": "configurations_experiences/scenarios/infinity/iid_infinity_centeredclipping.json",
-      "description": "MNIST IID Infinity with CenteredClipping"
+      "name": "non_iid_mimic_krum",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_krum.json",
+      "description": "MNIST Non-IID - Mimic - Krum"
+    },
+    {
+      "name": "non_iid_mimic_multikrum",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_multikrum.json",
+      "description": "MNIST Non-IID - Mimic - MultiKrum"
+    },
+    {
+      "name": "non_iid_mimic_mda",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_mda.json",
+      "description": "MNIST Non-IID - Mimic - MDA"
+    },
+    {
+      "name": "non_iid_mimic_monna",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_monna.json",
+      "description": "MNIST Non-IID - Mimic - MoNNA"
+    },
+    {
+      "name": "non_iid_mimic_meamed",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_meamed.json",
+      "description": "MNIST Non-IID - Mimic - Meamed"
+    },
+    {
+      "name": "non_iid_mimic_caf",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_caf.json",
+      "description": "MNIST Non-IID - Mimic - CAF"
+    },
+    {
+      "name": "non_iid_mimic_smea",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_smea.json",
+      "description": "MNIST Non-IID - Mimic - SMEA"
     }
   ]
 }

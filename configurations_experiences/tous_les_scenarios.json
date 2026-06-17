@@ -92,33 +92,93 @@
     },
     {
       "name": "iid_mimic_centeredclipping",
-      "file": "configurations_experiences/scenarios/mimic/iid_mimic_centeredclipping.json",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_centeredclipping.json",
       "description": "MNIST IID - Mimic - CenteredClipping"
     },
     {
       "name": "iid_mimic_geometricmedian",
-      "file": "configurations_experiences/scenarios/mimic/iid_mimic_geometricmedian.json",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_geometricmedian.json",
       "description": "MNIST IID - Mimic - GeometricMedian"
     },
     {
       "name": "iid_mimic_krum",
-      "file": "configurations_experiences/scenarios/mimic/iid_mimic_krum.json",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_krum.json",
       "description": "MNIST IID - Mimic - Krum"
     },
     {
       "name": "iid_mimic_median",
-      "file": "configurations_experiences/scenarios/mimic/iid_mimic_median.json",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_median.json",
       "description": "MNIST IID - Mimic - Median"
     },
     {
       "name": "iid_mimic_multikrum",
-      "file": "configurations_experiences/scenarios/mimic/iid_mimic_multikrum.json",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_multikrum.json",
       "description": "MNIST IID - Mimic - MultiKrum"
     },
     {
       "name": "iid_mimic_trmean",
-      "file": "configurations_experiences/scenarios/mimic/iid_mimic_trmean.json",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_trmean.json",
       "description": "MNIST IID - Mimic - TrMean"
+    },
+    {
+      "name": "non_iid_mimic_centeredclipping",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_centeredclipping.json",
+      "description": "MNIST Non-IID - Mimic - CenteredClipping"
+    },
+    {
+      "name": "non_iid_mimic_average",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_average.json",
+      "description": "MNIST Non-IID - Mimic - Average"
+    },
+    {
+      "name": "non_iid_mimic_median",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_median.json",
+      "description": "MNIST Non-IID - Mimic - Median"
+    },
+    {
+      "name": "non_iid_mimic_trmean",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_trmean.json",
+      "description": "MNIST Non-IID - Mimic - TrMean"
+    },
+    {
+      "name": "non_iid_mimic_geometricmedian",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_geometricmedian.json",
+      "description": "MNIST Non-IID - Mimic - GeometricMedian"
+    },
+    {
+      "name": "non_iid_mimic_krum",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_krum.json",
+      "description": "MNIST Non-IID - Mimic - Krum"
+    },
+    {
+      "name": "non_iid_mimic_multikrum",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_multikrum.json",
+      "description": "MNIST Non-IID - Mimic - MultiKrum"
+    },
+    {
+      "name": "non_iid_mimic_mda",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_mda.json",
+      "description": "MNIST Non-IID - Mimic - MDA"
+    },
+    {
+      "name": "non_iid_mimic_monna",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_monna.json",
+      "description": "MNIST Non-IID - Mimic - MoNNA"
+    },
+    {
+      "name": "non_iid_mimic_meamed",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_meamed.json",
+      "description": "MNIST Non-IID - Mimic - Meamed"
+    },
+    {
+      "name": "non_iid_mimic_caf",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_caf.json",
+      "description": "MNIST Non-IID - Mimic - CAF"
+    },
+    {
+      "name": "non_iid_mimic_smea",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_smea.json",
+      "description": "MNIST Non-IID - Mimic - SMEA"
     },
     {
       "name": "iid_clean_average",
