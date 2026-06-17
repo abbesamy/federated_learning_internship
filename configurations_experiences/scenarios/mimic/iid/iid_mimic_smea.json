@@ -2,8 +2,8 @@
   "name": "iid_mimic_smea",
   "dataset": "MNIST",
   "distribution": "iid",
-  "nb_honest": 4,
-  "nb_byz": 1,
+  "nb_honest": 5,
+  "nb_byz": 2,
   "aggregator": "SMEA",
   "attack": "Mimic"
 }

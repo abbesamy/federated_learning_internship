@@ -3,8 +3,8 @@
   "dataset": "MNIST",
   "distribution": "dirichlet_niid",
   "distribution_parameter": 0.5,
-  "nb_honest": 4,
-  "nb_byz": 1,
+  "nb_honest": 5,
+  "nb_byz": 2,
   "aggregator": "Median",
   "attack": "InnerProductManipulation",
   "attack_tau": 2.0
