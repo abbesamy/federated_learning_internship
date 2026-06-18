@@ -2,6 +2,24 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import torch
+
+# ==============================================================================
+# MONKEY PATCH POUR BYZFL (Bug as_tensor / dtype=int avec Python 3.11+)
+# ==============================================================================
+_orig_as_tensor = torch.as_tensor
+
+def _patched_as_tensor(data, dtype=None, device=None):
+    # Intercepte le type 'int' ou 'float' Python natif pour le convertir 
+    # au format Tensor d'indexation / calcul propre exigé par PyTorch récent
+    if dtype is int:
+        dtype = torch.int64
+    elif dtype is float:
+        dtype = torch.float32
+    return _orig_as_tensor(data, dtype=dtype, device=device)
+
+torch.as_tensor = _patched_as_tensor
+
 
 from moteur_experiences import (
     DEFAULT_COMMON_CONFIG,
@@ -71,7 +89,7 @@ def main() -> None:
         records = run_scenario(config)
         all_records.extend(records)
 
-    # Modification ici : Le dossier par défaut 'resultats_experiences' est désormais 
+    # Modification : Le dossier par défaut 'resultats_experiences' est désormais 
     # au même niveau que le répertoire 'code', et non plus à l'intérieur.
     output_dir = resolve_repo_path(common_config.get("output_dir", "resultats_experiences"))
     
