@@ -1,4 +1,4 @@
 rank_dans_attaque,attack,scenario,aggregator,round,accuracy,error,nb_honest,nb_byz
-1,inf,iid_infinity_multikrum,MultiKrum,500,0.9836,0.0163999999999999,4,1
 1,InnerProductManipulation,iid_innerproduct_multikrum,MultiKrum,500,0.9811,0.0189,4,1
+1,Mimic,non_iid_mimic_centeredclipping,CenteredClipping,500,0.9834,0.0165999999999999,5,2
 1,SignFlipping,signflipping_Average,Average,500,0.9772,0.0228,3,1
