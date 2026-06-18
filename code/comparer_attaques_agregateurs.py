@@ -10,11 +10,10 @@ import pandas as pd
 # ==============================================================================
 # STRUCTURE DES DOSSIERS (Mise à jour Racine)
 # ==============================================================================
-# __file__ est dans "PROJECT_ROOT/code/comparer_attaques.py" (ou équivalent)
 CODE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = CODE_DIR.parent
 
-# Dossier des résultats globaux sorti de code/ et placé au même niveau
+# Dossier des résultats globaux
 RESULTS_DIR = PROJECT_ROOT / "resultats_experiences"
 
 # Dossier par défaut pour les graphiques comparatifs
@@ -58,15 +57,10 @@ def build_color_map(aggregators: list[str]) -> dict[str, str]:
 
 
 def discover_input_csvs() -> list[Path]:
-    preferred_names = [
-        "resultats_combines.csv",
-        "resultats_colab.csv",
-        "resultats_colab_produit_interne.csv",
-    ]
-    discovered = [RESULTS_DIR / name for name in preferred_names if (RESULTS_DIR / name).exists()]
-    if discovered:
-        return discovered
-    return sorted(RESULTS_DIR.glob("resultats*.csv"))
+    # CORRECTION : On récupère absolument TOUS les fichiers qui commencent par 'resultats'
+    # Cela permet d'inclure 'resultats_combines.csv' ET les fichiers spécifiques comme 'resultats_signflipping_non_iid.csv'
+    all_discovered = sorted(RESULTS_DIR.glob("resultats*.csv"))
+    return all_discovered
 
 
 def ordered_aggregators(df: pd.DataFrame) -> list[str]:
