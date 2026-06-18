@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
 from moteur_experiences import (
@@ -30,6 +31,27 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--eval-interval", type=int, help="Override evaluation interval.")
     parser.add_argument("--output-dir", type=str, help="Override output directory.")
     return parser.parse_args()
+
+
+def sanitize_name(value: object) -> str:
+    value_str = str(value) if value is not None else ""
+    normalized = re.sub(r"[^A-Za-z0-9]+", "_", value_str.strip().lower())
+    return normalized.strip("_") or "resultats"
+
+
+def build_output_filename(scenario_configs: list[dict[str, object]]) -> str:
+    if not scenario_configs:
+        return "resultats_combines.csv"
+
+    attacks = {str(config.get("attack", "")).strip() for config in scenario_configs}
+    distributions = {str(config.get("distribution", "")).strip() for config in scenario_configs}
+
+    if len(attacks) == 1 and len(distributions) == 1:
+        attack_name = sanitize_name(next(iter(attacks)))
+        distribution_name = sanitize_name(next(iter(distributions)))
+        return f"resultats_{attack_name}_{distribution_name}.csv"
+
+    return "resultats_combines.csv"
 
 
 def main() -> None:
@@ -64,8 +86,10 @@ def main() -> None:
                 raise SystemExit(f"Unknown scenario(s): {', '.join(sorted(missing))}")
 
     all_records = []
+    scenario_configs: list[dict[str, object]] = []
     for entry in scenario_entries:
         scenario_config = load_json(resolve_repo_path(entry["file"]))
+        scenario_configs.append(scenario_config)
         config = build_config(common_config, scenario_config)
         print(f"Running scenario: {config['name']}")
         records = run_scenario(config)
@@ -74,8 +98,9 @@ def main() -> None:
     # Modification ici : Le dossier par défaut 'resultats_experiences' est désormais 
     # au même niveau que le répertoire 'code', et non plus à l'intérieur.
     output_dir = resolve_repo_path(common_config.get("output_dir", "resultats_experiences"))
-    
-    csv_path = save_records(all_records, output_dir)
+
+    output_filename = build_output_filename(scenario_configs)
+    csv_path = save_records(all_records, output_dir, filename=output_filename)
     plot_records(all_records, output_dir)
     print(f"Results saved to: {csv_path}")
     print(f"Graphiques enregistrés dans : {output_dir / 'graphiques'}")
