@@ -1,8 +1,8 @@
 {
   "name": "non_iid_innerproduct_median",
   "dataset": "MNIST",
-  "distribution": "non-iid",
-  "alpha": 0.5,
+  "distribution": "non_iid",
+  "dirichlet_parameter": 0.5,
   "nb_honest": 5,
   "nb_byz": 2,
   "aggregator": "Median",
