@@ -28,18 +28,22 @@ commandes, ainsi que de configurer le type d'exécution de Google Colab sur l'ac
 %cd /content/ter_iaaa_byzfl_abbes_arezki
 
 # 2. Configuration Git
-!git config user.email "nom.prenom@etu.univ-amu.fr"
-!git config user.name "Prénom Nom"
+!git config user.email "celia.arezki.1@etu.univ-amu.fr"
+!git config user.name "Celia AREZKI"
 
 # 3. En cas de modification pendant l'exérience lancée sur colab
-!git pull origin main --no-rebase --no-edit
-
-# 4. Ajouter tes fichiers modifiés
+!git status
 !git add .
+!git commit -m "mise a jour des resultats colab"
 
-# 5. Créer le commit
-!git commit -m "message du commit"
+# 4. Recuperer les derniers changements distants avant de pousser
+!git pull --rebase origin main
 
-# 6. Envoyer sur Etulab
+# 5. Envoyer sur Etulab
 !git push origin main
+
+# Si git signale un conflit sur resultats_experiences/resultats_combines.csv :
+# - terminer d'abord le commit local des nouveaux résultats,
+# - relancer le pull --rebase,
+# - puis refaire le push.
 
