@@ -6,21 +6,27 @@ from pathlib import Path
 import torch
 
 # ==============================================================================
-# MONKEY PATCH POUR BYZFL (Bug as_tensor / dtype=int avec Python 3.11+)
+# MONKEY PATCH ULTRA-ROBUSTE POUR BYZFL (Bug as_tensor avec Python 3.11+)
 # ==============================================================================
 _orig_as_tensor = torch.as_tensor
 
-def _patched_as_tensor(data, dtype=None, device=None):
-    # Intercepte le type 'int' ou 'float' Python natif pour le convertir 
-    # au format Tensor d'indexation / calcul propre exigé par PyTorch récent
-    if dtype is int:
-        dtype = torch.int64
-    elif dtype is float:
-        dtype = torch.float32
-    return _orig_as_tensor(data, dtype=dtype, device=device)
+def _patched_as_tensor(data, dtype=None, device=None, **kwargs):
+    # Si ByzFL envoie un type qui n'est pas un type PyTorch officiel (ex: int, bool, np.float)
+    if dtype is not None and not isinstance(dtype, torch.dtype):
+        dtype_str = str(dtype).lower()
+        if 'int' in dtype_str:
+            dtype = torch.int64
+        elif 'float' in dtype_str:
+            dtype = torch.float32
+        elif 'bool' in dtype_str:
+            dtype = torch.bool
+        else:
+            dtype = None  # Fallback ultime : on laisse PyTorch deviner
+            
+    return _orig_as_tensor(data, dtype=dtype, device=device, **kwargs)
 
 torch.as_tensor = _patched_as_tensor
-
+# ==============================================================================
 
 from moteur_experiences import (
     DEFAULT_COMMON_CONFIG,
