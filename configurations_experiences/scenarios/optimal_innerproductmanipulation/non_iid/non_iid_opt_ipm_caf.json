@@ -2,9 +2,9 @@
   "name": "non_iid_opt_ipm_caf",
   "dataset": "MNIST",
   "distribution": "non-iid",
+  "alpha": 0.5,
   "nb_honest": 5,
   "nb_byz": 2,
   "aggregator": "CAF",
-  "attack": "Optimal_InnerProductManipulation",
-  "alpha": 0.5
+  "attack": "Optimal_InnerProductManipulation"
 }

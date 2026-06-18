@@ -2,9 +2,9 @@
   "name": "non_iid_opt_alie_trmean",
   "dataset": "MNIST",
   "distribution": "non-iid",
+  "alpha": 0.5,
   "nb_honest": 5,
   "nb_byz": 2,
   "aggregator": "TrMean",
-  "attack": "Optimal_ALittleIsEnough",
-  "alpha": 0.5
+  "attack": "Optimal_ALittleIsEnough"
 }

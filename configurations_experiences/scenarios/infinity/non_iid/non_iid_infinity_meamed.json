@@ -2,9 +2,9 @@
   "name": "non_iid_infinity_meamed",
   "dataset": "MNIST",
   "distribution": "non-iid",
+  "alpha": 0.5,
   "nb_honest": 5,
   "nb_byz": 2,
   "aggregator": "Meamed",
-  "attack": "Inf",
-  "alpha": 0.5
+  "attack": "Inf"
 }
