@@ -1,63 +1,63 @@
 {
   "scenarios": [
-{"name": "iid_signflipping_average",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_average.json",
-      "description": "MNIST IID - Sign Flipping - Average"
+{"name": "iid_mimic_average",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_average.json",
+      "description": "MNIST IID - Mimic - Average"
     },
     {
-      "name": "iid_signflipping_median",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_median.json",
-      "description": "MNIST IID - Sign Flipping - Median"
+      "name": "iid_mimic_median",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_median.json",
+      "description": "MNIST IID - Mimic - Median"
     },
     {
-      "name": "iid_signflipping_trmean",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_trmean.json",
-      "description": "MNIST IID - Sign Flipping - Trimmed Mean"
+      "name": "iid_mimic_trmean",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_trmean.json",
+      "description": "MNIST IID - Mimic - Trimmed Mean"
     },
     {
-      "name": "iid_signflipping_geometricmedian",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_geometricmedian.json",
-      "description": "MNIST IID - Sign Flipping - Geometric Median"
+      "name": "iid_mimic_geometricmedian",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_geometricmedian.json",
+      "description": "MNIST IID - Mimic - Geometric Median"
     },
     {
-      "name": "iid_signflipping_krum",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_krum.json",
-      "description": "MNIST IID - Sign Flipping - Krum"
+      "name": "iid_mimic_krum",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_krum.json",
+      "description": "MNIST IID - Mimic - Krum"
     },
     {
-      "name": "iid_signflipping_multikrum",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_multikrum.json",
-      "description": "MNIST IID - Sign Flipping - Multi-Krum"
+      "name": "iid_mimic_multikrum",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_multikrum.json",
+      "description": "MNIST IID - Mimic - Multi-Krum"
     },
     {
-      "name": "iid_signflipping_centeredclipping",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_centeredclipping.json",
-      "description": "MNIST IID - Sign Flipping - Centered Clipping"
+      "name": "iid_mimic_centeredclipping",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_centeredclipping.json",
+      "description": "MNIST IID - Mimic - Centered Clipping"
     },
     {
-      "name": "iid_signflipping_mda",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_mda.json",
-      "description": "MNIST IID - Sign Flipping - Minimum Diameter Averaging (MDA)"
+      "name": "iid_mimic_mda",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_mda.json",
+      "description": "MNIST IID - Mimic - Minimum Diameter Averaging (MDA)"
     },
     {
-      "name": "iid_signflipping_monna",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_monna.json",
-      "description": "MNIST IID - Sign Flipping - MoNNA"
+      "name": "iid_mimic_monna",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_monna.json",
+      "description": "MNIST IID - Mimic - MoNNA"
     },
     {
-      "name": "iid_signflipping_meamed",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_meamed.json",
-      "description": "MNIST IID - Sign Flipping - Meamed"
+      "name": "iid_mimic_meamed",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_meamed.json",
+      "description": "MNIST IID - Mimic - Meamed"
     },
     {
-      "name": "iid_signflipping_caf",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_caf.json",
-      "description": "MNIST IID - Sign Flipping - Covariance-bound Agnostic Filter (CAF)"
+      "name": "iid_mimic_caf",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_caf.json",
+      "description": "MNIST IID - Mimic - Covariance-bound Agnostic Filter (CAF)"
     },
     {
-      "name": "iid_signflipping_smea",
-      "file": "configurations_experiences/scenarios/signflipping/iid/iid_signflipping_smea.json",
-      "description": "MNIST IID - Sign Flipping - Smallest Maximum Eigenvalue Averaging (SMEA)"
+      "name": "iid_mimic_smea",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_smea.json",
+      "description": "MNIST IID - Mimic - Smallest Maximum Eigenvalue Averaging (SMEA)"
     }
   ]
 }

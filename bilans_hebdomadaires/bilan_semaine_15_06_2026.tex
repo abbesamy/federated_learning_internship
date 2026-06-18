@@ -1,0 +1,206 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Paquets ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.45cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={Bilan hebdomadaire - Semaine du 15/06/2026}
+}
+
+\newcommand{\placeholderfigure}[2]{
+\begin{figure}[H]
+    \centering
+    \fbox{\parbox{0.93\textwidth}{
+        \vspace{1.2cm}
+        \centering
+        \textbf{Emplacement pour capture / graphique}\par
+        \vspace{0.2cm}
+        \texttt{#1}\par
+        \vspace{0.2cm}
+        #2
+        \vspace{1.2cm}
+    }}
+    \caption{#2}
+\end{figure}
+}
+
+\title{\textbf{Bilan hebdomadaire TER} \\ \large Semaine du 15 Juin 2026}
+\author{ABBES Samy \& AREZKI Célia}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Contexte général}
+Cette semaine a été consacrée à la stabilisation finale de notre plateforme d'expérimentation ByzFL, à l'organisation des résultats produits par les différentes campagnes de tests, ainsi qu'à la mise en place d'une chaîne de comparaison en deux niveaux : d'abord comparer tous les agrégateurs pour chaque attaque, puis comparer uniquement les meilleures courbes retenues pour chaque attaque afin d'identifier l'attaque la plus difficile et le meilleur agrégateur associé.
+
+Nous avons travaillé en binôme de manière continue sur la base de code, sur les scénarios JSON, sur les résultats générés et sur les scripts de comparaison. Cette semaine a aussi été marquée par plusieurs opérations Git importantes : pull, rebase, correction de conflit sur un CSV de résultats et push final vers le dépôt distant.
+
+\section{Objectifs de la semaine}
+Les objectifs fixés au début de cette semaine étaient les suivants :
+\begin{itemize}
+    \item ajouter de nouveaux scénarios et enrichir ceux déjà présents dans le dépôt ;
+    \item organiser les scénarios par attaque et par distribution pour rendre l'arborescence plus lisible ;
+    \item lancer les scénarios IID et Non-IID de façon séparée afin d'éviter les conflits de fichiers de résultats ;
+    \item créer deux comparateurs complémentaires : un comparateur attaque/agrégateur et un comparateur final basé sur la meilleure courbe de chaque attaque ;
+    \item sécuriser la synchronisation Git entre les résultats produits localement et les résultats du dépôt distant ;
+    \item préparer une version exploitable dans le rapport hebdomadaire avec des emplacements pour les figures finales.
+\end{itemize}
+
+\section{Historique des modifications et commits}
+Pour garder une trace claire du travail réalisé, nous avons repris l'historique Git de la semaine et identifié les changements les plus importants.
+
+\subsection{Commit de structuration des scénarios non-IID}
+Une première série de modifications a concerné la normalisation des configurations non-IID. Nous avons corrigé les scénarios pour homogénéiser les paramètres et garantir la cohérence des comparaisons, notamment en imposant une base commune de \textbf{5 clients honnêtes} et \textbf{2 attaquants} sur les scénarios concernés.
+
+Cette étape a touché de nombreux fichiers JSON dans les dossiers des scénarios : SignFlipping, Inner Product Manipulation, Opt-IPM, ALIE, Opt-ALIE, Mimic, Infinity et Gaussian.
+
+\subsection{Commit lié au lancement des expériences Mimic}
+Un autre commit majeur de la semaine a ajouté et validé les scénarios Mimic en IID, avec tous les agrégateurs retenus. Cela a généré de nouveaux graphiques de sortie et a enrichi le fichier global de résultats `resultats_combines.csv`.
+
+\subsection{Commit de modification du lanceur d'expériences}
+Nous avons ensuite modifié le lanceur principal pour améliorer l'organisation des fichiers de sortie. Le but était d'éviter les collisions entre expériences IID et Non-IID, en attribuant des noms plus précis aux CSV générés selon l'attaque et la distribution.
+
+\subsection{Commit des commandes Google Colab}
+Enfin, un commit a porté sur le fichier de commandes Colab. Nous avons clarifié la procédure d'exécution GPU et la séquence Git à suivre lorsque les expériences sont relancées depuis Colab.
+
+\section{Organisation du dépôt et des scénarios}
+L'un des apports les plus importants de cette semaine a été l'organisation définitive des scénarios par attaque.
+
+Chaque famille d'attaque est désormais rangée dans un sous-dossier dédié, avec deux sous-ensembles :
+\begin{itemize}
+    \item \texttt{iid/} pour les scénarios à distribution identique entre les clients ;
+    \item \texttt{non\_iid/} pour les scénarios hétérogènes.
+\end{itemize}
+
+Cette nouvelle structure concerne notamment :
+\begin{itemize}
+    \item Sign Flipping,
+    \item Inner Product Manipulation (IPM),
+    \item Optimal Inner Product Manipulation (Opt-IPM),
+    \item A Little Is Enough (ALIE),
+    \item Optimal A Little Is Enough (Opt-ALIE),
+    \item Mimic,
+    \item Infinity,
+    \item Gaussian.
+\end{itemize}
+
+Nous avons également harmonisé les noms des agrégateurs utilisés dans les scénarios : Average, Median, TrMean, Geometric Median, Krum, Multi-Krum, Centered Clipping, MDA, MoNNA, Meamed, CAF et SMEA.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{CAP.png}
+    \caption{Organisation finale des scénarios par attaque avec sous-dossiers IID et Non-IID}
+    \label{fig:arborescence_scenarios}
+\end{figure}
+
+\section{Passage à deux niveaux de comparaison}
+Cette semaine a surtout servi à mettre en place une logique d'analyse plus claire des résultats.
+
+\subsection{Premier niveau : tous les agrégateurs pour chaque attaque}
+Le premier script de comparaison, \texttt{comparer\_attaques\_agregateurs.py}, trace pour chaque attaque les courbes de tous les agrégateurs disponibles. Cela permet de visualiser la robustesse de chaque défense face à une attaque donnée, en gardant un axe des ordonnées normalisé entre 0 et 1 et des couleurs cohérentes d'un graphique à l'autre.
+
+Le script produit également un résumé CSV des meilleurs agrégateurs par attaque, avec un classement interne selon l'accuracy finale.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{MIMIC.png}
+    \caption{Courbes de tous les agrégateurs pour une attaque donnée}
+    \label{fig:comparaison_agregateurs}
+\end{figure}
+
+\subsection{Deuxième niveau : meilleure courbe retenue pour chaque attaque}
+Le second script, \texttt{comparer\_meilleures\_attaques.py}, prend le meilleur agrégateur pour chaque attaque, extrait sa courbe complète et compare ensuite ces meilleures courbes sur un seul graphique final.
+
+L'idée est de répondre à deux questions distinctes :
+\begin{itemize}
+    \item quelle est la pire attaque parmi celles testées ?
+    \item quel est le meilleur agrégateur pour chaque attaque, puis globalement ?
+\end{itemize}
+
+Ce deuxième niveau fournit donc un classement final plus synthétique et plus exploitable pour le rapport.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{courbe_comparaison_meilleures_attaques.png}
+    \caption{Comparaison finale des meilleures courbes retenues pour chaque attaque}
+    \label{fig:comparaison_meilleures_attaques}
+\end{figure}
+
+\section{Résultats observés cette semaine}
+À la fin de cette semaine, les résultats consolidés ont montré que, sur les attaques effectivement présentes dans les CSV fusionnés, les meilleures performances finales atteignent des niveaux très élevés.
+
+Dans la dernière comparaison finale générée, nous observons par exemple :
+\begin{itemize}
+    \item \textbf{SignFlipping} : meilleure courbe avec \textbf{Average}, accuracy finale d'environ \textbf{0.9772} ;
+    \item \textbf{InnerProductManipulation} : meilleure courbe avec \textbf{MultiKrum}, accuracy finale d'environ \textbf{0.9811} ;
+    \item \textbf{Infinity} : meilleure courbe avec \textbf{MultiKrum}, accuracy finale d'environ \textbf{0.9836}.
+\end{itemize}
+
+Ces résultats confirment que certains agrégateurs robustes restent très performants, même lorsque les attaques deviennent plus agressives. Ils montrent aussi que le comportement dépend fortement du couple \emph{attaque / agrégateur}.
+
+\placeholderfigure{Tableau ou extrait CSV à insérer}{Extrait du classement final des attaques selon la meilleure accuracy finale}
+
+\section{Résolution du conflit Git et gestion des résultats}
+Cette semaine a aussi été importante du point de vue du versionnement.
+
+Lors de nos synchronisations avec le dépôt distant, nous avons rencontré un cas concret de conflit sur le fichier généré \texttt{resultats\_experiences/resultats\_combines.csv}. Le problème ne venait pas du code source, mais du fait que ce fichier de résultats était modifié à la fois localement sur Colab et dans le dépôt distant.
+
+Nous avons alors pris la décision de ne pas écraser les résultats, mais de conserver les deux jeux de résultats en les fusionnant. Cette approche nous a conduits à clarifier la procédure de travail sur Colab :
+\begin{itemize}
+    \item exécuter les expériences ;
+    \item générer les CSV et les graphiques ;
+    \item récupérer les changements distants avec \texttt{git pull --rebase} ;
+    \item résoudre les conflits de résultats en fusionnant les lignes utiles du CSV ;
+    \item relancer les scripts de comparaison si nécessaire ;
+    \item terminer par un \texttt{git push} propre.
+\end{itemize}
+
+Nous avons aussi modifié le lanceur pour que les sorties puissent être distinguées plus facilement selon la famille exécutée, par exemple avec des noms de fichiers du type \texttt{resultats\_<attaque>\_<iid/non\_iid>.csv} lorsqu'on lance une série homogène de scénarios.
+
+\placeholderfigure{Capture du conflit Git ou du terminal Colab}{Gestion d'un conflit de rebase sur le fichier de résultats et résolution manuelle}
+
+\section{Travail d'intégration et de nettoyage}
+En parallèle des expérimentations et de la gestion Git, nous avons poursuivi le travail de nettoyage du dépôt :
+\begin{itemize}
+    \item mise à jour des noms de scripts en français ;
+    \item révision des chemins d'accès ;
+    \item centralisation des comparaisons dans des dossiers dédiés ;
+    \item mise en cohérence des CSV, images et sous-dossiers de sortie ;
+    \item préparation du rapport hebdomadaire avec des emplacements dédiés pour les captures.
+\end{itemize}
+
+Ce travail d'organisation est important car il conditionne la lisibilité du projet final et la qualité de la démonstration devant les encadrants.
+
+\section{Bilan technique}
+Au terme de cette semaine, nous avons obtenu une base beaucoup plus solide qu'au début de la période :
+\begin{itemize}
+    \item les scénarios sont mieux rangés et mieux nommés ;
+    \item les paramètres des expériences sont harmonisés ;
+    \item les sorties de résultats sont plus sûres et plus lisibles ;
+    \item la comparaison se fait maintenant en deux niveaux, ce qui clarifie l'analyse ;
+    \item la synchronisation Git et Colab est mieux maîtrisée malgré les conflits sur les fichiers générés.
+\end{itemize}
+
+\section{Conclusion}
+La semaine du 15/06 a été une semaine de consolidation et de structuration. Nous avons non seulement enrichi le contenu expérimental, mais aussi renforcé la qualité du pipeline complet : scénarios, exécution, comparaison, gestion des sorties et synchronisation avec le dépôt distant.
+
+Le projet a maintenant une organisation plus professionnelle, avec des résultats mieux séparés selon la distribution et l'attaque, et avec des outils de comparaison capables d'identifier à la fois le meilleur agrégateur pour chaque attaque et l'attaque la plus difficile à défendre.
+
+La prochaine étape consistera à lancer les nouvelles familles de scénarios en IID et Non-IID pour toutes les attaques, à remplir les résultats correspondants et à compléter la comparaison finale avec l'ensemble des attaques prévues.
+
+\end{document}
