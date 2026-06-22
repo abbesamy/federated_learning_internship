@@ -28,8 +28,8 @@ commandes, ainsi que de configurer le type d'exécution de Google Colab sur l'ac
 %cd /content/ter_iaaa_byzfl_abbes_arezki
 
 # 2. Configuration Git
-!git config user.email "nom.prenom@etu.univ-amu.fr"
-!git config user.name "Prénom Nom"
+!git config user.email "celia.arezki.1@etu.univ-amu.fr"
+!git config user.name "Celia AREZKI"
 
 # 3. En cas de modification pendant l'exérience lancée sur colab
 !git pull origin main --no-rebase --no-edit
