@@ -54,6 +54,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, help="Override batch size.")
     parser.add_argument("--eval-interval", type=int, help="Override evaluation interval.")
     parser.add_argument("--output-dir", type=str, help="Override output directory.")
+    # NOUVEAU PARAMÈTRE : Nombre de runs à moyenner
+    parser.add_argument("--runs", type=int, default=5, help="Nombre de runs à effectuer et moyenner par scénario.")
     return parser.parse_args()
 
 
@@ -111,22 +113,56 @@ def main() -> None:
 
     all_records = []
     scenario_configs: list[dict[str, object]] = []
+    
+    num_runs = args.runs  # Par défaut, 5 runs comme demandé
+
     for entry in scenario_entries:
         scenario_config = load_json(resolve_repo_path(entry["file"]))
         scenario_configs.append(scenario_config)
-        config = build_config(common_config, scenario_config)
-        print(f"Running scenario: {config['name']}")
-        records = run_scenario(config)
-        all_records.extend(records)
+        base_config = build_config(common_config, scenario_config)
+        
+        print(f"Running scenario: {base_config['name']} (Lissage sur {num_runs} runs)")
+        
+        accumulated_metrics = {}
+        template_records = {}
+        base_seed = int(base_config.get("seed", 42))
 
-    # Modification : Le dossier par défaut 'resultats_experiences' est désormais 
-    # au même niveau que le répertoire 'code', et non plus à l'intérieur.
+        for run_idx in range(num_runs):
+            print(f"  -> Exécution du run {run_idx + 1}/{num_runs}...")
+            
+            # On crée une copie de la configuration et on MODIFIE LA GRAINE (seed).
+            # C'est obligatoire pour que chaque run génère des résultats différents.
+            run_config = base_config.copy()
+            run_config["seed"] = base_seed + run_idx
+            
+            records = run_scenario(run_config)
+            
+            # On cumule les résultats round par round
+            for rec in records:
+                r = rec["round"]
+                if r not in accumulated_metrics:
+                    accumulated_metrics[r] = {"acc": 0.0, "err": 0.0}
+                    # On sauvegarde les métadonnées (scenario, attaque, etc.) une seule fois
+                    template_records[r] = {k: v for k, v in rec.items() if k not in ["accuracy", "error"]}
+                
+                accumulated_metrics[r]["acc"] += rec["accuracy"]
+                accumulated_metrics[r]["err"] += rec["error"]
+
+        # Une fois les 5 runs terminés, on calcule les moyennes pour chaque round
+        for r in sorted(accumulated_metrics.keys()):
+            avg_record = template_records[r].copy()
+            avg_record["accuracy"] = accumulated_metrics[r]["acc"] / num_runs
+            avg_record["error"] = accumulated_metrics[r]["err"] / num_runs
+            
+            # On ajoute le record "moyen" final à la liste globale
+            all_records.append(avg_record)
+
     output_dir = resolve_repo_path(common_config.get("output_dir", "resultats_experiences"))
 
     output_filename = build_output_filename(scenario_configs)
     csv_path = save_records(all_records, output_dir, filename=output_filename)
     plot_records(all_records, output_dir)
-    print(f"Results saved to: {csv_path}")
+    print(f"\nResults saved to: {csv_path}")
     print(f"Graphiques enregistrés dans : {output_dir / 'graphiques'}")
 
 
