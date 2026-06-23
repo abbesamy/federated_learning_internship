@@ -1,7 +1,8 @@
 rank_dans_contexte,attack,distribution,scenario,aggregator,round,accuracy,error,nb_honest,nb_byz
 1,InnerProductManipulation,dirichlet_niid,non_iid_innerproduct_average,Average,500,0.94738,0.05262,5,2
-1,InnerProductManipulation,iid,iid_innerproduct_caf,CAF,500,0.97572,0.0242799999999999,5,2
+1,InnerProductManipulation,iid,iid_innerproduct_monna,MoNNA,500,0.97962,0.02038,5,2
 1,Mimic,dirichlet_niid,non_iid_mimic_centeredclipping,CenteredClipping,500,0.9834,0.0165999999999999,5,2
 1,Optimal_InnerProductManipulation,dirichlet_niid,non_iid_opt_ipm_monna,MoNNA,200,0.90896,0.0910399999999999,5,2
-1,SignFlipping,dirichlet_niid,non_iid_signflipping_centeredclipping,CenteredClipping,500,0.9729,0.0271,5,2
+1,Optimal_InnerProductManipulation,iid,iid_opt_ipm_caf,CAF,200,0.96868,0.0313199999999999,5,2
+1,SignFlipping,dirichlet_niid,non_iid_signflipping_average,Average,500,0.9729,0.0271,5,2
 1,SignFlipping,iid,signflipping_Average,Average,500,0.9772,0.0228,3,1

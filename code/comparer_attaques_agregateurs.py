@@ -91,7 +91,7 @@ def plot_attack_curves(
     ax.set_xlabel("Round")
     ax.set_ylabel("Accuracy")
     ax.set_title(title_name)
-    ax.set_xlim(1, max(round_max, 2))
+    ax.set_xlim(1, max(round_max, 2))  # S'adaptera dynamiquement au max du groupe !
     ax.set_ylim(0.0, 1.0)
     ax.grid(True, alpha=0.3)
     ax.legend(fontsize=9, loc="best")
@@ -101,7 +101,7 @@ def plot_attack_curves(
 
 
 def summarize_attack(df: pd.DataFrame) -> pd.DataFrame:
-    # CORRECTION : On groupe aussi par la colonne 'distribution' pour éviter de mélanger les classements finaux
+    # Le .tail(1) va s'adapter automatiquement : il prendra le round 500 ou 200 selon ce qui existe pour ce groupe
     final_rounds = df.sort_values("round").groupby(["attack", "distribution", "aggregator"], as_index=False).tail(1)
     summary = final_rounds[
         ["attack", "distribution", "scenario", "aggregator", "round", "accuracy", "error", "nb_honest", "nb_byz"]
@@ -133,7 +133,6 @@ def main() -> None:
     if missing_columns:
         raise SystemExit(f"CSV incomplet, colonnes manquantes : {', '.join(sorted(missing_columns))}")
 
-    round_max = int(df["round"].max()) if not df.empty else 1
     aggregators = ordered_aggregators(df)
     color_map = build_color_map(aggregators)
 
@@ -141,18 +140,23 @@ def main() -> None:
     summary_csv = output_dir / "resume_par_attaque.csv"
     summary.to_csv(summary_csv, index=False)
 
-    # CORRECTION CRITIQUE :On groupe par couple (attack, distribution)
+    # On boucle sur chaque couple (attack, distribution)
     for (attack_name, dist_name), df_group in df.groupby(["attack", "distribution"], sort=False):
         clean_attack = sanitize_name(attack_name)
         clean_dist = sanitize_name(dist_name)
         
+        # === LA MAGIE SE PASSE ICI ===
+        # Au lieu d'une limite globale, on regarde le round max UNIQUE à ce graphique précis.
+        group_round_max = int(df_group["round"].max()) if not df_group.empty else 1
+        # =============================
+        
         plot_path = output_dir / f"courbe_{clean_attack}_{clean_dist}_agregateurs.png"
         title = f"Attaque : {attack_name} ({dist_name})"
         
-        plot_attack_curves(df_group, title, plot_path, color_map, round_max)
-        print(f"Courbe enregistrée : {plot_path}")
+        # On passe la limite sur mesure à la fonction de dessin
+        plot_attack_curves(df_group, title, plot_path, color_map, group_round_max)
+        print(f"Courbe enregistrée : {plot_path} (Axe X calé sur {group_round_max} rounds)")
 
-    # CORRECTION SYNTHÈSE : Sélection du meilleur par couple Attaque + Distribution
     best_by_context = summary.sort_values(["attack", "distribution", "accuracy"], ascending=[True, True, False]).groupby(["attack", "distribution"], as_index=False).head(1)
     best_csv = output_dir / "meilleur_agregateur_par_attaque.csv"
     best_by_context.to_csv(best_csv, index=False)
