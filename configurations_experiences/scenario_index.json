@@ -1,64 +1,64 @@
 {
   "scenarios": [
     {
-      "name": "iid_innerproduct_average",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_average.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Average"
+      "name": "non_iid_opt_ipm_average",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_average.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Average"
     },
     {
-      "name": "iid_innerproduct_median",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_median.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Median"
+      "name": "non_iid_opt_ipm_median",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_median.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Median"
     },
     {
-      "name": "iid_innerproduct_trmean",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_trmean.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Trimmed Mean"
+      "name": "non_iid_opt_ipm_trmean",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_trmean.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Trimmed Mean"
     },
     {
-      "name": "iid_innerproduct_geometricmedian",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_geometricmedian.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Geometric Median"
+      "name": "non_iid_opt_ipm_geometricmedian",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_geometricmedian.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Geometric Median"
     },
     {
-      "name": "iid_innerproduct_krum",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_krum.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Krum"
+      "name": "non_iid_opt_ipm_krum",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_krum.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Krum"
     },
     {
-      "name": "iid_innerproduct_multikrum",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_multikrum.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Multi-Krum"
+      "name": "non_iid_opt_ipm_multikrum",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_multikrum.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Multi-Krum"
     },
     {
-      "name": "iid_innerproduct_centeredclipping",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_centeredclipping.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Centered Clipping"
+      "name": "non_iid_opt_ipm_centeredclipping",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_centeredclipping.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Centered Clipping"
     },
     {
-      "name": "iid_innerproduct_mda",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_mda.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Minimum Diameter Averaging (MDA)"
+      "name": "non_iid_opt_ipm_mda",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_mda.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Minimum Diameter Averaging (MDA)"
     },
     {
-      "name": "iid_innerproduct_monna",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_monna.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - MoNNA"
+      "name": "non_iid_opt_ipm_monna",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_monna.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - MoNNA"
     },
     {
-      "name": "iid_innerproduct_meamed",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_meamed.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Meamed"
+      "name": "non_iid_opt_ipm_meamed",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_meamed.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Meamed"
     },
     {
-      "name": "iid_innerproduct_caf",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_caf.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Covariance-bound Agnostic Filter (CAF)"
+      "name": "non_iid_opt_ipm_caf",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_caf.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Covariance-bound Agnostic Filter (CAF)"
     },
     {
-      "name": "iid_innerproduct_smea",
-      "file": "configurations_experiences/scenarios/innerproductmanipulation/iid/iid_innerproduct_smea.json",
-      "description": "MNIST IID - Inner Product Manipulation (IPM) - Smallest Maximum Eigenvalue Averaging (SMEA)"
+      "name": "non_iid_opt_ipm_smea",
+      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/non_iid/non_iid_opt_ipm_smea.json",
+      "description": "MNIST Non-IID - Optimal Inner Product Manipulation (Opt-IPM) - Smallest Maximum Eigenvalue Averaging (SMEA)"
     }
   ]
 }
