@@ -1,4 +1,4 @@
 rank_dans_attaque,attack,scenario,aggregator,round,accuracy,error,nb_honest,nb_byz
-1,InnerProductManipulation,iid_innerproduct_centeredclipping,CenteredClipping,500,0.9738,0.0262,4,1
+1,InnerProductManipulation,iid_innerproduct_multikrum,MultiKrum,500,0.9811,0.0189,4,1
 1,Mimic,non_iid_mimic_centeredclipping,CenteredClipping,500,0.9834,0.0165999999999999,5,2
-1,SignFlipping,signflipping_Median,Median,500,0.9752,0.0248,3,1
+1,SignFlipping,non_iid_signflipping_centeredclipping,CenteredClipping,500,0.9729,0.0271,5,2
