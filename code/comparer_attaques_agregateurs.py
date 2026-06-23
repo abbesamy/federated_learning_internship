@@ -25,7 +25,7 @@ AGGREGATOR_ORDER = ["Average", "Median", "TrMean", "Krum", "MultiKrum", "MoNNA",
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Comparer les courbes d'accuracy par attaque, avec une couleur par agrégateur."
+        description="Comparer les courbes d'accuracy par attaque et distribution, avec une couleur par agrégateur."
     )
     parser.add_argument(
         "--input-csv",
@@ -57,8 +57,6 @@ def build_color_map(aggregators: list[str]) -> dict[str, str]:
 
 
 def discover_input_csvs() -> list[Path]:
-    # CORRECTION : On récupère absolument TOUS les fichiers qui commencent par 'resultats'
-    # Cela permet d'inclure 'resultats_combines.csv' ET les fichiers spécifiques comme 'resultats_signflipping_non_iid.csv'
     all_discovered = sorted(RESULTS_DIR.glob("resultats*.csv"))
     return all_discovered
 
@@ -72,7 +70,7 @@ def ordered_aggregators(df: pd.DataFrame) -> list[str]:
 
 def plot_attack_curves(
     df_attack: pd.DataFrame,
-    attack_name: str,
+    title_name: str,
     output_path: Path,
     color_map: dict[str, str],
     round_max: int,
@@ -92,7 +90,7 @@ def plot_attack_curves(
 
     ax.set_xlabel("Round")
     ax.set_ylabel("Accuracy")
-    ax.set_title(f"Attaque : {attack_name}")
+    ax.set_title(title_name)
     ax.set_xlim(1, max(round_max, 2))
     ax.set_ylim(0.0, 1.0)
     ax.grid(True, alpha=0.3)
@@ -103,12 +101,13 @@ def plot_attack_curves(
 
 
 def summarize_attack(df: pd.DataFrame) -> pd.DataFrame:
-    final_rounds = df.sort_values("round").groupby(["attack", "aggregator"], as_index=False).tail(1)
+    # CORRECTION : On groupe aussi par la colonne 'distribution' pour éviter de mélanger les classements finaux
+    final_rounds = df.sort_values("round").groupby(["attack", "distribution", "aggregator"], as_index=False).tail(1)
     summary = final_rounds[
-        ["attack", "scenario", "aggregator", "round", "accuracy", "error", "nb_honest", "nb_byz"]
+        ["attack", "distribution", "scenario", "aggregator", "round", "accuracy", "error", "nb_honest", "nb_byz"]
     ].copy()
-    summary = summary.sort_values(["attack", "accuracy"], ascending=[True, False]).reset_index(drop=True)
-    summary.insert(0, "rank_dans_attaque", summary.groupby("attack").cumcount() + 1)
+    summary = summary.sort_values(["attack", "distribution", "accuracy"], ascending=[True, True, False]).reset_index(drop=True)
+    summary.insert(0, "rank_dans_contexte", summary.groupby(["attack", "distribution"]).cumcount() + 1)
     return summary
 
 
@@ -129,7 +128,7 @@ def main() -> None:
 
     frames = [pd.read_csv(path) for path in input_csvs]
     df = pd.concat(frames, ignore_index=True).drop_duplicates().reset_index(drop=True)
-    required_columns = {"scenario", "round", "accuracy", "error", "aggregator", "attack", "nb_byz"}
+    required_columns = {"scenario", "distribution", "round", "accuracy", "error", "aggregator", "attack", "nb_byz"}
     missing_columns = required_columns - set(df.columns)
     if missing_columns:
         raise SystemExit(f"CSV incomplet, colonnes manquantes : {', '.join(sorted(missing_columns))}")
@@ -142,21 +141,28 @@ def main() -> None:
     summary_csv = output_dir / "resume_par_attaque.csv"
     summary.to_csv(summary_csv, index=False)
 
-    for attack_name, df_attack in df.groupby("attack", sort=False):
-        plot_path = output_dir / f"courbe_{sanitize_name(attack_name)}_agregateurs.png"
-        plot_attack_curves(df_attack, attack_name, plot_path, color_map, round_max)
+    # CORRECTION CRITIQUE :On groupe par couple (attack, distribution)
+    for (attack_name, dist_name), df_group in df.groupby(["attack", "distribution"], sort=False):
+        clean_attack = sanitize_name(attack_name)
+        clean_dist = sanitize_name(dist_name)
+        
+        plot_path = output_dir / f"courbe_{clean_attack}_{clean_dist}_agregateurs.png"
+        title = f"Attaque : {attack_name} ({dist_name})"
+        
+        plot_attack_curves(df_group, title, plot_path, color_map, round_max)
         print(f"Courbe enregistrée : {plot_path}")
 
-    best_by_attack = summary.sort_values(["attack", "accuracy"], ascending=[True, False]).groupby("attack", as_index=False).head(1)
+    # CORRECTION SYNTHÈSE : Sélection du meilleur par couple Attaque + Distribution
+    best_by_context = summary.sort_values(["attack", "distribution", "accuracy"], ascending=[True, True, False]).groupby(["attack", "distribution"], as_index=False).head(1)
     best_csv = output_dir / "meilleur_agregateur_par_attaque.csv"
-    best_by_attack.to_csv(best_csv, index=False)
+    best_by_context.to_csv(best_csv, index=False)
 
     print(f"\n--- Synthèse Terminée ---")
     print(f"CSV de synthèse : {summary_csv}")
-    print(f"CSV du meilleur agrégateur par attaque : {best_csv}")
+    print(f"CSV du meilleur agrégateur par contexte : {best_csv}")
     print(f"CSV source(s) utilisées : {', '.join(str(path) for path in input_csvs)}")
-    print("\nMeilleurs agrégateurs par attaque :")
-    print(best_by_attack.to_string(index=False))
+    print("\nMeilleurs agrégateurs par contexte (Attaque + Distribution) :")
+    print(best_by_context.to_string(index=False))
 
 
 if __name__ == "__main__":
