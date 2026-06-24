@@ -1,64 +1,124 @@
 {
   "scenarios": [
     {
-      "name": "iid_opt_ipm_average",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_average.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Average"
+      "name": "iid_alittle_average",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_average.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Average"
     },
     {
-      "name": "iid_opt_ipm_median",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_median.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Median"
+      "name": "iid_alittle_median",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_median.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Median"
     },
     {
-      "name": "iid_opt_ipm_trmean",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_trmean.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Trimmed Mean"
+      "name": "iid_alittle_trmean",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_trmean.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Trimmed Mean"
     },
     {
-      "name": "iid_opt_ipm_geometricmedian",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_geometricmedian.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Geometric Median"
+      "name": "iid_alittle_geometricmedian",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_geometricmedian.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Geometric Median"
     },
     {
-      "name": "iid_opt_ipm_krum",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_krum.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Krum"
+      "name": "iid_alittle_krum",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_krum.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Krum"
     },
     {
-      "name": "iid_opt_ipm_multikrum",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_multikrum.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Multi-Krum"
+      "name": "iid_alittle_multikrum",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_multikrum.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Multi-Krum"
     },
     {
-      "name": "iid_opt_ipm_centeredclipping",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_centeredclipping.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Centered Clipping"
+      "name": "iid_alittle_centeredclipping",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_centeredclipping.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Centered Clipping"
     },
     {
-      "name": "iid_opt_ipm_mda",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_mda.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Minimum Diameter Averaging (MDA)"
+      "name": "iid_alittle_mda",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_mda.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Minimum Diameter Averaging (MDA)"
     },
     {
-      "name": "iid_opt_ipm_monna",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_monna.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - MoNNA"
+      "name": "iid_alittle_monna",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_monna.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - MoNNA"
     },
     {
-      "name": "iid_opt_ipm_meamed",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_meamed.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Meamed"
+      "name": "iid_alittle_meamed",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_meamed.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Meamed"
     },
     {
-      "name": "iid_opt_ipm_caf",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_caf.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Covariance-bound Agnostic Filter (CAF)"
+      "name": "iid_alittle_caf",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_caf.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Covariance-bound Agnostic Filter (CAF)"
     },
     {
-      "name": "iid_opt_ipm_smea",
-      "file": "configurations_experiences/scenarios/optimal_innerproductmanipulation/iid/iid_opt_ipm_smea.json",
-      "description": "MNIST IID - Optimal Inner Product Manipulation (Opt-IPM) - Smallest Maximum Eigenvalue Averaging (SMEA)"
+      "name": "iid_alittle_smea",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_smea.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Smallest Maximum Eigenvalue Averaging (SMEA)"
+    },
+    {
+      "name": "non_iid_alittle_average",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_average.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Average"
+    },
+    {
+      "name": "non_iid_alittle_median",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_median.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Median"
+    },
+    {
+      "name": "non_iid_alittle_trmean",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_trmean.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Trimmed Mean"
+    },
+    {
+      "name": "non_iid_alittle_geometricmedian",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_geometricmedian.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Geometric Median"
+    },
+    {
+      "name": "non_iid_alittle_krum",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_krum.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Krum"
+    },
+    {
+      "name": "non_iid_alittle_multikrum",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_multikrum.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Multi-Krum"
+    },
+    {
+      "name": "non_iid_alittle_centeredclipping",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_centeredclipping.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Centered Clipping"
+    },
+    {
+      "name": "non_iid_alittle_mda",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_mda.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Minimum Diameter Averaging (MDA)"
+    },
+    {
+      "name": "non_iid_alittle_monna",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_monna.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - MoNNA"
+    },
+    {
+      "name": "non_iid_alittle_meamed",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_meamed.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Meamed"
+    },
+    {
+      "name": "non_iid_alittle_caf",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_caf.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Covariance-bound Agnostic Filter (CAF)"
+    },
+    {
+      "name": "non_iid_alittle_smea",
+      "file": "configurations_experiences/scenarios/alittleisenough/non_iid/non_iid_alittle_smea.json",
+      "description": "MNIST Non-IID - A Little Is Enough (ALIE) - Smallest Maximum Eigenvalue Averaging (SMEA)"
     }
   ]
 }
