@@ -1,6 +1,11 @@
 {
   "scenarios": [
     {
+      "name": "iid_infinity_caf",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_caf.json",
+      "description": "MNIST IID - Infinity - Covariance-bound Agnostic Filter (CAF)"
+    },
+    {
       "name": "iid_infinity_average",
       "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_average.json",
       "description": "MNIST IID - Infinity - Average"
@@ -49,11 +54,6 @@
       "name": "iid_infinity_meamed",
       "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_meamed.json",
       "description": "MNIST IID - Infinity - Meamed"
-    },
-    {
-      "name": "iid_infinity_caf",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_caf.json",
-      "description": "MNIST IID - Infinity - Covariance-bound Agnostic Filter (CAF)"
     },
     {
       "name": "iid_infinity_smea",
