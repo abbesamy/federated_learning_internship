@@ -1,6 +1,6 @@
 {
   "seed": 42,
-  "device": "cuda",
+  "device": "cpu",
   "data_root": "data",
   "model_name": "cnn_mnist",
   "optimizer_name": "SGD",
