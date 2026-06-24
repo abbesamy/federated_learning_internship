@@ -1,124 +1,64 @@
 {
   "scenarios": [
-    {
-      "name": "iid_infinity_caf",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_caf.json",
-      "description": "MNIST IID - Infinity - Covariance-bound Agnostic Filter (CAF)"
+{
+      "name": "iid_alittle_average",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_average.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Average"
     },
     {
-      "name": "iid_infinity_average",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_average.json",
-      "description": "MNIST IID - Infinity - Average"
+      "name": "iid_alittle_median",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_median.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Median"
     },
     {
-      "name": "iid_infinity_median",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_median.json",
-      "description": "MNIST IID - Infinity - Median"
+      "name": "iid_alittle_trmean",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_trmean.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Trimmed Mean"
     },
     {
-      "name": "iid_infinity_trmean",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_trmean.json",
-      "description": "MNIST IID - Infinity - Trimmed Mean"
+      "name": "iid_alittle_geometricmedian",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_geometricmedian.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Geometric Median"
     },
     {
-      "name": "iid_infinity_geometricmedian",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_geometricmedian.json",
-      "description": "MNIST IID - Infinity - Geometric Median"
+      "name": "iid_alittle_krum",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_krum.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Krum"
     },
     {
-      "name": "iid_infinity_krum",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_krum.json",
-      "description": "MNIST IID - Infinity - Krum"
+      "name": "iid_alittle_multikrum",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_multikrum.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Multi-Krum"
     },
     {
-      "name": "iid_infinity_multikrum",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_multikrum.json",
-      "description": "MNIST IID - Infinity - Multi-Krum"
+      "name": "iid_alittle_centeredclipping",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_centeredclipping.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Centered Clipping"
     },
     {
-      "name": "iid_infinity_centeredclipping",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_centeredclipping.json",
-      "description": "MNIST IID - Infinity - Centered Clipping"
+      "name": "iid_alittle_mda",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_mda.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Minimum Diameter Averaging (MDA)"
     },
     {
-      "name": "iid_infinity_mda",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_mda.json",
-      "description": "MNIST IID - Infinity - Minimum Diameter Averaging (MDA)"
+      "name": "iid_alittle_monna",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_monna.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - MoNNA"
     },
     {
-      "name": "iid_infinity_monna",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_monna.json",
-      "description": "MNIST IID - Infinity - MoNNA"
+      "name": "iid_alittle_meamed",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_meamed.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Meamed"
     },
     {
-      "name": "iid_infinity_meamed",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_meamed.json",
-      "description": "MNIST IID - Infinity - Meamed"
+      "name": "iid_alittle_caf",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_caf.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Covariance-bound Agnostic Filter (CAF)"
     },
     {
-      "name": "iid_infinity_smea",
-      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_smea.json",
-      "description": "MNIST IID - Infinity - Smallest Maximum Eigenvalue Averaging (SMEA)"
-    },
-    {
-      "name": "non_iid_infinity_average",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_average.json",
-      "description": "MNIST Non-IID - Infinity - Average"
-    },
-    {
-      "name": "non_iid_infinity_median",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_median.json",
-      "description": "MNIST Non-IID - Infinity - Median"
-    },
-    {
-      "name": "non_iid_infinity_trmean",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_trmean.json",
-      "description": "MNIST Non-IID - Infinity - Trimmed Mean"
-    },
-    {
-      "name": "non_iid_infinity_geometricmedian",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_geometricmedian.json",
-      "description": "MNIST Non-IID - Infinity - Geometric Median"
-    },
-    {
-      "name": "non_iid_infinity_krum",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_krum.json",
-      "description": "MNIST Non-IID - Infinity - Krum"
-    },
-    {
-      "name": "non_iid_infinity_multikrum",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_multikrum.json",
-      "description": "MNIST Non-IID - Infinity - Multi-Krum"
-    },
-    {
-      "name": "non_iid_infinity_centeredclipping",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_centeredclipping.json",
-      "description": "MNIST Non-IID - Infinity - Centered Clipping"
-    },
-    {
-      "name": "non_iid_infinity_mda",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_mda.json",
-      "description": "MNIST Non-IID - Infinity - Minimum Diameter Averaging (MDA)"
-    },
-    {
-      "name": "non_iid_infinity_monna",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_monna.json",
-      "description": "MNIST Non-IID - Infinity - MoNNA"
-    },
-    {
-      "name": "non_iid_infinity_meamed",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_meamed.json",
-      "description": "MNIST Non-IID - Infinity - Meamed"
-    },
-    {
-      "name": "non_iid_infinity_caf",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_caf.json",
-      "description": "MNIST Non-IID - Infinity - Covariance-bound Agnostic Filter (CAF)"
-    },
-    {
-      "name": "non_iid_infinity_smea",
-      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_smea.json",
-      "description": "MNIST Non-IID - Infinity - Smallest Maximum Eigenvalue Averaging (SMEA)"
+      "name": "iid_alittle_smea",
+      "file": "configurations_experiences/scenarios/alittleisenough/iid/iid_alittle_smea.json",
+      "description": "MNIST IID - A Little Is Enough (ALIE) - Smallest Maximum Eigenvalue Averaging (SMEA)"
     }
   ]
 }
