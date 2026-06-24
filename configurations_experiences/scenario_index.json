@@ -1,124 +1,124 @@
 {
   "scenarios": [
     {
-      "name": "iid_gaussian_average",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_average.json",
-      "description": "MNIST IID - Gaussian - Average"
+      "name": "iid_infinity_caf",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_caf.json",
+      "description": "MNIST IID - Infinity - Covariance-bound Agnostic Filter (CAF)"
     },
     {
-      "name": "iid_gaussian_median",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_median.json",
-      "description": "MNIST IID - Gaussian - Median"
+      "name": "iid_infinity_average",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_average.json",
+      "description": "MNIST IID - Infinity - Average"
     },
     {
-      "name": "iid_gaussian_trmean",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_trmean.json",
-      "description": "MNIST IID - Gaussian - Trimmed Mean"
+      "name": "iid_infinity_median",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_median.json",
+      "description": "MNIST IID - Infinity - Median"
     },
     {
-      "name": "iid_gaussian_geometricmedian",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_geometricmedian.json",
-      "description": "MNIST IID - Gaussian - Geometric Median"
+      "name": "iid_infinity_trmean",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_trmean.json",
+      "description": "MNIST IID - Infinity - Trimmed Mean"
     },
     {
-      "name": "iid_gaussian_krum",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_krum.json",
-      "description": "MNIST IID - Gaussian - Krum"
+      "name": "iid_infinity_geometricmedian",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_geometricmedian.json",
+      "description": "MNIST IID - Infinity - Geometric Median"
     },
     {
-      "name": "iid_gaussian_multikrum",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_multikrum.json",
-      "description": "MNIST IID - Gaussian - Multi-Krum"
+      "name": "iid_infinity_krum",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_krum.json",
+      "description": "MNIST IID - Infinity - Krum"
     },
     {
-      "name": "iid_gaussian_centeredclipping",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_centeredclipping.json",
-      "description": "MNIST IID - Gaussian - Centered Clipping"
+      "name": "iid_infinity_multikrum",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_multikrum.json",
+      "description": "MNIST IID - Infinity - Multi-Krum"
     },
     {
-      "name": "iid_gaussian_mda",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_mda.json",
-      "description": "MNIST IID - Gaussian - Minimum Diameter Averaging (MDA)"
+      "name": "iid_infinity_centeredclipping",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_centeredclipping.json",
+      "description": "MNIST IID - Infinity - Centered Clipping"
     },
     {
-      "name": "iid_gaussian_monna",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_monna.json",
-      "description": "MNIST IID - Gaussian - MoNNA"
+      "name": "iid_infinity_mda",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_mda.json",
+      "description": "MNIST IID - Infinity - Minimum Diameter Averaging (MDA)"
     },
     {
-      "name": "iid_gaussian_meamed",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_meamed.json",
-      "description": "MNIST IID - Gaussian - Meamed"
+      "name": "iid_infinity_monna",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_monna.json",
+      "description": "MNIST IID - Infinity - MoNNA"
     },
     {
-      "name": "iid_gaussian_caf",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_caf.json",
-      "description": "MNIST IID - Gaussian - Covariance-bound Agnostic Filter (CAF)"
+      "name": "iid_infinity_meamed",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_meamed.json",
+      "description": "MNIST IID - Infinity - Meamed"
     },
     {
-      "name": "iid_gaussian_smea",
-      "file": "configurations_experiences/scenarios/gaussian/iid/iid_gaussian_smea.json",
-      "description": "MNIST IID - Gaussian - Smallest Maximum Eigenvalue Averaging (SMEA)"
+      "name": "iid_infinity_smea",
+      "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_smea.json",
+      "description": "MNIST IID - Infinity - Smallest Maximum Eigenvalue Averaging (SMEA)"
     },
     {
-      "name": "non_iid_gaussian_average",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_average.json",
-      "description": "MNIST Non-IID - Gaussian - Average"
+      "name": "non_iid_infinity_average",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_average.json",
+      "description": "MNIST Non-IID - Infinity - Average"
     },
     {
-      "name": "non_iid_gaussian_median",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_median.json",
-      "description": "MNIST Non-IID - Gaussian - Median"
+      "name": "non_iid_infinity_median",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_median.json",
+      "description": "MNIST Non-IID - Infinity - Median"
     },
     {
-      "name": "non_iid_gaussian_trmean",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_trmean.json",
-      "description": "MNIST Non-IID - Gaussian - Trimmed Mean"
+      "name": "non_iid_infinity_trmean",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_trmean.json",
+      "description": "MNIST Non-IID - Infinity - Trimmed Mean"
     },
     {
-      "name": "non_iid_gaussian_geometricmedian",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_geometricmedian.json",
-      "description": "MNIST Non-IID - Gaussian - Geometric Median"
+      "name": "non_iid_infinity_geometricmedian",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_geometricmedian.json",
+      "description": "MNIST Non-IID - Infinity - Geometric Median"
     },
     {
-      "name": "non_iid_gaussian_krum",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_krum.json",
-      "description": "MNIST Non-IID - Gaussian - Krum"
+      "name": "non_iid_infinity_krum",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_krum.json",
+      "description": "MNIST Non-IID - Infinity - Krum"
     },
     {
-      "name": "non_iid_gaussian_multikrum",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_multikrum.json",
-      "description": "MNIST Non-IID - Gaussian - Multi-Krum"
+      "name": "non_iid_infinity_multikrum",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_multikrum.json",
+      "description": "MNIST Non-IID - Infinity - Multi-Krum"
     },
     {
-      "name": "non_iid_gaussian_centeredclipping",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_centeredclipping.json",
-      "description": "MNIST Non-IID - Gaussian - Centered Clipping"
+      "name": "non_iid_infinity_centeredclipping",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_centeredclipping.json",
+      "description": "MNIST Non-IID - Infinity - Centered Clipping"
     },
     {
-      "name": "non_iid_gaussian_mda",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_mda.json",
-      "description": "MNIST Non-IID - Gaussian - Minimum Diameter Averaging (MDA)"
+      "name": "non_iid_infinity_mda",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_mda.json",
+      "description": "MNIST Non-IID - Infinity - Minimum Diameter Averaging (MDA)"
     },
     {
-      "name": "non_iid_gaussian_monna",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_monna.json",
-      "description": "MNIST Non-IID - Gaussian - MoNNA"
+      "name": "non_iid_infinity_monna",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_monna.json",
+      "description": "MNIST Non-IID - Infinity - MoNNA"
     },
     {
-      "name": "non_iid_gaussian_meamed",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_meamed.json",
-      "description": "MNIST Non-IID - Gaussian - Meamed"
+      "name": "non_iid_infinity_meamed",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_meamed.json",
+      "description": "MNIST Non-IID - Infinity - Meamed"
     },
     {
-      "name": "non_iid_gaussian_caf",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_caf.json",
-      "description": "MNIST Non-IID - Gaussian - Covariance-bound Agnostic Filter (CAF)"
+      "name": "non_iid_infinity_caf",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_caf.json",
+      "description": "MNIST Non-IID - Infinity - Covariance-bound Agnostic Filter (CAF)"
     },
     {
-      "name": "non_iid_gaussian_smea",
-      "file": "configurations_experiences/scenarios/gaussian/non_iid/non_iid_gaussian_smea.json",
-      "description": "MNIST Non-IID - Gaussian - Smallest Maximum Eigenvalue Averaging (SMEA)"
+      "name": "non_iid_infinity_smea",
+      "file": "configurations_experiences/scenarios/infinity/non_iid/non_iid_infinity_smea.json",
+      "description": "MNIST Non-IID - Infinity - Smallest Maximum Eigenvalue Averaging (SMEA)"
     }
   ]
 }
