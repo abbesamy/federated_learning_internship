@@ -1,7 +1,6 @@
 {
   "scenarios": [
     {
-<<<<<<< HEAD
       "name": "iid_infinity_average",
       "file": "configurations_experiences/scenarios/infinity/iid/iid_infinity_average.json",
       "description": "MNIST IID - Infinity - Average"
