@@ -221,7 +221,15 @@ def run_scenario(config: dict[str, Any]) -> list[dict[str, Any]]:
         device = server.device if hasattr(server, 'device') else "cuda"
         corrupted = [g.to(device) for g in corrupted]
 
-        server.update_model_with_gradients(honest_gradients + corrupted)
+        try:
+            server.update_model_with_gradients(honest_gradients + corrupted)
+        except TypeError as e:
+            if "'NoneType' object is not subscriptable" in str(e):
+                print(f"\n [Limite Mathématique] L'agrégateur {aggregator_name} a échoué (renvoyé None) face à l'attaque {attack_name}.")
+                print("Arrêt prématuré de ce run pour passer automatiquement aux scénarios suivants.")
+                break  # Permet de sortir proprement de la boucle des rounds et continuer le script !
+            else:
+                raise e
 
         if round_number % eval_interval == 0:
             accuracy = float(server.compute_test_accuracy())
