@@ -1,124 +1,124 @@
 {
   "scenarios": [
     {
-      "name": "iid_opt_alie_average",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_average.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Average"
+      "name": "iid_mimic_average",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_average.json",
+      "description": "MNIST IID - Mimic - Average"
     },
     {
-      "name": "iid_opt_alie_median",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_median.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Median"
+      "name": "iid_mimic_median",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_median.json",
+      "description": "MNIST IID - Mimic - Median"
     },
     {
-      "name": "iid_opt_alie_trmean",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_trmean.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Trimmed Mean"
+      "name": "iid_mimic_trmean",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_trmean.json",
+      "description": "MNIST IID - Mimic - Trimmed Mean"
     },
     {
-      "name": "iid_opt_alie_geometricmedian",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_geometricmedian.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Geometric Median"
+      "name": "iid_mimic_geometricmedian",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_geometricmedian.json",
+      "description": "MNIST IID - Mimic - Geometric Median"
     },
     {
-      "name": "iid_opt_alie_krum",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_krum.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Krum"
+      "name": "iid_mimic_krum",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_krum.json",
+      "description": "MNIST IID - Mimic - Krum"
     },
     {
-      "name": "iid_opt_alie_multikrum",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_multikrum.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Multi-Krum"
+      "name": "iid_mimic_multikrum",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_multikrum.json",
+      "description": "MNIST IID - Mimic - Multi-Krum"
     },
     {
-      "name": "iid_opt_alie_centeredclipping",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_centeredclipping.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Centered Clipping"
+      "name": "iid_mimic_centeredclipping",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_centeredclipping.json",
+      "description": "MNIST IID - Mimic - Centered Clipping"
     },
     {
-      "name": "iid_opt_alie_mda",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_mda.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Minimum Diameter Averaging (MDA)"
+      "name": "iid_mimic_mda",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_mda.json",
+      "description": "MNIST IID - Mimic - Minimum Diameter Averaging (MDA)"
     },
     {
-      "name": "iid_opt_alie_monna",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_monna.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - MoNNA"
+      "name": "iid_mimic_monna",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_monna.json",
+      "description": "MNIST IID - Mimic - MoNNA"
     },
     {
-      "name": "iid_opt_alie_meamed",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_meamed.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Meamed"
+      "name": "iid_mimic_meamed",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_meamed.json",
+      "description": "MNIST IID - Mimic - Meamed"
     },
     {
-      "name": "iid_opt_alie_caf",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_caf.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Covariance-bound Agnostic Filter (CAF)"
+      "name": "iid_mimic_caf",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_caf.json",
+      "description": "MNIST IID - Mimic - Covariance-bound Agnostic Filter (CAF)"
     },
     {
-      "name": "iid_opt_alie_smea",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/iid/iid_opt_alie_smea.json",
-      "description": "MNIST IID - Optimal A Little Is Enough (Opt-ALIE) - Smallest Maximum Eigenvalue Averaging (SMEA)"
+      "name": "iid_mimic_smea",
+      "file": "configurations_experiences/scenarios/mimic/iid/iid_mimic_smea.json",
+      "description": "MNIST IID - Mimic - Smallest Maximum Eigenvalue Averaging (SMEA)"
     },
     {
-      "name": "non_iid_opt_alie_average",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_average.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Average"
+      "name": "non_iid_mimic_average",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_average.json",
+      "description": "MNIST Non-IID - Mimic - Average"
     },
     {
-      "name": "non_iid_opt_alie_median",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_median.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Median"
+      "name": "non_iid_mimic_median",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_median.json",
+      "description": "MNIST Non-IID - Mimic - Median"
     },
     {
-      "name": "non_iid_opt_alie_trmean",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_trmean.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Trimmed Mean"
+      "name": "non_iid_mimic_trmean",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_trmean.json",
+      "description": "MNIST Non-IID - Mimic - Trimmed Mean"
     },
     {
-      "name": "non_iid_opt_alie_geometricmedian",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_geometricmedian.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Geometric Median"
+      "name": "non_iid_mimic_geometricmedian",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_geometricmedian.json",
+      "description": "MNIST Non-IID - Mimic - Geometric Median"
     },
     {
-      "name": "non_iid_opt_alie_krum",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_krum.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Krum"
+      "name": "non_iid_mimic_krum",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_krum.json",
+      "description": "MNIST Non-IID - Mimic - Krum"
     },
     {
-      "name": "non_iid_opt_alie_multikrum",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_multikrum.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Multi-Krum"
+      "name": "non_iid_mimic_multikrum",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_multikrum.json",
+      "description": "MNIST Non-IID - Mimic - Multi-Krum"
     },
     {
-      "name": "non_iid_opt_alie_centeredclipping",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_centeredclipping.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Centered Clipping"
+      "name": "non_iid_mimic_centeredclipping",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_centeredclipping.json",
+      "description": "MNIST Non-IID - Mimic - Centered Clipping"
     },
     {
-      "name": "non_iid_opt_alie_mda",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_mda.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Minimum Diameter Averaging (MDA)"
+      "name": "non_iid_mimic_mda",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_mda.json",
+      "description": "MNIST Non-IID - Mimic - Minimum Diameter Averaging (MDA)"
     },
     {
-      "name": "non_iid_opt_alie_monna",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_monna.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - MoNNA"
+      "name": "non_iid_mimic_monna",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_monna.json",
+      "description": "MNIST Non-IID - Mimic - MoNNA"
     },
     {
-      "name": "non_iid_opt_alie_meamed",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_meamed.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Meamed"
+      "name": "non_iid_mimic_meamed",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_meamed.json",
+      "description": "MNIST Non-IID - Mimic - Meamed"
     },
     {
-      "name": "non_iid_opt_alie_caf",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_caf.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Covariance-bound Agnostic Filter (CAF)"
+      "name": "non_iid_mimic_caf",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_caf.json",
+      "description": "MNIST Non-IID - Mimic - Covariance-bound Agnostic Filter (CAF)"
     },
     {
-      "name": "non_iid_opt_alie_smea",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_smea.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Smallest Maximum Eigenvalue Averaging (SMEA)"
+      "name": "non_iid_mimic_smea",
+      "file": "configurations_experiences/scenarios/mimic/non_iid/non_iid_mimic_smea.json",
+      "description": "MNIST Non-IID - Mimic - Smallest Maximum Eigenvalue Averaging (SMEA)"
     }
   ]
 }
