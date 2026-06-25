@@ -111,81 +111,59 @@ def main() -> None:
             if missing:
                 raise SystemExit(f"Unknown scenario(s): {', '.join(sorted(missing))}")
 
-    # ==========================================================================
-    # MODIFICATION SÉCURITÉ : AMÉLIORATION DE LA SAUVEGARDE AU FIL DE L'EAU
-    # ==========================================================================
     all_records = []
+    scenario_configs: list[dict[str, object]] = []
     
-    # 1. On pré-charge toutes les configurations pour fixer le nom du CSV final dès le départ
-    scenario_configs = []
+    num_runs = args.runs  # Par défaut, 5 runs comme demandé
+
     for entry in scenario_entries:
-        scenario_configs.append(load_json(resolve_repo_path(entry["file"])))
-
-    output_dir = resolve_repo_path(common_config.get("output_dir", "resultats_experiences"))
-    output_filename = build_output_filename(scenario_configs)
-    
-    num_runs = args.runs  # Par défaut, 5 runs
-
-    # 2. On exécute les scénarios un par un
-    for entry, scenario_config in zip(scenario_entries, scenario_configs):
+        scenario_config = load_json(resolve_repo_path(entry["file"]))
+        scenario_configs.append(scenario_config)
         base_config = build_config(common_config, scenario_config)
         
-        print(f"\n====================================================================")
-        print(f" Running scenario: {base_config['name']} (Lissage sur {num_runs} runs)")
-        print(f"====================================================================")
+        print(f"Running scenario: {base_config['name']} (Lissage sur {num_runs} runs)")
         
         accumulated_metrics = {}
         template_records = {}
         base_seed = int(base_config.get("seed", 42))
-        scenario_has_data = False
 
         for run_idx in range(num_runs):
             print(f"  -> Exécution du run {run_idx + 1}/{num_runs}...")
             
+            # On crée une copie de la configuration et on MODIFIE LA GRAINE (seed).
+            # C'est obligatoire pour que chaque run génère des résultats différents.
             run_config = base_config.copy()
             run_config["seed"] = base_seed + run_idx
             
-            # Encapsulation de run_scenario pour éviter qu'un crash total d'un run ne bloque le reste
-            try:
-                records = run_scenario(run_config)
-            except Exception as e:
-                print(f"  ❌ Le run {run_idx + 1} a échoué avec l'erreur : {e}")
-                records = []
+            records = run_scenario(run_config)
             
             # On cumule les résultats round par round
             for rec in records:
                 r = rec["round"]
                 if r not in accumulated_metrics:
-                    # Ajout d'un compteur 'count' pour savoir combien de runs ont réussi ce round
-                    accumulated_metrics[r] = {"acc": 0.0, "err": 0.0, "count": 0}
+                    accumulated_metrics[r] = {"acc": 0.0, "err": 0.0}
+                    # On sauvegarde les métadonnées (scenario, attaque, etc.) une seule fois
                     template_records[r] = {k: v for k, v in rec.items() if k not in ["accuracy", "error"]}
                 
                 accumulated_metrics[r]["acc"] += rec["accuracy"]
                 accumulated_metrics[r]["err"] += rec["error"]
-                accumulated_metrics[r]["count"] += 1
-                scenario_has_data = True
 
-        # 3. Si le scénario a généré des données, on calcule la moyenne et on SAUVEGARDE IMMÉDIATEMENT
-        if scenario_has_data:
-            for r in sorted(accumulated_metrics.keys()):
-                actual_runs = accumulated_metrics[r]["count"]
-                if actual_runs > 0:
-                    avg_record = template_records[r].copy()
-                    # Moyenne intelligente basée sur le nombre réel de runs réussis pour ce round
-                    avg_record["accuracy"] = accumulated_metrics[r]["acc"] / actual_runs
-                    avg_record["error"] = accumulated_metrics[r]["err"] / actual_runs
-                    all_records.append(avg_record)
+        # Une fois les 5 runs terminés, on calcule les moyennes pour chaque round
+        for r in sorted(accumulated_metrics.keys()):
+            avg_record = template_records[r].copy()
+            avg_record["accuracy"] = accumulated_metrics[r]["acc"] / num_runs
+            avg_record["error"] = accumulated_metrics[r]["err"] / num_runs
+            
+            # On ajoute le record "moyen" final à la liste globale
+            all_records.append(avg_record)
 
-            # === SAUVEGARDE ET GRAPHES AU FIL DE L'EAU ===
-            csv_path = save_records(all_records, output_dir, filename=output_filename)
-            plot_records(all_records, output_dir)
-            print(f"  💾 [Sauvegarde Secours] Données cumulées écrites dans : {csv_path.name}")
-            print(f"  📊 [Sauvegarde Secours] Graphiques mis à jour dans : {output_dir / 'graphiques'}")
-        else:
-            print(f"  ⚠️ Aucune donnée n'a pu être extraite pour le scénario {base_config['name']}.")
+    output_dir = resolve_repo_path(common_config.get("output_dir", "resultats_experiences"))
 
-    print(f"\n--- TOUS LES SCÉNARIOS DISPONIBLES ONT ÉTÉ TRAITÉS ---")
-    print(f"Fichier final complet : {output_dir / output_filename}")
+    output_filename = build_output_filename(scenario_configs)
+    csv_path = save_records(all_records, output_dir, filename=output_filename)
+    plot_records(all_records, output_dir)
+    print(f"\nResults saved to: {csv_path}")
+    print(f"Graphiques enregistrés dans : {output_dir / 'graphiques'}")
 
 
 if __name__ == "__main__":
