@@ -1,4 +1,5 @@
 rank_dans_contexte,attack,distribution,scenario,aggregator,round,accuracy,error,nb_honest,nb_byz
+1,inf,iid,iid_infinity_multikrum,MultiKrum,200,0.97086,0.02914,5,2
 1,Gaussian,dirichlet_niid,non_iid_gaussian_smea,SMEA,200,0.96956,0.0304399999999999,5,2
 1,Gaussian,iid,iid_gaussian_geometricmedian,GeometricMedian,200,0.9719,0.0280999999999999,5,2
 1,InnerProductManipulation,dirichlet_niid,non_iid_innerproduct_average,Average,500,0.94738,0.05262,5,2
