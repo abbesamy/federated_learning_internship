@@ -1,0 +1,455 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper, top=2.2cm, bottom=2.2cm, left=1.9cm, right=1.9cm, columnsep=0.75cm]{geometry}
+\usepackage{multicol}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{microtype}
+
+\titleformat{\section}{\normalsize\bfseries\centering}{\thesection.}{0.5em}{\MakeUppercase}
+\titleformat{\subsection}{\normalsize\itshape}{\thesubsection.}{0.5em}{}
+\titlespacing{\section}{0pt}{7pt}{3pt}
+\titlespacing{\subsection}{0pt}{5pt}{2pt}
+
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\small TER encadr\'e par Arnaud Labourel et Fran\c{c}ois-Xavier Dup\'e.}
+
+\begin{document}
+
+% ─── TITRE ────────────────────────────────────────────────────────────────────
+\begin{center}
+{\large\bfseries \'Etude de la robustesse des agr\'egateurs en apprentissage f\'ed\'er\'e\\
+face aux attaques byzantines avec ByzFL}
+
+\medskip
+{\normalsize Arezki C\'elia, Abbes Samy}\\
+{\small Parcours IAAA --- 2025--2026}
+\end{center}
+
+\medskip
+
+% ─── RÉSUMÉ ───────────────────────────────────────────────────────────────────
+\noindent\textbf{R\'esum\'e} ---
+L'apprentissage f\'ed\'er\'e permet d'entra\^iner un mod\`ele global \`a partir de donn\'ees distribu\'ees
+chez plusieurs clients, sans centralisation des donn\'ees brutes. Ce cadre est cependant vuln\'erable
+aux \textit{attaques byzantines non cibl\'ees}, dont l'objectif est de d\'egrader ou de casser compl\`etement
+le mod\`ele global. Ce travail compare, \`a l'aide de la biblioth\`eque ByzFL, douze agr\'egateurs robustes
+face \`a huit attaques, sur le jeu de donn\'ees MNIST en distributions IID et Non-IID. Deux exp\'eriences
+particuli\`erement \'eclairantes sont analys\'ees en d\'etail~: l'attaque IPM en IID et l'attaque Gaussian
+en Non-IID. Nos r\'esultats montrent qu'aucun agr\'egateur n'est universellement optimal et que
+l'h\'et\'erog\'en\'eit\'e Non-IID amplifie consid\'erablement la difficult\'e du probl\`eme.
+
+\smallskip
+\noindent\textbf{Mots cl\'es} --- apprentissage f\'ed\'er\'e, attaques byzantines, agr\'egation robuste,
+IID, Non-IID, ByzFL, MNIST
+
+\bigskip
+
+% ─── CORPS À DEUX COLONNES ────────────────────────────────────────────────────
+\begin{multicols}{2}
+
+%=======================================================================
+\section{Introduction}
+
+L'apprentissage f\'ed\'er\'e (\textit{Federated Learning}, FL) est un paradigme d'apprentissage
+automatique distribu\'e propos\'e par McMahan \textit{et al.}~\cite{mcmahan2017}. Son principe
+fondateur est simple, plut\^ot que de centraliser les donn\'ees sur un serveur, on laisse
+chaque participant, appel\'e \textit{client}, entra\^iner un mod\`ele localement sur ses propres
+donn\'ees, puis envoyer uniquement les param\`etres appris (gradients ou poids) \`a un serveur central
+charg\'e de les agr\'eger. Le mod\`ele global est ainsi mis \`a jour sans que les donn\'ees brutes
+ne quittent jamais les appareils des participants.
+
+Ce paradigme est particuli\`erement int\'eressant dans des contextes o\`u la confidentialit\'e
+des donn\'ees est cruciale comme la sant\'e (dossiers m\'edicaux), la t\'el\'ephonie mobile (historique de
+navigation, saisie au clavier), ou la finance. Il permet de profiter de la richesse collective
+des donn\'ees distribu\'ees sans violer la vie priv\'ee des utilisateurs.
+
+Cependant, cette architecture distribu\'ee introduit une vuln\'erabilit\'e fondamentale. Le
+serveur ne peut pas v\'erifier le contenu des mises \`a jour re\c{c}ues. Un client malveillant, dit \textit{byzantin}, peut donc envoyer des gradients arbitrairement corrompus pour
+d\'evier ou d\'etruire l'apprentissage. Ce d\'efi s'inscrit dans le cadre g\'en\'eral du \textit{probl\`eme
+du consensus} en syst\`emes distribu\'es~\cite{lamport1982}, o\`u le serveur doit obtenir un accord correct et convergent malgr\'e la pr\'esence de participants hostiles. Cette recherche d'un consensus robuste constitue l'objectif centrale \'etudi\'ee dans ce travail.
+
+Ce rapport pr\'esente les exp\'eriences r\'ealis\'ees avec la biblioth\`eque ByzFL~\cite{byzfl2023},
+en comparant syst\'ematiquement douze agr\'egateurs robustes face \`a huit types d'attaques,
+sur le jeu de donn\'ees MNIST, en distributions IID et Non-IID.
+%=======================================================================
+\section{Apprentissage F\'ed\'er\'e}
+
+\subsection{Fonctionnement g\'en\'eral}
+
+Dans un syst\`eme d'apprentissage f\'ed\'er\'e classique, l'objectif est d'optimiser un mod\`ele d'apprentissage automatique, comme un r\'eseau de neurones adapt\'e \`a la classification d'images. Le mod\`ele est d\'efini par un vecteur de param\`etres math\'ematiques appel\'es les poids du mod\`ele et not\'es $w$. L'apprentissage consiste \`a minimiser une fonction de co\^ut globale qui mesure l'erreur entre les pr\'edictions du mod\`ele et la r\'ealit\'e.
+
+Le protocole se d\'eroule en plusieurs iterations successives. \`A chaque iteration $t$, le serveur distribue les param\`etres du mod\`ele global courant $w^t$ \`a l'ensemble des $n$ clients. Chaque client $i$ \'evalue l'erreur du mod\`ele sur ses propres donn\'ees locales. Il calcule ensuite un gradient $g_i^t$. Ce gradient correspond \`a la d\'eriv\'ee de la fonction d'erreur. Plus simplement, c'est un vecteur qui indique tr\`es pr\'ecis\'ement dans quelle direction et avec quelle force il faut modifier les poids du mod\`ele pour r\'eduire l'erreur locale. Le client envoie ensuite ce vecteur au serveur.
+
+Celui-ci agr\`ege les contributions re\c{c}ues selon une r\`egle math\'ematique $\mathcal{A}$ pour produire la mise \`a jour globale
+\[
+  w^{t+1} = w^t - \eta \cdot \mathcal{A}(g_1^t, \ldots, g_n^t)
+\]
+o\`u $\eta$ est le taux d'apprentissage. Le mod\`ele converge progressivement vers une solution exploitant l'ensemble des donn\'ees distribu\'ees, sans jamais avoir besoin de les centraliser.
+
+\subsection{Vuln\'erabilit\'e aux clients byzantins}
+
+Parmi les $n$ clients, $f$ peuvent \^etre byzantins. Ces participants hostiles sont libres d'envoyer n'importe quel vecteur, ind\'ependamment de leurs donn\'ees r\'eelles ou m\^eme de toute donn\'ee. L'hypoth\`ese classique impose $f < n/2$, assurant ainsi une majorit\'e honnête~\cite{blanchard2017}. Si l'agr\'egateur est une simple moyenne (\textit{Average}), m\^eme un seul client byzantin peut potentiellement envoyer un gradient de norme arbitrairement grande et d\'evier compl\`etement l'apprentissage. C'est cette fragilit\'e qui motive l'\'etude des agr\'egateurs robustes.
+
+\subsection{Deux grandes familles d'attaques}
+
+En apprentissage f\'ed\'er\'e, les attaques byzantines se divisent en deux grandes familles. Les \textbf{attaques cibl\'ees}, \'egalement connues sous le nom d'attaques adversarielles ou \textit{backdoor attacks}, cherchent \`a faire classifier correctement l'ensemble des donn\'ees normales tout en introduisant subtilement un comportement erron\'e sur un sous-ensemble pr\'ecis de donn\'ees poss\'edant un marqueur secret. Les \textbf{attaques non cibl\'ees} visent un objectif plus brutal en cherchant \`a d\'egrader ou casser enti\`erement le mod\`ele global, sans se soucier de maintenir une apparence de normalit\'e.
+
+Dans ce travail, nous nous concentrons exclusivement sur les attaques non cibl\'ees. L'ensemble des huit attaques \'etudi\'ees cherchent \`a emp\^echer la convergence du mod\`ele ou \`a en r\'eduire dramatiquement les performances en corrompant les mises \`a jour envoy\'ees au serveur.
+
+%=======================================================================
+\section{Jeu de Donn\'ees et Distributions}
+
+\subsection{MNIST}
+
+Le jeu de donn\'ees MNIST (\textit{Modified National Institute of Standards and
+Technology})~\cite{lecun1998} est le support exp\'erimental de toutes les exp\'eriences
+men\'ees dans ce travail. Il se compose de \textbf{70~000 images en niveaux de gris}
+repr\'esentant des chiffres manuscrits de 0 \`a 9, soit \textbf{10 classes}. Chaque
+image est de taille \textbf{28$\times$28 pixels}, repr\'esent\'ee comme un vecteur
+de 784 valeurs entre 0 et 255.
+
+La r\'epartition est la suivante~: \textbf{60~000 images d'entra\^inement} et \textbf{10~000
+images de test}. Les classes sont quasiment \'equilibr\'ees~, environ \textbf{6~000 images
+par classe} dans l'ensemble d'entra\^inement, et environ \textbf{1~000 images par classe}
+dans l'ensemble de test.
+
+MNIST constitue un choix id\'eal pour ce type d'\'etude~, il est suffisamment simple
+pour permettre des entra\^inements rapides sur de nombreuses configurations, bien connu
+et r\'ef\'erenc\'e dans la litt\'erature, et suffisamment riche pour mettre en \'evidence
+des diff\'erences significatives entre strat\'egies de d\'efense. Sa simplicit\'e garantit
+que les \'ecarts de performances observ\'es entre agr\'egateurs refl\`etent bien l'effet
+des attaques, et non une difficult\'e intrins\`eque de la t\^ache de classification.
+
+Un jeu de donn\'ees plus complexe, comme \textbf{CIFAR-10}~\cite{krizhevsky2009},
+compos\'e de 60~000 images couleur RGB 32$\times$32 en 10 classes, serait davantage
+adapt\'e \`a un r\'eseau de neurones convolutionnel (CNN). Les CNN exploitent la structure
+spatiale des images gr\^ace \`a des couches de convolution, de pooling et d'activation,
+et obtiennent des performances nettement sup\'erieures sur des t\^aches visuelles complexes.
+Dans une suite \`a ce travail, CIFAR-10 associ\'e \`a un CNN constituerait une \'etape naturelle
+pour tester la robustesse des agr\'egateurs dans un contexte complexifié.
+
+\subsection{Distributions IID et Non-IID}
+
+La mani\`ere dont les donn\'ees sont r\'eparties entre les clients a une influence
+d\'eterminante sur la difficult\'e du probl\`eme.
+
+En configuration \textbf{IID} (\textit{Independent and Identically Distributed}),
+chaque client re\c{c}oit un \'echantillon al\'eatoire et uniform\'ement distribu\'e de
+l'ensemble des donn\'ees. Chaque classe est ainsi repr\'esent\'ee de mani\`ere \'equilibr\'ee
+chez chaque client. Les gradients honnêtes produits sont donc similaires entre clients
+et pointent naturellement dans la m\^eme direction. Dans ce contexte, d\'etecter une
+mise \`a jour byzantine est relativement accessible~, elle se d\'emarque du consensus.
+
+En configuration \textbf{Non-IID}, la r\'epartition est biais\'ee~, chaque client
+ne poss\`ede que certaines classes, ou les observe avec des fr\'equences tr\`es in\'egales.
+Par exemple, un client peut n'avoir re\c{c}u que des images du chiffre 3 et du chiffre 7,
+tandis qu'un autre client aura exclusivement des 0 et des 1. Ce biais de distribution
+cr\'ee une h\'et\'erog\'en\'eit\'e profonde entre clients~, leurs gradients honnêtes
+divergent naturellement, m\^eme sans aucune attaque. Cette dispersion l\'egitime
+complique drastiquement le travail des agr\'egateurs robustes, qui doivent contourner les perturbations introduites par les
+byzantins en faisant face à une variabilit\'e naturelle due au Non-IID 
+
+%=======================================================================
+\section{Attaques et Agr\'egateurs}
+
+\subsection{Attaques byzantines \'etudi\'ees}
+
+Les huit attaques non cibl\'ees \'etudi\'ees visent toutes \`a d\'egrader le mod\`ele global,
+mais par des m\'ecanismes tr\`es diff\'erents.
+
+\textbf{Sign Flipping (SF)}~\cite{li2019}~: l'attaquant inverse simplement le signe de son gradient
+r\'eel~: $\tilde{g} = -g_i$. L'effet est brutal~: le mod\`ele est pouss\'e syst\'ematiquement
+dans la mauvaise direction \`a chaque iteration. Simple mais redoutablement efficace contre
+les agr\'egateurs qui ne filtrent pas les valeurs extr\^emes.
+
+\textbf{Inner Product Manipulation (IPM)}~\cite{xie2020}~: plut\^ot que d'agir brutalement,
+l'attaquant envoie un gradient dont le produit scalaire avec la vraie moyenne des gradients
+honnêtes est fortement n\'egatif. Cela d\'evie l'optimisation de mani\`ere cibl\'ee et structur\'ee,
+rendant l'attaque plus difficile \`a d\'etecter.
+
+\textbf{Optimal IPM (Opt-IPM)}~: version optimis\'ee d'IPM, qui maximise analytiquement
+l'angle entre le gradient malveillant et la moyenne honnête, tout en restant discret.
+
+\textbf{A Little Is Enough (ALIE)}~\cite{baruch2019}~: attaque particuli\`erement
+sournoise. L'attaquant analyse la distribution statistique des gradients honnêtes et
+injecte une perturbation calibr\'ee pour se fondre dans leur bruit naturel. L'attaque
+est "invisible" aux yeux de nombreuses d\'efenses~, le gradient malveillant est
+statistiquement plausible, mais oriente subtilement l'apprentissage dans la mauvaise direction.
+
+\textbf{Optimal ALIE (Opt-ALIE)}~: variante d'ALIE qui optimise le vecteur d'attaque
+pour maximiser son impact tout en \'evitant d'\^etre \'elimin\'e par les agr\'egateurs
+bas\'es sur la norme ou la distance.
+
+\textbf{Mimic}~: l'attaquant copie exactement le gradient d'un client honnête. En se
+d\'eguisant en participant l\'egitime, il trompe les d\'efenses bas\'ees sur la similarit\'e qui ne peuvent plus le diff\'erencier d'un client normal. Cette attaque
+r\'ev\`ele une faiblesse profonde des m\'ethodes de s\'election par proximit\'e.
+
+\textbf{Gaussian}~: le gradient malveillant est tir\'e d'une distribution gaussienne
+centr\'ee sur z\'ero, independante de toute donn\'ee r\'eelle. L'attaque est brute et
+non structur\'ee~, elle injecte un bruit al\'eatoire. Si elle semble na\"{i}ve, elle se
+r\'ev\`ele d\'evastatrice pour les agr\'egateurs sans m\'ecanisme de filtrage, et ses
+effets sont amplifi\'es par le contexte Non-IID.
+
+\textbf{Infinity}~: les gradients malveillants ont une norme extr\^emement \'elev\'ee,
+visant \`a dominer la somme agr\'eg\'ee et \`a \'ecraser les contributions honnêtes.
+
+\subsection{Agr\'egateurs compar\'es}
+
+Douze agr\'egateurs sont \'evalu\'es, des plus simples aux plus sophistiqu\'es.
+
+\textbf{Average}~: moyenne arithm\'etique na\"{i}ve de tous les gradients. Aucune
+r\'esistance aux attaques~. Un seul byzantin suffit \`a d\'evier l'ensemble de l'apprentissage.
+Sert de r\'ef\'erence basse.
+
+\textbf{Median}~\cite{yin2018}~: m\'ediane coordonn\'ee par coordonn\'ee. Plus robuste
+qu'Average, car les valeurs extr\^emes ont moins d'influence, mais vuln\'erable aux
+attaques qui ciblent la m\'ediane elle-m\^eme.
+
+\textbf{TrMean}~\cite{yin2018}~: moyenne tronqu\'ee. \'Elimine les $f$ gradients les
+plus grands et les plus petits sur chaque coordonn\'ee avant de faire la moyenne. Sa robustesse dépend du nombre de valeurs extrêmes supprimées avant le calcul de la moyenne.
+
+\textbf{Geometric Median}~\cite{chen2017}~: point de l'espace qui minimise la somme
+des distances euclidiennes \`a l'ensemble des gradients. Tr\`es robuste aux vecteurs
+\'eloign\'es de la majorit\'e, mais co\^uteux \`a calculer.
+
+\textbf{Krum}~\cite{blanchard2017}~: s\'electionne le gradient dont la somme des
+distances aux $n-f-2$ plus proches voisins est minimale. Il identifie ainsi le
+gradient le plus repr\'esentatif de la majorit\'e. Tr\`es efficace contre les attaques
+directes, mais mis en d\'efaut par Mimic.
+
+\textbf{Multi-Krum}~: variante de Krum s\'electionnant les $m > 1$ meilleurs gradients
+au sens du score Krum, puis en faisant leur moyenne. Offre un meilleur compromis
+biais-variance que Krum seul.
+
+\textbf{Centered Clipping (CC)}~\cite{karimireddy2021}~: projette chaque gradient dans
+une boule de rayon $\tau$ centr\'ee autour d'une estimation du centre honnête. Tr\`es
+efficace en Non-IID, car il adapte son centre aux donn\'ees h\'et\'erog\`enes.
+
+\textbf{MDA} (\textit{Minimum Distance Aggregation})~: s\'electionne le sous-ensemble
+de gradients dont la dispersion interne est minimale, en postulant que les honnêtes
+sont plus concentr\'es que les byzantins.
+
+\textbf{MoNNA}~: agr\'egateur bas\'e sur le momentum~, il utilise l'historique des mises
+\`a jour pour d\'etecter les gradients inconsistants avec la dynamique observ\'ee.
+
+\textbf{Meamed}~: variante de la m\'ediane qui utilise une estimation de la moyenne pour donner plus ou moins d'importance aux gradients, afin de combiner robustesse et efficacit\'e.
+
+\textbf{CAF}~: filtre les gradients par blocs de coordonn\'ees, cherchant \`a isoler
+les dimensions les plus corrompues.
+
+\textbf{SMEA}~: m\'ethode r\'ecente qui s\'electionne les gradients jug\'es fiables avant de calculer leur moyenne, afin de limiter l'influence des clients byzantins, montrant
+de tr\`es bonnes performances sur les attaques gaussiennes et Mimic en Non-IID.
+
+%=======================================================================
+\section{Protocole Exp\'erimental}
+
+Les exp\'eriences ont \'et\'e r\'ealis\'ees avec \textbf{5 clients honnêtes} et
+\textbf{2 clients byzantins}, sur le jeu de donn\'ees MNIST, avec plusieurs iterations
+d'entra\^inement (jusqu’à 500 itérations pour les expériences longues sur Google Colab avec GPU, que nous avons réduites à environ 200 vers la fin par manque de temps et de ressources). Chaque sc\'enario est d\'efini dans un fichier \textbf{JSON} sp\'ecifiant
+l'attaque, l'agr\'egateur, la distribution (IID ou Non-IID) et le nombre d'iterations.
+Un moteur Python automatise le lancement et sauvegarde les r\'esultats en CSV pour
+visualisation. Certains sc\'enarios ont \'et\'e r\'ep\'et\'es sur plusieurs seeds al\'eatoires (5 runs)
+pour stabiliser les r\'esultats.
+
+%=======================================================================
+%=======================================================================
+\section{R\'esultats Exp\'erimentaux}
+
+Parmi l'ensemble des exp\'eriences men\'ees, nous avons cherch\'e \`a identifier la meilleure attaque et le meilleur agr\'egateur selon un crit\`ere de pire cas. Une attaque est consid\'er\'ee comme la meilleure si elle arrive \`a minimiser la pr\'ecision maximale de l'ensemble des agr\'egateurs. \`A l'inverse, le meilleur agr\'egateur est celui qui maximise la pr\'ecision minimale face \`a toutes les attaques confondues.
+
+\subsection{La meilleure attaque et le meilleur agr\'egateur}
+
+L'analyse compl\`ete de toutes les courbes d'apprentissage confirme que l'attaque Optimal Inner Product Manipulation en distribution Non-IID s'impose d\'efinitivement comme la plus redoutable. Elle parvient \`a faire chuter drastiquement les performances d'agr\'egateurs pourtant tr\`es robustes en temps normal. Des m\'ethodes comme SMEA ou Multi-Krum peinent \`a d\'epasser les 50 pour cent de pr\'ecision sous cette attaque. Les exp\'eriences suppl\'ementaires montrent que des attaques alternatives comme Gaussian ou A Little Is Enough sont finalement bien g\'er\'ees par la majorit\'e des d\'efenses. L'attaque Gaussian injecte un bruit trop \'evident qui se retrouve tr\`es vite bloqu\'e par les algorithmes. L'attaque A Little Is Enough est plus sournoise mais elle ne r\'eussit pas \`a d\'etruire le mod\`ele d'apprentissage violement. En effet, il n'y a que l'aggrégateur Meamed qui peine à contrer cette attaque en distribution non-iid. Le biais naturel des donn\'ees Non-IID reste le facteur aggravant qui complique la t\^ache des d\'efenses et permet aux meilleures attaques de faire un maximum de d\'eg\^ats.
+
+Du c\^ot\'e des d\'efenses, la moyenne tronqu\'ee (\textit{TrMean}) et la m\'ediane g\'eom\'etrique (\textit{Geometric Median}) s'en sortent le mieux de fa\c{c}on globale. M\^eme lorsque les exp\'eriences sont prolong\'ees jusqu'\`a 500 it\'erations pour tester la r\'esistance sur le long terme, ces m\'ethodes prouvent leur grande fiabilit\'e. Elles ne finissent pas forc\'ement premi\`eres sur chaque graphique individuel, mais elles ne s'effondrent jamais. Elles assurent ainsi une performance minimale tr\`es robuste sur toutes les exp\'eriences confondues, l\`a o\`u d'autres agr\'egateurs tombent parfois \`a des scores proches du hasard sur des attaques sp\'ecifiques. Il convient cependant de noter que la s\'ev\'erit\'e de l'attaque \textit{Optimal IPM} parvient \`a affaiblir significativement les capacit\'es de ces deux d\'efenses r\'esilientes, alors que des agr\'egateurs plus sophistiqu\'es, tels que \textit{MoNNA}, \textit{MDA} et \textit{CAF}, ont su d\'emontrer leur efficacit\'e dans ce contexte.
+
+\subsection{Exp\'erience 1 avec IPM en distribution IID}
+
+L'attaque Inner Product Manipulation (IPM) reste assez simple dans son approche algorithmique. L'attaquant construit un gradient dont le produit scalaire avec la direction honn\^ete est n\'egatif pour d\'evier le mod\`ele. L'effet est subtil mais profond. Plut\^ot que de d\'etruire brutalement les mises \`a jour, l'attaque d\'evie progressivement le mod\`ele dans une mauvaise direction.
+
+Dans cette configuration IID, l'agr\'egateur Multi-Krum atteint la meilleure pr\'ecision finale avec 0.9672. Ce r\'esultat est remarquable, mais il est particuli\`erement int\'eressant de noter que l'agr\'egateur na\"if Average r\'esiste \'etonnamment bien \`a cette attaque sp\'ecifique en IID, parvenant \`a maintenir pr\`es de 95\% de pr\'ecision (0.9491). L'agr\'egateur Centered Clipping offre d'ailleurs des performances similaires (0.9491). Le gain de Multi-Krum reste n\'eanmoins significatif car il r\'eussit \`a optimiser l'entra\^inement au maximum, \'ecartant avec plus de pr\'ecision les vecteurs byzantins pour fr\^oler les 97\%.
+
+Ce succ\`es s'explique par la r\'epartition des donn\'ees. En IID, les gradients honn\^etes sont tr\`es similaires entre eux. Multi-Krum calcule les distances entre les vecteurs et identifie naturellement le groupe majoritaire. Il \'ecarte facilement les byzantins car ils s'\'eloignent trop du consensus.
+
+\subsection{Exp\'erience 2 avec Gaussian en distribution Non-IID}
+
+L'attaque Gaussian injecte simplement du bruit al\'eatoire. C'est l'attaque la plus na\"ive possible.
+
+En distribution Non-IID, l'agr\'egateur SMEA obtient la meilleure performance avec une pr\'ecision de 0.9695. En distribution IID sur la m\^eme attaque Gaussian, SMEA reste d'ailleurs en t\^ete (0.9717), talonn\'e de tr\`es pr\`es par Multi-Krum (0.9715) et Geometric Median (0.971). Le contraste le plus frappant concerne la moyenne classique (Average), alors qu'elle parvenait \`a maintenir environ 95 pour cent face \`a IPM, elle s'effondre compl\`etement sous l'attaque Gaussian, tombant \`a 22.3\% en IID et \`a environ 10\% en Non-IID (soit l'\'equivalent d'une classification totalement au hasard).
+
+Le point le plus int\'eressant est de voir \`a quel point la robustesse d\'epend du contexte. Par exemple, Multi-Krum brille face aux attaques en IID, mais son efficacit\'e chute drastiquement face \`a IPM en Non-IID (tombant \`a moins de 59 \% de pr\'ecision). La distribution Non-IID amplifie dramatiquement la difficult\'e de l'apprentissage. Les gradients honn\^etes sont d\'ej\`a tr\`es dispers\'es \`a cause de la r\'epartition in\'egale des donn\'ees. Les agr\'egateurs ont alors \'enorm\'ement de mal \`a s\'eparer la variabilit\'e l\'egitime des perturbations malveillantes.
+
+\begin{center}
+\captionof{table}{Accuracy finale compar\'ee sur IPM et Gaussian.}
+\label{tab:results}
+\footnotesize
+\setlength{\tabcolsep}{3pt} % Réduit pour faire tenir 5 colonnes
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Agr\'egateur} & \textbf{IPM} & \textbf{IPM} & \textbf{Gaussian} & \textbf{Gaussian} \\
+ & \textbf{(IID)} & \textbf{(Non-IID)} & \textbf{(IID)} & \textbf{(Non-IID)} \\
+\midrule
+Average          & 0.94912       & 0.9473        & 0.223         & $\sim$0.10  \\
+Geometric Median & 0.9636        & 0.9375        & 0.971         & 0.967     \\
+Multi-Krum       & \textbf{0.9672} & 0.5895      & 0.9715        & 0.9644         \\
+CC               & 0.9491        & 0.9472        & 0.9518        & 0.94008        \\
+SMEA             & 0.9501        & 0.4609        & \textbf{0.9717} & \textbf{0.9695} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.2cm}
+
+%=======================================================================
+\subsection{Absence d'agr\'egateur universel}
+
+Le constat le plus saillant de ce travail est qu'aucun agr\'egateur ne domine toutes les situations. Multi Krum excelle par exemple face \`a l'attaque IPM en distribution IID mais reste tr\`es faible dans un contexte Non IID. Les deux graphiques plac\'es juste en dessous permettent de comparer visuellement cette chute de performance lors du passage d'une distribution \`a l'autre.
+
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+\centering
+\includegraphics[width=\linewidth]{iid_innerproduct_multikrum.png}
+\captionof{figure}{Multi Krum avec IPM(IID)}
+\label{fig_multi_krum_iid}
+\end{minipage}%
+\hfill%
+\begin{minipage}{0.5\linewidth}
+\centering
+\includegraphics[width=\linewidth]{non_iid_innerproduct_multikrum.png}
+\captionof{figure}{Multi Krum avec IPM(Non IID)}
+\label{fig_multi_krum_non_iid}
+\end{minipage}
+\end{center}
+
+SMEA est optimal face \`a Gaussian en Non-IID mais se r\'ev\`ele tr\`es fragile sur d'autres attaques tel que \textit{IPM}. Le choix d'un agr\'egateur doit imperativement d\'ependre d'une analyse du profil de menace pr\'evu dans le contexte de d\'eploiement.
+
+\subsection{Impact du cadre Non-IID}
+
+La distribution Non-IID repr\'esente syst\'ematiquement le sc\'enario le plus exigeant. En IID, les gradients honn\^etes forment un groupe compact ce qui rend la d\'etection des byzantins plus \'evidente. En Non-IID, ce groupe s'\'etend. Les agr\'egateurs bas\'es sur la concentration comme Krum ou Multi-Krum \'eliminent parfois des gradients honn\^etes l\'egitimement atypiques, ce qui d\'egrade leurs propres capacit\'es d'apprentissage.
+
+\subsection{Limites du travail}
+
+Toutes les attaques n'ont pas pu \^etre \'evalu\'ees avec la m\^eme profondeur. En particulier, l'attaque \textit{Optimal ALIE} a d\^u \^etre \'ecart\'ee des exp\'eriences longues, son temps d'ex\'ecution d\'emesur\'e provoquant des \'echecs syst\'ematiques sur Google Colab. Cette lourdeur s'explique par la m\'ecanique de l'attaque, qui \`a chaque it\'eration, doit r\'esoudre un co\^uteux probl\`eme d'optimisation sous contraintes pour calibrer parfaitement sa perturbation sur la distribution des gradients honn\^etes. Par ailleurs, nos r\'esultats reposent sur MNIST, un jeu de donn\'ees classique mais simple. Des exp\'eriences futures sur CIFAR-10 avec un r\'eseau convolutif pourraient affiner ces conclusions. Enfin, les param\`etres des agr\'egateurs ont \'et\'e utilis\'es avec leurs valeurs par d\'efaut, sans r\'eglage sp\'ecifique par attaque.
+
+%=======================================================================
+\section{Conclusion}
+
+Ce TER a permis de mettre en place un pipeline exp\'erimental automatis\'e pour comparer douze agr\'egateurs robustes face \`a huit attaques byzantines non cibl\'ees. Ces simulations ont \'et\'e r\'ealis\'ees sur MNIST avec des distributions IID et Non-IID.
+
+L'int\'er\^et de l'apprentissage f\'ed\'er\'e r\'eside dans sa capacit\'e \`a exploiter des donn\'ees distribu\'ees sans les centraliser. Sa vuln\'erabilit\'e aux clients byzantins est bien r\'eelle. La moyenne classique tombe \`a 10 pour cent de pr\'ecision sous de nombreuses attaques, l\`a o\`u des d\'efenses adapt\'ees maintiennent d'excellents scores. Le choix de l'agr\'egateur est d\'eterminant et aucune m\'ethode n'est universellement parfaite. L'h\'et\'erog\'en\'eit\'e des donn\'ees en Non-IID rend toujours le probl\`eme bien plus difficile \`a r\'esoudre.
+
+La biblioth\`eque ByzFL constitue un outil solide pour poursuivre ces investigations. Il sera possible d'ajouter de nouvelles configurations d'attaques ou d'utiliser des mod\`eles d'intelligence artificielle plus complexes pour prolonger ce travail de recherche.
+%=======================================================================
+\section{Bilan Personnel}
+
+\subsection*{Bilan de Samy}
+
+Ce projet a \'et\'e pour moi une d\'ecouverte concr\`ete de ce que signifie mener
+une \'etude exp\'erimentale scientifique. J'avais des notions th\'eoriques sur
+l'apprentissage automatique, mais l'exp\'erience de construire un pipeline complet, de la d\'efinition des sc\'enarios JSON jusqu'\`a la g\'en\'eration des courbes
+d'analyse, m'a apport\'e une vision bien plus globale du processus de recherche.
+J'ai particuli\`erement appr\'eci\'e le travail d'analyse des r\'esultats, qui m'a oblig\'e \`a r\'efl\'echir au-del\`a des
+chiffres et \`a formuler des explications formelle. Ce TER m'a aussi enseign\'e
+la valeur de l'organisation~: structurer un d\'ep\^ot, nommer proprement les fichiers
+de r\'esultats, r\'ep\'eter les exp\'eriences sur plusieurs seeds, autant d'habitudes
+que je consid\`ere d\'esormais indispensables dans tout travail scientifique.
+
+\subsection*{Bilan de C\'elia}
+
+Ce TER a \'et\'e l'occasion pour moi d'aborder pour la premi\`ere fois la probl\'ematique
+de la s\'ecurit\'e en apprentissage automatique, et plus pr\'ecis\'ement en apprentissage
+f\'ed\'er\'e. Avant ce projet, je n'avais qu'une connaissance superficielle de ce domaine.
+Travailler sur les attaques byzantines et les m\'ecanismes de d\'efense m'a permis
+de comprendre que la robustesse est un probl\`eme fondamentalement contextuel, autrement dit, il n'existe pas de solution miracle, et chaque agr\'egateur a ses forces et ses failles
+selon le sc\'enario. J'ai \'egalement d\'evelopp\'e des comp\'etences pratiques en
+automatisation d'exp\'eriences et en analyse de courbes. La difficult\'e principale
+a \'et\'e de g\'erer la quantit\'e de configurations \`a tester et d'en tirer des
+conclusions claires et justifi\'ees. Ce travail m'a donn\'e envie d'aller plus loin
+sur les questions de confidentialit\'e et de s\'ecurit\'e des syst\`emes d'IA distribu\'es.
+
+%=======================================================================
+\end{multicols}
+
+\newpage
+
+\begin{center}
+{\normalsize\bfseries 9. \MakeUppercase{R\'ef\'erences}}
+\end{center}
+
+% On masque le titre généré automatiquement par thebibliography 
+% pour conserver ton propre titre personnalisé juste au-dessus.
+\renewcommand{\refname}{\vspace{-5ex}}
+
+\begin{multicols}{2}
+\small
+\begin{thebibliography}{12}
+\setlength{\itemsep}{3pt}
+
+  \bibitem{mcmahan2017} H.~B. McMahan, E.~Moore, D.~Ramage, S.~Hampson,
+        et B.~A. y~Arcas, ``Communication-efficient learning of deep networks
+        from decentralized data,'' in \textit{Proc. AISTATS}, 2017.
+
+  \bibitem{lamport1982} L.~Lamport, R.~Shostak, et M.~Pease, ``The Byzantine
+        generals problem,'' \textit{ACM Trans. Program. Lang. Syst.}, vol.~4,
+        no.~3, pp.~382--401, 1982.
+
+  \bibitem{blanchard2017} P.~Blanchard, E.~M.~El~Mhamdi, R.~Guerraoui,
+        et J.~Stainer, ``Machine learning with adversaries: Byzantine tolerant
+        gradient descent,'' in \textit{Proc. NeurIPS}, 2017.
+
+  \bibitem{chen2017} Y.~Chen, L.~Su, et J.~Xu, ``Distributed statistical
+        machine learning in adversarial settings: Byzantine gradient descent,''
+        \textit{Proc. ACM Meas. Anal. Comput. Syst.}, vol.~1, no.~2, 2017.
+
+  \bibitem{karimireddy2021} S.~P. Karimireddy, L.~He, et M.~Jaggi,
+        ``Byzantine-robust learning on heterogeneous datasets via bucketing,''
+        in \textit{Proc. ICLR}, 2021.
+
+  \bibitem{li2019} L.~Li, W.~Xu, T.~Chen, G.~B.~Giannakis, et Q.~Ling,
+        ``RSA: Byzantine-robust stochastic aggregation methods for distributed
+        learning from heterogeneous datasets,'' in \textit{Proc. AAAI}, 2019.
+
+  \bibitem{xie2020} C.~Xie, O.~Koyejo, et I.~Gupta, ``Fall of empires:
+        Breaking byzantine-tolerant SGD by inner product manipulation,''
+        in \textit{Proc. UAI}, 2020.
+
+  \bibitem{baruch2019} G.~Baruch, M.~Baruch, et Y.~Goldberg,
+        ``A little is enough: Circumventing defenses for distributed learning,''
+        in \textit{Proc. NeurIPS}, 2019.
+
+  \bibitem{yin2018} D.~Yin, Y.~Chen, R.~Kannan, et P.~Bartlett,
+        ``Byzantine-robust distributed learning: Towards optimal statistical
+        rates,'' in \textit{Proc. ICML}, 2018.
+
+  \bibitem{lecun1998} Y.~LeCun, L.~Bottou, Y.~Bengio, et P.~Haffner,
+        ``Gradient-based learning applied to document recognition,''
+        \textit{Proc. IEEE}, vol.~86, no.~11, pp.~2278--2324, 1998.
+
+  \bibitem{krizhevsky2009} A.~Krizhevsky, ``Learning multiple layers of
+        features from tiny images,'' Tech. Rep., Univ. Toronto, 2009.
+
+  \bibitem{byzfl2023} El~Mhamdi \textit{et al.}, ``ByzFL: A Python library
+        for Byzantine-robust federated learning simulation,''
+        \url{https://github.com/LPD-EPFL/ByzFL}, 2023.
+
+\end{thebibliography}
+\end{multicols}
+
+\end{document}
