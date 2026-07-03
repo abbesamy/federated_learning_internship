@@ -1,39 +1,14 @@
 {
   "scenarios": [
    {
-      "name": "non_iid_opt_alie_trmean",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_trmean.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Trimmed Mean"
+      "name": "iid_clean_average",
+      "file": "configurations_experiences/scenarios/none/iid_clean_average.json",
+      "description": "MNIST IID - none - Average (clean baseline)"
     },
     {
-      "name": "non_iid_opt_alie_median",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_median.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Median"
-    },
-    {
-      "name": "non_iid_opt_alie_multikrum",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_multikrum.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Multi-Krum"
-    },
-    {
-      "name": "non_iid_opt_alie_mda",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_mda.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Minimum Diameter Averaging (MDA)"
-    },
-    {
-      "name": "non_iid_opt_alie_monna",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_monna.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - MoNNA"
-    },
-    {
-      "name": "non_iid_opt_alie_meamed",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_meamed.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Meamed"
-    },
-    {
-      "name": "non_iid_opt_alie_smea",
-      "file": "configurations_experiences/scenarios/optimal_alittleisenough/non_iid/non_iid_opt_alie_smea.json",
-      "description": "MNIST Non-IID - Optimal A Little Is Enough (Opt-ALIE) - Smallest Maximum Eigenvalue Averaging (SMEA)"
+      "name": "non_iid_clean_average",
+      "file": "configurations_experiences/scenarios/none/non_iid_clean_average.json",
+      "description": "MNIST non-IID - none - Average (clean baseline)"
     }
   ]
 }

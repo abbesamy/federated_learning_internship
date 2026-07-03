@@ -966,19 +966,9 @@
       "description": "MNIST IID - none - Average (clean baseline)"
     },
     {
-      "name": "noniid_dirichlet_fashionmnist_krum",
-      "file": "configurations_experiences/scenarios/noniid_dirichlet/noniid_dirichlet_fashionmnist_krum.json",
-      "description": "FashionMNIST Dirichlet - Krum"
-    },
-    {
-      "name": "noniid_dirichlet_gaussian_trmean",
-      "file": "configurations_experiences/scenarios/noniid_dirichlet/noniid_dirichlet_gaussian_trmean.json",
-      "description": "Dirichlet - Gaussian - TrMean"
-    },
-    {
-      "name": "noniid_dirichlet_innerproduct_median",
-      "file": "configurations_experiences/scenarios/noniid_dirichlet/noniid_dirichlet_innerproduct_median.json",
-      "description": "Dirichlet - InnerProductManipulation - Median"
+      "name": "non_iid_clean_average",
+      "file": "configurations_experiences/scenarios/none/non_iid_clean_average.json",
+      "description": "MNIST non-IID - none - Average (clean baseline)"
     }
   ]
 }
