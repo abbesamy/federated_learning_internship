@@ -81,6 +81,3 @@ Execution GPU :
 Pour exécuter des expériences avec accélération GPU, il faut se rendre sur Google Colab et exécuter les commandes figurant dans le fichier texte `commandes_ggl_colab.txt`.
 
 
--Nous avons aussi expérimenté av
-
-- 
