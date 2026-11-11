@@ -95,37 +95,6 @@ Pour exécuter des expériences avec accélération GPU, il faut se rendre sur G
 
 
 
-
-
-
-
-
-maintenant on va passer au bilan de la semaine du 01/06 on l'on fait tout cela :
-
--ajouté de nouveaux scénarios à ceux deja présent dans notre dépot.
-
--Nous avons implémenté les expériences moyennant sur 10 seeds dont le code se trouve dans le répertoire expérience avec moyennes, et dont l'utilisation est expliqué dans le readme dédié dans ce même répertoire.
-
--Nous avons aussi corrigé certaines erreurs que nous avons constaté lors de la dernière réunion concernant la génération de graphiques, et nous avons aussi fait en sorte qu'il soient généré dans les répertoires dédié afin d'organiser au mieux notre dépot.
-
--Nous avons executé des expériences sur 20 rounds avant de pouvoir faire des expériences sur colab dont les résultats se sont montré infructueux, la'accuracy dépassait à peine Les 50 %.
-
--Une fois le protocole d'execution sur google colab mis en place, nous avons pu lancer de plus grandes expériences sur google colab sur 500 rounds par scenarion dont les résultats etait trèes interessants, on atteignait les 0.96 et 0.97 d'accuracy. Tu peux chiffrer grace au graphique que je te donne. Tu peux aussi lfaire en sorte de mettre les graphiques pour illustrer dans le rapports notre travail, j'aurais juste à importer les graphique et à mettre le nom du fichier png dans le rapports latex, en s'en fout ici de la taille du rapport, il doit etre plus grand, on est censé avoir bien avancé. les graphique que je te donne la concerne ipm avec les différents agrégateurs.
-
--Nous avons aussi expérimenté av
-
-- maintenant on va passer au bilan de la semaine du 01/06 on l'on fait tout cela :
-
--ajouté de nouveaux scénarios à ceux deja présent dans notre dépot.
-
--Nous avons implémenté les expériences moyennant sur 10 seeds dont le code se trouve dans le répertoire expérience avec moyennes, et dont l'utilisation est expliqué dans le readme dédié dans ce même répertoire.
-
--Nous avons aussi corrigé certaines erreurs que nous avons constaté lors de la dernière réunion concernant la génération de graphiques, et nous avons aussi fait en sorte qu'il soient généré dans les répertoires dédié afin d'organiser au mieux notre dépot.
-
--Nous avons executé des expériences sur 20 rounds avant de pouvoir faire des expériences sur colab dont les résultats se sont montré infructueux, la'accuracy dépassait à peine Les 50 %.
-
--Une fois le protocole d'execution sur google colab mis en place, nous avons pu lancer de plus grandes expériences sur google colab sur 500 rounds par scenarion dont les résultats etait trèes interessants, on atteignait les 0.96 et 0.97 d'accuracy. Tu peux chiffrer grace au graphique que je te donne. Tu peux aussi lfaire en sorte de mettre les graphiques pour illustrer dans le rapports notre travail, j'aurais juste à importer les graphique et à mettre le nom du fichier png dans le rapports latex, en s'en fout ici de la taille du rapport, il doit etre plus grand, on est censé avoir bien avancé. les graphique que je te donne la concerne ipm avec les différents agrégateurs.
-
 -Nous avons aussi expérimenté av
 
 - 
